@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Nick Petrenko](https://up.htmlacademy.ru/react/8/user/1342083).
-* Наставник: `Неизвестно`.
+* Наставник: [Владислав Зубко](https://htmlacademy.ru/profile/whatislove).
 
 ---
 
