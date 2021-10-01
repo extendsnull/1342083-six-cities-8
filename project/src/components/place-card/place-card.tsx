@@ -1,11 +1,15 @@
 import type {OfferPreview} from '../../types';
 import {getRatingValue} from '../../utils';
 
-function PlaceCard(props: OfferPreview): JSX.Element {
+interface PlaceCardProps extends OfferPreview {
+  className: string;
+}
+
+function PlaceCard(props: PlaceCardProps): JSX.Element {
   const ratingValue: string = getRatingValue(props.rating);
 
   return (
-    <article className="cities__place-card place-card">
+    <article className={`${props.className} place-card`}>
       {props.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>

@@ -5,6 +5,8 @@ type MainScreenProps = {
   offers: OffersPreviews;
 }
 
+const CARD_CLASSNAME = 'cities__place-card';
+
 function MainScreen(props: MainScreenProps): JSX.Element {
   const {offers} = props;
   return (
@@ -96,7 +98,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {offers.map((offer) => <PlaceCard key={offer.id} {...offer} />)}
+                {offers.map((offer) => <PlaceCard key={offer.id} className={CARD_CLASSNAME} {...offer} />)}
               </div>
             </section>
             <div className="cities__right-section">
