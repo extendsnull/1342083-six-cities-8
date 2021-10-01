@@ -1,6 +1,12 @@
 import PlaceCard from '../place-card/place-card';
+import type {OffersPreviews} from '../../types';
 
-function MainScreen(): JSX.Element {
+type MainScreenProps = {
+  offers: OffersPreviews;
+}
+
+function MainScreen(props: MainScreenProps): JSX.Element {
+  const {offers} = props;
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -90,11 +96,7 @@ function MainScreen(): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
+                {offers.map((offer) => <PlaceCard key={offer.id} {...offer} />)}
               </div>
             </section>
             <div className="cities__right-section">
