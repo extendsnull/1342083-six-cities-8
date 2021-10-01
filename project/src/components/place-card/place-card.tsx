@@ -1,6 +1,9 @@
 import type {OfferPreview} from '../../types';
+import {getRatingValue} from '../../utils';
 
 function PlaceCard(props: OfferPreview): JSX.Element {
+  const ratingValue: string = getRatingValue(props.rating);
+
   return (
     <article className="cities__place-card place-card">
       {props.isPremium && (
@@ -28,7 +31,7 @@ function PlaceCard(props: OfferPreview): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: ratingValue}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
