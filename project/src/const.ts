@@ -1,6 +1,11 @@
-export const RATING_MAX_VALUE = 5;
+const RATING_MAX_VALUE = 5;
 
-export enum OfferType {
+enum OfferType {
   Apartament = 'Apartment',
   Private = 'Private room',
 }
+
+export {
+  RATING_MAX_VALUE,
+  OfferType
+};

@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {OfferType} from './const';
-import type {OfferPreview} from './types';
+import type {Offer} from './types';
 
-const offers: OfferPreview[] = [
+const offers: Offer[] = [
   {
     id: 0,
     isFavorite: false,

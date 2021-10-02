@@ -1,8 +1,8 @@
 import MainScreen from '../main-screen/main-screen';
-import type {OffersPreviews} from '../../types';
+import type {Offer} from '../../types';
 
 type AppProps = {
-  offers: OffersPreviews;
+  offers: Offer[];
 }
 
 function App(props: AppProps): JSX.Element {

@@ -1,6 +1,6 @@
 import {OfferType} from '../const';
 
-export type OfferPreview = {
+type Offer = {
   id: number;
   isFavorite: boolean;
   isPremium: boolean;
@@ -11,4 +11,6 @@ export type OfferPreview = {
   type: OfferType;
 }
 
-export type OffersPreviews = OfferPreview[];
+export type {
+  Offer
+};
