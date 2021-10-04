@@ -7,6 +7,12 @@ enum AppRoute {
   Offer = '/offer/:id',
 }
 
+enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
 enum OfferType {
   Apartament = 'Apartment',
   Private = 'Private room',
@@ -15,5 +21,6 @@ enum OfferType {
 export {
   RATING_MAX_VALUE,
   AppRoute,
+  AuthorizationStatus,
   OfferType
 };
