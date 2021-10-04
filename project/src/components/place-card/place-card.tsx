@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import {Offer} from '../../types';
 import {getRatingValue} from '../../utils';
 
@@ -8,10 +9,14 @@ type PlaceCardProps = {
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
   const {className, offer} = props;
+  const cardClassNames: string = classNames({
+    [className]: className,
+    'place-card': true,
+  });
   const ratingValue: string = getRatingValue(offer.rating);
 
   return (
-    <article className={`${className} place-card`}>
+    <article className={cardClassNames}>
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
