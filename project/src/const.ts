@@ -1,5 +1,12 @@
 const RATING_MAX_VALUE = 5;
 
+enum AppRoute {
+  Main = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer/:id',
+}
+
 enum OfferType {
   Apartament = 'Apartment',
   Private = 'Private room',
@@ -7,5 +14,6 @@ enum OfferType {
 
 export {
   RATING_MAX_VALUE,
+  AppRoute,
   OfferType
 };
