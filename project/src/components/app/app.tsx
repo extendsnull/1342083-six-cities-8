@@ -23,7 +23,7 @@ function App(props: AppProps): JSX.Element {
           <LoginScreen />
         </Route>
         <PrivateRoute
-          authorizationStatus={AuthorizationStatus.Auth}
+          authorizationStatus={AuthorizationStatus.NoAuth}
           path={AppRoute.Favorites}
           exact
         >
