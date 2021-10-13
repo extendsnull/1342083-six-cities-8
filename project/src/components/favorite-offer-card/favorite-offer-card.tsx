@@ -1,5 +1,5 @@
-import {Offer} from '../../types';
 import {getOfferUrl, getRatingValue} from '../../utils';
+import type {Offer} from '../../types';
 
 type FavoriteOfferProps = {
   offer: Offer;

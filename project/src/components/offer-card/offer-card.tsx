@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import {Offer} from '../../types';
 import {getRatingValue} from '../../utils';
+import type {Offer} from '../../types';
 
 type PlaceCardProps = {
   className: string;

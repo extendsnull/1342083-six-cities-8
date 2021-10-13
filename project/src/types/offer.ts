@@ -1,4 +1,4 @@
-import {OfferType} from '../const';
+import type {OfferType} from '../const';
 
 type Offer = {
   city: {

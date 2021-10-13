@@ -1,7 +1,7 @@
 import FavoriteOfferCard from '../favorite-offer-card/favorite-offer-card';
 import Logo from '../logo/logo';
 import {AppRoute} from '../../const';
-import {Offer} from '../../types';
+import type {Offer} from '../../types';
 
 type FavoritesScreenProps = {
   offers: Offer[];
