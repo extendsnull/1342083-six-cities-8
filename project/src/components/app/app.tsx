@@ -13,21 +13,23 @@ type AppProps = {
 }
 
 function App(props: AppProps): JSX.Element {
+  const {offers} = props;
+
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainScreen offers={props.offers} />
+          <MainScreen offers={offers} />
         </Route>
         <Route path={AppRoute.Login} exact>
           <LoginScreen />
         </Route>
         <PrivateRoute
-          authorizationStatus={AuthorizationStatus.NoAuth}
+          authorizationStatus={AuthorizationStatus.Auth}
           path={AppRoute.Favorites}
           exact
         >
-          <FavoritesScreen />
+          <FavoritesScreen offers={offers} />
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
           <OfferScreen />
