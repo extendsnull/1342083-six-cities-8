@@ -1,42 +1,45 @@
 import classNames from 'classnames';
-import {getRatingValue} from '../../utils';
+import {Link} from 'react-router-dom';
+import {getOfferUrl, getRatingValue} from '../../utils';
 import type {Offer} from '../../types';
 
 type PlaceCardProps = {
-  className: string;
   offer: Offer;
   onMouseMove: (id: number) => void;
 }
 
 function OfferCard(props: PlaceCardProps): JSX.Element {
-  const {className, offer, onMouseMove} = props;
-  const cardClassNames: string = classNames({
-    [className]: className,
-    'place-card': true,
-  });
+  const {offer, onMouseMove} = props;
+  const {id, isPremium, previewImage, price, isFavorite, title, type} = offer;
+  const offerUrl = getOfferUrl(id);
   const ratingValue: string = getRatingValue(offer.rating);
+  const bookmarkButtonClassNames = classNames({
+    'place-card__bookmark-button': true,
+    'place-card__bookmark-button--active': isFavorite,
+    'button': true,
+  });
 
   const handleMouseMove = (): void => onMouseMove(offer.id);
 
   return (
-    <article className={cardClassNames} onMouseMove={handleMouseMove}>
-      {offer.isPremium && (
+    <article className="cities__place-card place-card" onMouseMove={handleMouseMove}>
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="/">
-          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="" />
-        </a>
+        <Link to={offerUrl}>
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="" />
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offer.price}</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&nbsp;&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${offer.isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button">
+          <button className={bookmarkButtonClassNames} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -50,9 +53,9 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{offer.title}</a>
+          <Link to={offerUrl}>{title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );

@@ -1,20 +1,30 @@
+import {useLocation} from 'react-router';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import {AppRoute} from '../../const';
 
-type LogoProps = {
-  isActive?: boolean;
-}
+function Logo(): JSX.Element {
+  const location = useLocation();
+  const isMainScreen = location.pathname === AppRoute.Main;
 
-function Logo(props: LogoProps): JSX.Element {
   const logoClassNames: string = classNames({
     'header__logo-link': true,
-    'header__logo-link--active': props.isActive,
+    'header__logo-link--active': isMainScreen,
   });
+
+  const logoImg = <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />;
+
+  if (isMainScreen) {
+    return (
+      <span className={logoClassNames}>
+        {logoImg}
+      </span>
+    );
+  }
 
   return (
     <Link className={logoClassNames} to={AppRoute.Main}>
-      <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
+      {logoImg}
     </Link>
   );
 }

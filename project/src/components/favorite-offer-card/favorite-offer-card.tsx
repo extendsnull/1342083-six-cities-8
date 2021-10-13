@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import {getOfferUrl, getRatingValue} from '../../utils';
 import type {Offer} from '../../types';
 
@@ -13,9 +14,9 @@ function FavoriteOfferCard(props: FavoriteOfferProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href={offerUrl}>
+        <Link to={offerUrl}>
           <img className="place-card__image" src={previewImage} width="150" height="110" alt="" />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -37,7 +38,7 @@ function FavoriteOfferCard(props: FavoriteOfferProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={offerUrl}>{title}</a>
+          <Link to={offerUrl}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

@@ -18,7 +18,6 @@ function PlacesList(props: PlacesListProps): JSX.Element {
       {offers.map((offer: Offer) => (
         <OfferCard
           key={offer.id}
-          className="cities__place-card"
           offer={offer}
           onMouseMove={handlePlaceCardMouseMove}
         />
