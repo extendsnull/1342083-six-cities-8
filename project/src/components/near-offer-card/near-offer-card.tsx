@@ -4,14 +4,13 @@ import {getOfferUrl, getRatingValue} from '../../utils';
 import type {LocationDescriptor} from 'history';
 import type {Offer} from '../../types';
 
-type PlaceCardProps = {
+type NearOfferCardProps = {
   offer: Offer;
-  onMouseMove: (id: number) => void;
 }
 
-function OfferCard(props: PlaceCardProps): JSX.Element {
-  const {offer, onMouseMove} = props;
-  const {rating, id, isPremium, previewImage, price, isFavorite, title, type} = offer;
+function NearOfferCard(props: NearOfferCardProps): JSX.Element {
+  const {offer} = props;
+  const {rating, isFavorite, id, isPremium, previewImage, price, title, type} = offer;
   const ratingValue: string = getRatingValue(rating);
 
   const bookmarkButtonClassNames = classNames({
@@ -24,16 +23,14 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
     state: offer,
   };
 
-  const handleMouseMove = (): void => onMouseMove(offer.id);
-
   return (
-    <article className="cities__place-card place-card" onMouseMove={handleMouseMove}>
+    <article className="near-places__card place-card">
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="near-places__image-wrapper place-card__image-wrapper">
         <Link to={offerUrl}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="" />
         </Link>
@@ -42,13 +39,13 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&nbsp;&#47;&nbsp;night</span>
+            <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className={bookmarkButtonClassNames} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -66,4 +63,4 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
   );
 }
 
-export default OfferCard;
+export default NearOfferCard;
