@@ -3,6 +3,9 @@ import type {Offer} from '../types';
 
 const offers: Offer[] = [
   {
+    city: {
+      name: 'Paris',
+    },
     id: 0,
     isFavorite: false,
     isPremium: true,
@@ -13,6 +16,9 @@ const offers: Offer[] = [
     type: OfferType.Apartament,
   },
   {
+    city: {
+      name: 'Cologne',
+    },
     id: 1,
     isFavorite: true,
     isPremium: false,
@@ -23,6 +29,9 @@ const offers: Offer[] = [
     type: OfferType.Private,
   },
   {
+    city: {
+      name: 'Brussels',
+    },
     id: 2,
     isFavorite: false,
     isPremium: false,
@@ -33,6 +42,9 @@ const offers: Offer[] = [
     type: OfferType.Apartament,
   },
   {
+    city: {
+      name: 'Amsterdam',
+    },
     id: 3,
     isFavorite: false,
     isPremium: false,
@@ -43,11 +55,14 @@ const offers: Offer[] = [
     type: OfferType.Apartament,
   },
   {
+    city: {
+      name: 'Paris',
+    },
     id: 4,
     isFavorite: true,
     isPremium: false,
     previewImage: 'img/room.jpg',
-    price: 80,
+    price: 120,
     rating: 3.9,
     title: 'Wood and stone place',
     type: OfferType.Private,

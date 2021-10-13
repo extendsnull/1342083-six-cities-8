@@ -1,6 +1,9 @@
 import {OfferType} from '../const';
 
 type Offer = {
+  city: {
+    name: string,
+  };
   id: number;
   isFavorite: boolean;
   isPremium: boolean;
