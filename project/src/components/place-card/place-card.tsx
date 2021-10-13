@@ -5,18 +5,21 @@ import {getRatingValue} from '../../utils';
 type PlaceCardProps = {
   className: string;
   offer: Offer;
+  onMouseMove: (id: number) => void;
 }
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const {className, offer} = props;
+  const {className, offer, onMouseMove} = props;
   const cardClassNames: string = classNames({
     [className]: className,
     'place-card': true,
   });
   const ratingValue: string = getRatingValue(offer.rating);
 
+  const handleMouseMove = (): void => onMouseMove(offer.id);
+
   return (
-    <article className={cardClassNames}>
+    <article className={cardClassNames} onMouseMove={handleMouseMove}>
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
