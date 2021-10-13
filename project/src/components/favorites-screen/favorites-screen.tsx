@@ -1,4 +1,4 @@
-import FavoriteOffer from '../favorite-offer/favorite-offer';
+import FavoriteOfferCard from '../favorite-offer-card/favorite-offer-card';
 import Logo from '../logo/logo';
 import {AppRoute} from '../../const';
 import {Offer} from '../../types';
@@ -71,7 +71,7 @@ function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
                   </div>
                   <div className="favorites__places">
                     {offers.map((offer) => (
-                      <FavoriteOffer
+                      <FavoriteOfferCard
                         key={offer.id}
                         offer={offer}
                       />

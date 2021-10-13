@@ -5,7 +5,7 @@ type FavoriteOfferProps = {
   offer: Offer;
 }
 
-function FavoriteOffer(props: FavoriteOfferProps): JSX.Element {
+function FavoriteOfferCard(props: FavoriteOfferProps): JSX.Element {
   const {id, rating, previewImage, price, title, type} = props.offer;
   const offerUrl: string = getOfferUrl(id);
   const ratingValue: string = getRatingValue(rating);
@@ -45,4 +45,4 @@ function FavoriteOffer(props: FavoriteOfferProps): JSX.Element {
   );
 }
 
-export default FavoriteOffer;
+export default FavoriteOfferCard;

@@ -8,7 +8,7 @@ type PlaceCardProps = {
   onMouseMove: (id: number) => void;
 }
 
-function PlaceCard(props: PlaceCardProps): JSX.Element {
+function OfferCard(props: PlaceCardProps): JSX.Element {
   const {className, offer, onMouseMove} = props;
   const cardClassNames: string = classNames({
     [className]: className,
@@ -58,4 +58,4 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
   );
 }
 
-export default PlaceCard;
+export default OfferCard;

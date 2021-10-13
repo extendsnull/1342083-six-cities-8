@@ -1,5 +1,5 @@
 import Logo from '../logo/logo';
-import PlacesList from '../places-list/places-list';
+import OfferList from '../offer-list/offer-list';
 import type {Offer} from '../../types';
 
 type MainScreenProps = {
@@ -94,7 +94,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlacesList offers={offers}></PlacesList>
+              <OfferList offers={offers}></OfferList>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
