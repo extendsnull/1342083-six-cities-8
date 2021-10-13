@@ -15,7 +15,14 @@ function PlacesList(props: PlacesListProps): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => <PlaceCard key={offer.id} className="cities__place-card" offer={offer} onMouseMove={handlePlaceCardMouseMove} />)}
+      {offers.map((offer: Offer) => (
+        <PlaceCard
+          key={offer.id}
+          className="cities__place-card"
+          offer={offer}
+          onMouseMove={handlePlaceCardMouseMove}
+        />
+      ))}
     </div>
   );
 }
