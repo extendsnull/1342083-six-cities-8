@@ -1,14 +1,19 @@
-import {useHistory} from 'react-router';
+import {useParams} from 'react-router';
+import {Redirect} from 'react-router-dom';
 import Header from '../header/header';
 import Review from '../review/review';
 import ReviewForm from '../review-form/review-form';
 import OfferCard from '../offer-card/offer-card';
-import {OfferCardType} from '../../const';
+import {humanizedOfferTypeMap, AppRoute, OfferCardType} from '../../const';
 import {getClassNames, getRandomId, getRatingValue} from '../../utils';
 import type {Offer, Comment} from '../../types';
 
 const MAX_IMAGES_COUNT = 6;
 const MAX_NEAR_OFFERS_COUNT = 3;
+
+type History = {
+  id: string;
+}
 
 type OfferScreenProps = {
   offers: Offer[];
@@ -18,9 +23,15 @@ type OfferScreenProps = {
 
 function OfferScreen(props: OfferScreenProps): JSX.Element {
   const {offers, comments, onReviewFormSubmit} = props;
-  const history = useHistory<Offer>();
-  const {rating, isFavorite, images, isPremium, title, price, type, maxAdults, goods, host, description} = history.location.state;
-  const ratingValue: string = getRatingValue(rating);
+  const params = useParams<History>();
+  const currentOffer = offers.find((offer) => offer.id === parseInt(params.id, 10));
+
+  if (!currentOffer) {
+    return <Redirect to={AppRoute.NotFound} />;
+  }
+
+
+  const ratingValue: string = getRatingValue(currentOffer.rating);
 
   return (
     <div className="page">
@@ -28,10 +39,10 @@ function OfferScreen(props: OfferScreenProps): JSX.Element {
 
       <main className="page__main page__main--property">
         <section className="property">
-          {Boolean(images.length) && (
+          {Boolean(currentOffer.images.length) && (
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                {images.slice(0, MAX_IMAGES_COUNT).map((image) => (
+                {currentOffer.images.slice(0, MAX_IMAGES_COUNT).map((image) => (
                   <div className="property__image-wrapper" key={getRandomId()}>
                     <img className="property__image" src={image} alt="" />
                   </div>
@@ -41,17 +52,17 @@ function OfferScreen(props: OfferScreenProps): JSX.Element {
           )}
           <div className="property__container container">
             <div className="property__wrapper">
-              {isPremium && (
+              {currentOffer.isPremium && (
                 <div className="property__mark">
                   <span>Premium</span>
                 </div>
               )}
               <div className="property__name-wrapper">
-                <h1 className="property__name">{title}</h1>
+                <h1 className="property__name">{currentOffer.title}</h1>
                 <button
                   className={getClassNames([
                     'property__bookmark-button',
-                    {'property__bookmark-button--active': isFavorite},
+                    {'property__bookmark-button--active': currentOffer.isFavorite},
                     'button',
                   ])}
                   type="button"
@@ -67,28 +78,28 @@ function OfferScreen(props: OfferScreenProps): JSX.Element {
                   <span style={{width: ratingValue}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{rating}</span>
+                <span className="property__rating-value rating__value">{currentOffer.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {humanizedOfferTypeMap.get(currentOffer.type)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {maxAdults} Bedrooms
+                  {currentOffer.maxAdults} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {maxAdults} adults
+                  Max {currentOffer.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{price}</b>
+                <b className="property__price-value">&euro;{currentOffer.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
-                {Boolean(goods.length) && (
+                {Boolean(currentOffer.goods.length) && (
                   <ul className="property__inside-list">
-                    {goods.map((feature) => (
+                    {currentOffer.goods.map((feature) => (
                       <li className="property__inside-item" key={feature}>{feature}</li>
                     ))}
                   </ul>
@@ -100,16 +111,16 @@ function OfferScreen(props: OfferScreenProps): JSX.Element {
                   <div
                     className={getClassNames([
                       'property__avatar-wrapper',
-                      {'property__avatar-wrapper--pro': host.isPro},
+                      {'property__avatar-wrapper--pro': currentOffer.host.isPro},
                       'user__avatar-wrapper',
                     ])}
                   >
-                    <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    {host.name}
+                    {currentOffer.host.name}
                   </span>
-                  {host.isPro && (
+                  {currentOffer.host.isPro && (
                     <span className="property__user-status">
                       Pro
                     </span>
@@ -117,7 +128,7 @@ function OfferScreen(props: OfferScreenProps): JSX.Element {
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    {description}
+                    {currentOffer.description}
                   </p>
                 </div>
               </div>

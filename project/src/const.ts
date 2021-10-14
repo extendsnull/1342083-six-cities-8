@@ -6,6 +6,7 @@ enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/:id',
+  NotFound = '/404',
 }
 
 enum AuthorizationStatus {
@@ -15,8 +16,10 @@ enum AuthorizationStatus {
 }
 
 enum OfferType {
-  Apartament = 'Apartment',
-  Private = 'Private room',
+  Apartament = 'apartment',
+  Private = 'private',
+  House = 'house',
+  Hotel = 'hotel',
 }
 
 enum OfferCardType {
@@ -25,9 +28,17 @@ enum OfferCardType {
   Near = 'near-places',
 }
 
+const humanizedOfferTypeMap = new Map([
+  [OfferType.Apartament, 'Apartment'],
+  [OfferType.Private, 'Private Room'],
+  [OfferType.House, 'House'],
+  [OfferType.Hotel, 'Hotel'],
+]);
+
 export {
   RANDOM_ID_LENGTH,
   RATING_MAX_VALUE,
+  humanizedOfferTypeMap,
   AppRoute,
   AuthorizationStatus,
   OfferType,
