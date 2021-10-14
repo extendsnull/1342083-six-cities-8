@@ -3,7 +3,8 @@ import {useHistory} from 'react-router';
 import Header from '../header/header';
 import Review from '../review/review';
 import ReviewForm from '../review-form/review-form';
-import NearOfferCard from '../near-offer-card/near-offer-card';
+import OfferCard from '../offer-card/offer-card';
+import {OfferCardType} from '../../const';
 import {getRandomId, getRatingValue} from '../../utils';
 import type {Offer} from '../../types';
 
@@ -141,8 +142,9 @@ function OfferScreen(): JSX.Element {
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
                 {offers.slice(0, MAX_NEAR_OFFERS_COUNT).map((offer) => (
-                  <NearOfferCard
+                  <OfferCard
                     offer={offer}
+                    type={OfferCardType.Near}
                     key={offer.id}
                   />
                 ))}

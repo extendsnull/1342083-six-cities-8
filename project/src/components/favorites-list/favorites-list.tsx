@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
-import FavoriteOfferCard from '../favorite-offer-card/favorite-offer-card';
-import {AppRoute} from '../../const';
+import OfferCard from '../offer-card/offer-card';
+import {AppRoute, OfferCardType} from '../../const';
 import type {Offer} from '../../types';
 
 type FavoriteListProps = {
@@ -43,8 +43,9 @@ function FavoritesList(props: FavoriteListProps): JSX.Element {
           </div>
           <div className="favorites__places">
             {offers.map((offer) => (
-              <FavoriteOfferCard
+              <OfferCard
                 key={offer.id}
+                type={OfferCardType.Favorites}
                 offer={offer}
               />
             ))}

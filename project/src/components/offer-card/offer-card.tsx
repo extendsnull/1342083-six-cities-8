@@ -1,50 +1,88 @@
-import classNames from 'classnames';
 import {Link} from 'react-router-dom';
-import {getOfferUrl, getRatingValue} from '../../utils';
+import {OfferCardType} from '../../const';
+import {getClassNames, getOfferUrl, getRatingValue} from '../../utils';
 import type {LocationDescriptor} from 'history';
 import type {Offer} from '../../types';
 
+enum DefaultImageSize {
+  Width = 260,
+  Height = 200,
+}
+
+enum FavoriteImageSize {
+  Width = 150,
+  Height = 100,
+}
+
 type PlaceCardProps = {
+  type: OfferCardType;
   offer: Offer;
-  onMouseMove: (id: number) => void;
+  onMouseMove?: (id: number) => void;
 }
 
 function OfferCard(props: PlaceCardProps): JSX.Element {
-  const {offer, onMouseMove} = props;
-  const {rating, id, isPremium, previewImage, price, isFavorite, title, type} = offer;
-  const ratingValue: string = getRatingValue(rating);
+  const {type, offer, onMouseMove} = props;
+  const ratingValue: string = getRatingValue(offer.rating);
 
-  const bookmarkButtonClassNames = classNames({
-    'place-card__bookmark-button': true,
-    'place-card__bookmark-button--active': isFavorite,
-    'button': true,
-  });
   const offerUrl: LocationDescriptor<Offer> = {
-    pathname: getOfferUrl(id),
+    pathname: getOfferUrl(offer.id),
     state: offer,
   };
 
-  const handleMouseMove = (): void => onMouseMove(offer.id);
+  const handleMouseMove = (): void => {
+    if (onMouseMove) {
+      onMouseMove(offer.id);
+    }
+  };
 
   return (
-    <article className="cities__place-card place-card" onMouseMove={handleMouseMove}>
-      {isPremium && (
+    <article
+      className={getClassNames([
+        type === OfferCardType.Cities ? `${type}__place-card` : `${type}__card`,
+        'place-card',
+      ])}
+      onMouseMove={handleMouseMove}
+    >
+      {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div
+        className={getClassNames([
+          `${type}__image-wrapper`,
+          'place-card__image-wrapper',
+        ])}
+      >
         <Link to={offerUrl}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="" />
+          <img
+            className="place-card__image"
+            src={offer.previewImage}
+            width={type === OfferCardType.Favorites ? FavoriteImageSize.Width : DefaultImageSize.Width}
+            height={type === OfferCardType.Favorites ? FavoriteImageSize.Height : DefaultImageSize.Height}
+            alt=""
+          />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div
+        className={getClassNames([
+          `${type}__card-info`,
+          'place-card__info',
+        ])}
+      >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&nbsp;&#47;&nbsp;night</span>
           </div>
-          <button className={bookmarkButtonClassNames} type="button">
+          <button
+            className={getClassNames(
+              'place-card__bookmark-button',
+              {'place-card__bookmark-button--active': offer.isFavorite},
+              'button',
+            )}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -58,9 +96,9 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={offerUrl}>{title}</Link>
+          <Link to={offerUrl}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );
