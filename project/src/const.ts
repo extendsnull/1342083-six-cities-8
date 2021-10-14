@@ -1,3 +1,4 @@
+const RANDOM_ID_LENGTH = 6;
 const RATING_MAX_VALUE = 5;
 
 enum AppRoute {
@@ -18,9 +19,17 @@ enum OfferType {
   Private = 'Private room',
 }
 
+enum OfferCardType {
+  Cities = 'cities',
+  Favorites = 'favorites',
+  Near = 'near-places',
+}
+
 export {
+  RANDOM_ID_LENGTH,
   RATING_MAX_VALUE,
   AppRoute,
   AuthorizationStatus,
-  OfferType
+  OfferType,
+  OfferCardType
 };
