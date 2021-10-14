@@ -10,9 +10,9 @@ type PlacesListProps = {
 function PlacesList(props: PlacesListProps): JSX.Element {
   const {offers} = props;
   // eslint-disable-next-line
-  const [activePlace, setActivePlace] = useState(offers[0].id);
+  const [activePlace, setActivePlace] = useState<Offer | null>(null);
 
-  const handlePlaceCardMouseMove = (id: number): void => setActivePlace(id);
+  const handlePlaceCardMouseMove = (offer: Offer): void => setActivePlace(offer);
 
   return (
     <div className="cities__places-list places__list tabs__content">

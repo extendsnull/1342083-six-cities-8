@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import {getClassNames} from '../../utils';
 
 const CITIES = [
@@ -25,7 +26,7 @@ function Tabs(): JSX.Element {
                   'tabs__item',
                   {'tabs__item--active': city === ACTIVE_CITY},
                 ])}
-                to="/"
+                to={AppRoute.Main}
               >
                 <span>{city}</span>
               </Link>

@@ -17,7 +17,7 @@ enum FavoriteImageSize {
 type PlaceCardProps = {
   type: OfferCardType;
   offer: Offer;
-  onMouseMove?: (id: number) => void;
+  onMouseMove?: (offer: Offer) => void;
 }
 
 function OfferCard(props: PlaceCardProps): JSX.Element {
@@ -31,7 +31,7 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
 
   const handleMouseMove = (): void => {
     if (onMouseMove) {
-      onMouseMove(offer.id);
+      onMouseMove(offer);
     }
   };
 

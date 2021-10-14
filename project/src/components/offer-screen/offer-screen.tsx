@@ -5,20 +5,19 @@ import ReviewForm from '../review-form/review-form';
 import OfferCard from '../offer-card/offer-card';
 import {OfferCardType} from '../../const';
 import {getClassNames, getRandomId, getRatingValue} from '../../utils';
-import type {Offer} from '../../types';
-
-import offers from '../../mocks/offers';
-import comments from '../../mocks/comments';
+import type {Offer, Comment} from '../../types';
 
 const MAX_IMAGES_COUNT = 6;
 const MAX_NEAR_OFFERS_COUNT = 3;
 
 type OfferScreenProps = {
+  offers: Offer[];
+  comments: Comment[];
   onReviewFormSubmit: () => void;
 }
 
 function OfferScreen(props: OfferScreenProps): JSX.Element {
-  const {onReviewFormSubmit} = props;
+  const {offers, comments, onReviewFormSubmit} = props;
   const history = useHistory<Offer>();
   const {rating, isFavorite, images, isPremium, title, price, type, maxAdults, goods, host, description} = history.location.state;
   const ratingValue: string = getRatingValue(rating);

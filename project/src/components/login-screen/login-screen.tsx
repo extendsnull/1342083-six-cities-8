@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import Header from '../header/header';
+import {AppRoute} from '../../const';
 
 function LoginScreen(): JSX.Element {
   return (
@@ -26,7 +27,7 @@ function LoginScreen(): JSX.Element {
             <div className="locations__item">
               <Link
                 className="locations__item-link"
-                to="/"
+                to={AppRoute.Main}
               >
                 <span>Amsterdam</span>
               </Link>
