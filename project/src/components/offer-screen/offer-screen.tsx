@@ -1,11 +1,10 @@
-import classNames from 'classnames';
 import {useHistory} from 'react-router';
 import Header from '../header/header';
 import Review from '../review/review';
 import ReviewForm from '../review-form/review-form';
 import OfferCard from '../offer-card/offer-card';
 import {OfferCardType} from '../../const';
-import {getRandomId, getRatingValue} from '../../utils';
+import {getClassNames, getRandomId, getRatingValue} from '../../utils';
 import type {Offer} from '../../types';
 
 import offers from '../../mocks/offers';
@@ -14,21 +13,15 @@ import comments from '../../mocks/comments';
 const MAX_IMAGES_COUNT = 6;
 const MAX_NEAR_OFFERS_COUNT = 3;
 
-function OfferScreen(): JSX.Element {
+type OfferScreenProps = {
+  onReviewFormSubmit: () => void;
+}
+
+function OfferScreen(props: OfferScreenProps): JSX.Element {
+  const {onReviewFormSubmit} = props;
   const history = useHistory<Offer>();
   const {rating, isFavorite, images, isPremium, title, price, type, maxAdults, goods, host, description} = history.location.state;
   const ratingValue: string = getRatingValue(rating);
-
-  const bookmarkButtonClassNames = classNames({
-    'property__bookmark-button': true,
-    'property__bookmark-button--active': isFavorite,
-    'button': true,
-  });
-  const avatarClassNames = classNames({
-    'property__avatar-wrapper': true,
-    'property__avatar-wrapper--pro': host.isPro,
-    'user__avatar-wrapper': true,
-  });
 
   return (
     <div className="page">
@@ -56,7 +49,14 @@ function OfferScreen(): JSX.Element {
               )}
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
-                <button className={bookmarkButtonClassNames} type="button">
+                <button
+                  className={getClassNames([
+                    'property__bookmark-button',
+                    {'property__bookmark-button--active': isFavorite},
+                    'button',
+                  ])}
+                  type="button"
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -98,7 +98,13 @@ function OfferScreen(): JSX.Element {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className={avatarClassNames}>
+                  <div
+                    className={getClassNames([
+                      'property__avatar-wrapper',
+                      {'property__avatar-wrapper--pro': host.isPro},
+                      'user__avatar-wrapper',
+                    ])}
+                  >
                     <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
@@ -129,7 +135,7 @@ function OfferScreen(): JSX.Element {
                       />
                     ))}
                   </ul>
-                  <ReviewForm />
+                  <ReviewForm onReviewFormSubmit={onReviewFormSubmit} />
                 </section>
               )}
             </div>

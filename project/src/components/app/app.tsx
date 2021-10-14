@@ -32,7 +32,11 @@ function App(props: AppProps): JSX.Element {
           <FavoritesScreen offers={offers} />
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
-          <OfferScreen />
+          <OfferScreen
+            onReviewFormSubmit={() => {
+              throw new Error('Function \'onReviewFormSubmit\' isn\'t implemented.');
+            }}
+          />
         </Route>
         <Route>
           <NotFoundScreen />
