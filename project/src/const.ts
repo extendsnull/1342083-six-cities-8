@@ -28,12 +28,12 @@ enum OfferCardType {
   Near = 'near-places',
 }
 
-const humanizedOfferTypeMap = new Map([
-  [OfferType.Apartament, 'Apartment'],
-  [OfferType.Private, 'Private Room'],
-  [OfferType.House, 'House'],
-  [OfferType.Hotel, 'Hotel'],
-]);
+const humanizedOfferTypeMap = {
+  [OfferType.Apartament]: 'Apartment',
+  [OfferType.Private]: 'Private Room',
+  [OfferType.House]: 'House',
+  [OfferType.Hotel]: 'Hotel',
+};
 
 export {
   RANDOM_ID_LENGTH,

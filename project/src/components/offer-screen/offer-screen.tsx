@@ -82,7 +82,7 @@ function OfferScreen(props: OfferScreenProps): JSX.Element {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {humanizedOfferTypeMap.get(currentOffer.type)}
+                  {humanizedOfferTypeMap[currentOffer.type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {currentOffer.maxAdults} Bedrooms

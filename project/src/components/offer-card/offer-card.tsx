@@ -98,7 +98,7 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={offerUrl}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{humanizedOfferTypeMap.get(offer.type)}</p>
+        <p className="place-card__type">{humanizedOfferTypeMap[offer.type]}</p>
       </div>
     </article>
   );
