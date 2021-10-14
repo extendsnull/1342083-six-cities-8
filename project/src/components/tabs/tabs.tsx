@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import {Link} from 'react-router-dom';
+import {getClassNames} from '../../utils';
 
 const CITIES = [
   'Paris',
@@ -17,24 +17,20 @@ function Tabs(): JSX.Element {
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {CITIES.map((city) => {
-            const linkClassNames: string = classNames({
-              'locations__item-link': true,
-              'tabs__item': true,
-              'tabs__item--active': city === ACTIVE_CITY,
-            });
-
-            return (
-              <li className="locations__item" key={city}>
-                <Link
-                  className={linkClassNames}
-                  to="/"
-                >
-                  <span>{city}</span>
-                </Link>
-              </li>
-            );
-          })}
+          {CITIES.map((city) => (
+            <li className="locations__item" key={city}>
+              <Link
+                className={getClassNames([
+                  'locations__item-link',
+                  'tabs__item',
+                  {'tabs__item--active': city === ACTIVE_CITY},
+                ])}
+                to="/"
+              >
+                <span>{city}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
     </div>
