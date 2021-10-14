@@ -1,4 +1,4 @@
-import {getRatingValue} from '../../utils';
+import {humanizeDate, getRatingValue} from '../../utils';
 import type {Comment} from '../../types';
 
 type CommentProps = {
@@ -28,7 +28,7 @@ function Review(props: CommentProps): JSX.Element {
         <p className="reviews__text">
           {comment.comment}
         </p>
-        <time className="reviews__time" dateTime={comment.date}>{comment.date}</time>
+        <time className="reviews__time" dateTime={comment.date}>{humanizeDate(comment.date)}</time>
       </div>
     </li>
   );
