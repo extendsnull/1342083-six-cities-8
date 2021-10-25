@@ -1,5 +1,5 @@
 import {OfferType} from '../const';
-import type {Offer} from '../types';
+import type {MapLocation, Offer, User} from '../types';
 
 const mockDescription = 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.';
 const mockGoods = [
@@ -15,7 +15,16 @@ const mockGoods = [
   'Fridge',
 ];
 
-const mockHost = {
+const mockCity = {
+  location: {
+    lat: 52.37295592416151,
+    lng: 4.899730094382143,
+    zoom: 10,
+  } as MapLocation,
+  name: 'Amsterdam',
+};
+
+const mockHost: User = {
   avatarUrl: 'img/avatar-angelina.jpg',
   id: 3,
   isPro: true,
@@ -24,14 +33,7 @@ const mockHost = {
 
 const offers: Offer[] = [
   {
-    city: {
-      location: {
-        latitude: 52.3909553943508,
-        longitude: 4.85309666406198,
-        zoom: 10,
-      },
-      name: 'Paris',
-    },
+    city: {...mockCity},
     description: mockDescription,
     goods: [...mockGoods],
     host: {...mockHost},
@@ -47,8 +49,8 @@ const offers: Offer[] = [
     isFavorite: true,
     isPremium: true,
     location: {
-      latitude: 52.369553943508,
-      longitude: 4.85309666406198,
+      lat: 52.3909553943508,
+      lng: 4.85309666406198,
       zoom: 10,
     },
     maxAdults: 4,
@@ -61,11 +63,11 @@ const offers: Offer[] = [
   {
     city: {
       location: {
-        latitude: 52.3909553943508,
-        longitude: 4.929309666406198,
+        lat: 52.3909553943508,
+        lng: 4.929309666406198,
         zoom: 10,
       },
-      name: 'Cologne',
+      name: 'Amsterdam',
     },
     description: mockDescription,
     goods: [...mockGoods],
@@ -80,8 +82,8 @@ const offers: Offer[] = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 52.370216,
-      longitude: 4.895168,
+      lat: 52.369553943508,
+      lng: 4.85309666406198,
       zoom: 10,
     },
     maxAdults: 4,
@@ -92,14 +94,7 @@ const offers: Offer[] = [
     type: OfferType.Private,
   },
   {
-    city: {
-      location: {
-        latitude: 52.3909553943508,
-        longitude: 4.85309666406198,
-        zoom: 10,
-      },
-      name: 'Brussels',
-    },
+    city: {...mockCity},
     description: mockDescription,
     goods: [...mockGoods],
     host: {...mockHost},
@@ -110,8 +105,8 @@ const offers: Offer[] = [
     isFavorite: false,
     isPremium: false,
     location: {
-      latitude: 52.369553943508,
-      longitude: 4.85309666406198,
+      lat: 52.3909553943508,
+      lng: 4.929309666406198,
       zoom: 10,
     },
     maxAdults: 4,
@@ -124,11 +119,11 @@ const offers: Offer[] = [
   {
     city: {
       location: {
-        latitude: 52.3909553943508,
-        longitude: 4.929309666406198,
+        lat: 52.3909553943508,
+        lng: 4.929309666406198,
         zoom: 10,
       },
-      name: 'Paris',
+      name: 'Amsterdam',
     },
     description: mockDescription,
     goods: [...mockGoods],
@@ -145,8 +140,8 @@ const offers: Offer[] = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
+      lat: 52.3809553943508,
+      lng: 4.939309666406198,
       zoom: 10,
     },
     maxAdults: 4,
@@ -155,38 +150,6 @@ const offers: Offer[] = [
     rating: 5,
     title: 'Nice, cozy, warm big bed apartment',
     type: OfferType.Apartament,
-  },
-  {
-    city: {
-      location: {
-        latitude: 52.3909553943508,
-        longitude: 4.85309666406198,
-        zoom: 10,
-      },
-      name: 'Paris',
-    },
-    description: mockDescription,
-    goods: [...mockGoods],
-    host: {...mockHost},
-    id: 4,
-    images: [
-      'img/room.jpg',
-      'img/studio-01.jpg',
-      'img/apartment-01.jpg',
-    ],
-    isFavorite: false,
-    isPremium: false,
-    location: {
-      latitude: 52.3909553943508,
-      longitude: 4.929309666406198,
-      zoom: 10,
-    },
-    maxAdults: 4,
-    previewImage: 'img/room.jpg',
-    price: 120,
-    rating: 3.9,
-    title: 'Wood and stone place',
-    type: OfferType.Private,
   },
 ];
 

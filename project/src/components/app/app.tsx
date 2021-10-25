@@ -6,21 +6,22 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import OfferScreen from '../offer-screen/offer-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import type {Offer, Comment} from '../../types';
+import type {Offer, Comment, MapLocation} from '../../types';
 
 type AppProps = {
+  city: MapLocation,
   offers: Offer[];
   comments: Comment[];
 }
 
 function App(props: AppProps): JSX.Element {
-  const {offers, comments} = props;
+  const {city, offers, comments} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainScreen offers={offers} />
+          <MainScreen city={city} offers={offers} />
         </Route>
         <Route path={AppRoute.Login} exact>
           <LoginScreen />

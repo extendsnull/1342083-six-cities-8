@@ -17,11 +17,11 @@ enum FavoriteImageSize {
 type PlaceCardProps = {
   type: OfferCardType;
   offer: Offer;
-  onMouseMove?: (offer: Offer) => void;
+  onMouseOver?: (offer: Offer) => void;
 }
 
 function OfferCard(props: PlaceCardProps): JSX.Element {
-  const {type, offer, onMouseMove} = props;
+  const {type, offer, onMouseOver} = props;
   const ratingValue: string = getRatingValue(offer.rating);
 
   const offerUrl: LocationDescriptor<Offer> = {
@@ -29,9 +29,9 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
     state: offer,
   };
 
-  const handleMouseMove = (): void => {
-    if (onMouseMove) {
-      onMouseMove(offer);
+  const handleMouseOver = (): void => {
+    if (onMouseOver) {
+      onMouseOver(offer);
     }
   };
 
@@ -41,7 +41,7 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
         type === OfferCardType.Cities ? `${type}__place-card` : `${type}__card`,
         'place-card',
       ])}
-      onMouseMove={handleMouseMove}
+      onMouseOver={handleMouseOver}
     >
       {offer.isPremium && (
         <div className="place-card__mark">

@@ -1,3 +1,4 @@
+const LAYER_URL = 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png';
 const RANDOM_ID_LENGTH = 6;
 const RATING_MAX_VALUE = 5;
 
@@ -28,6 +29,16 @@ enum OfferCardType {
   Near = 'near-places',
 }
 
+enum MapIcon {
+  Default = 'img/pin.svg',
+  Active = 'img/pin-active.svg',
+}
+
+enum MapIconSize {
+  Width = 27,
+  Height = 39,
+}
+
 const humanizedOfferTypeMap = {
   [OfferType.Apartament]: 'Apartment',
   [OfferType.Private]: 'Private Room',
@@ -36,11 +47,14 @@ const humanizedOfferTypeMap = {
 };
 
 export {
+  LAYER_URL,
   RANDOM_ID_LENGTH,
   RATING_MAX_VALUE,
   humanizedOfferTypeMap,
   AppRoute,
   AuthorizationStatus,
   OfferType,
-  OfferCardType
+  OfferCardType,
+  MapIcon,
+  MapIconSize
 };
