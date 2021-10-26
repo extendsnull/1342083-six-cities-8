@@ -1,14 +1,20 @@
+import { useState } from 'react';
 import Header from '../header/header';
 import Tabs from '../tabs/tabs';
+import Map from '../map/map';
 import OfferList from '../offer-list/offer-list';
-import type {Offer} from '../../types';
+import type {MapLocation, Offer} from '../../types';
 
 type MainScreenProps = {
+  city: MapLocation;
   offers: Offer[];
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
-  const {offers} = props;
+  const {city, offers} = props;
+
+  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+
   return (
     <div className="page page--gray page--main">
       <Header isAuthorized />
@@ -36,10 +42,16 @@ function MainScreen(props: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferList offers={offers}></OfferList>
+              <OfferList offers={offers} setActiveOffer={setActiveOffer} ></OfferList>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map
+                  city={city}
+                  offers={offers}
+                  activeOffer={activeOffer}
+                />
+              </section>
             </div>
           </div>
         </div>

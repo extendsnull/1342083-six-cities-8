@@ -12,15 +12,17 @@ type OfferGroups = {
 }
 
 const groupFavoriteOffers = (offers: Offer[]): OfferGroups => offers
-  .filter((offer: Offer) => offer.isFavorite)
   .reduce((acc: OfferGroups, offer: Offer) => {
     const {name} = offer.city;
 
-    if (!acc[name]) {
+    if (offer.isFavorite && !acc[name]) {
       acc[name] = [];
     }
 
-    acc[name].push(offer);
+    if (offer.isFavorite) {
+      acc[name].push(offer);
+    }
+
     return acc;
   }, {});
 

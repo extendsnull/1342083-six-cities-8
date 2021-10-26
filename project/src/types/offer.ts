@@ -1,21 +1,21 @@
 import {OfferType} from '../const';
 import type User from './user';
-import type Location from './location';
+import type MapLocation from './map-location';
 
 type Offer = {
   city: {
-    location: Location,
-    name: string,
+    location: MapLocation;
+    name: string;
   };
-  description: string,
-  goods: string[],
-  host: User,
+  description: string;
+  goods: string[];
+  host: User;
   id: number;
   images: string[];
   isFavorite: boolean;
   isPremium: boolean;
-  location: Location,
-  maxAdults: number,
+  location: MapLocation;
+  maxAdults: number;
   previewImage: string;
   price: number;
   rating: number;

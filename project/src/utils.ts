@@ -1,5 +1,5 @@
 import classNames, {Argument} from 'classnames';
-import {nanoid} from 'nanoid';
+import {nanoid} from '@reduxjs/toolkit';
 import {generatePath} from 'react-router';
 import {RANDOM_ID_LENGTH, RATING_MAX_VALUE, AppRoute} from './const';
 

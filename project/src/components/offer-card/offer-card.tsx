@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {OfferCardType} from '../../const';
+import {humanizedOfferTypeMap, OfferCardType} from '../../const';
 import {getClassNames, getOfferUrl, getRatingValue} from '../../utils';
 import type {LocationDescriptor} from 'history';
 import type {Offer} from '../../types';
@@ -17,11 +17,11 @@ enum FavoriteImageSize {
 type PlaceCardProps = {
   type: OfferCardType;
   offer: Offer;
-  onMouseMove?: (id: number) => void;
+  onMouseOver?: (offer: Offer) => void;
 }
 
 function OfferCard(props: PlaceCardProps): JSX.Element {
-  const {type, offer, onMouseMove} = props;
+  const {type, offer, onMouseOver} = props;
   const ratingValue: string = getRatingValue(offer.rating);
 
   const offerUrl: LocationDescriptor<Offer> = {
@@ -29,9 +29,9 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
     state: offer,
   };
 
-  const handleMouseMove = (): void => {
-    if (onMouseMove) {
-      onMouseMove(offer.id);
+  const handleMouseOver = (): void => {
+    if (onMouseOver) {
+      onMouseOver(offer);
     }
   };
 
@@ -41,7 +41,7 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
         type === OfferCardType.Cities ? `${type}__place-card` : `${type}__card`,
         'place-card',
       ])}
-      onMouseMove={handleMouseMove}
+      onMouseOver={handleMouseOver}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
@@ -98,7 +98,7 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={offerUrl}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{humanizedOfferTypeMap[offer.type]}</p>
       </div>
     </article>
   );
