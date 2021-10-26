@@ -4,14 +4,14 @@ import type {Offer} from '../../types';
 
 type PlacesListProps = {
   offers: Offer[];
-  setActiveOffer: (offer: Offer) => void;
+  onActiveOfferSelect: (offer: Offer) => void;
 }
 
 function PlacesList(props: PlacesListProps): JSX.Element {
-  const {offers, setActiveOffer} = props;
+  const {offers, onActiveOfferSelect} = props;
 
-  const mouseOverHandler = (offer: Offer): void => {
-    setActiveOffer(offer);
+  const handleMouseOver = (offer: Offer): void => {
+    onActiveOfferSelect(offer);
   };
 
   return (
@@ -21,7 +21,7 @@ function PlacesList(props: PlacesListProps): JSX.Element {
           key={offer.id}
           type={OfferCardType.Cities}
           offer={offer}
-          onMouseOver={mouseOverHandler}
+          onMouseOver={handleMouseOver}
         />
       ))}
     </div>

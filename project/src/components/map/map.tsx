@@ -8,7 +8,7 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   city: MapLocation;
   offers: Offer[];
-  activeOffer: Offer | undefined;
+  activeOffer: Offer | null;
 }
 
 const defaultIcon = new Icon({
@@ -31,7 +31,7 @@ function Map(props: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      for (const offer of offers) {
+      offers.forEach((offer) => {
         const isActive = activeOffer?.id === offer.id;
 
         const marker = new Marker({
@@ -41,7 +41,7 @@ function Map(props: MapProps): JSX.Element {
 
         marker.setIcon(isActive ? activeIcon : defaultIcon);
         marker.addTo(map);
-      }
+      });
     }
 
   }, [map, offers, activeOffer]);

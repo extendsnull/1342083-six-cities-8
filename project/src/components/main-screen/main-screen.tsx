@@ -13,7 +13,7 @@ type MainScreenProps = {
 function MainScreen(props: MainScreenProps): JSX.Element {
   const {city, offers} = props;
 
-  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+  const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
 
   return (
     <div className="page page--gray page--main">
@@ -42,7 +42,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferList offers={offers} setActiveOffer={setActiveOffer} ></OfferList>
+              <OfferList offers={offers} onActiveOfferSelect={setActiveOffer}></OfferList>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
