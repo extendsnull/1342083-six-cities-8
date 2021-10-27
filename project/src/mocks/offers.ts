@@ -1,5 +1,5 @@
-import {OfferType} from '../const';
-import type {MapLocation, Offer, User} from '../types';
+import {CityName, OfferType} from '../const';
+import type {Offer, User} from '../types';
 
 const mockDescription = 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.';
 const mockGoods = [
@@ -17,11 +17,11 @@ const mockGoods = [
 
 const mockCity = {
   location: {
-    lat: 52.37295592416151,
-    lng: 4.899730094382143,
-    zoom: 10,
-  } as MapLocation,
-  name: 'Amsterdam',
+    lat: 52.37454,
+    lng: 4.897976,
+    zoom: 13,
+  },
+  name: CityName.Amsterdam,
 };
 
 const mockHost: User = {
@@ -61,14 +61,7 @@ const offers: Offer[] = [
     type: OfferType.Apartament,
   },
   {
-    city: {
-      location: {
-        lat: 52.3909553943508,
-        lng: 4.929309666406198,
-        zoom: 10,
-      },
-      name: 'Amsterdam',
-    },
+    city: {...mockCity},
     description: mockDescription,
     goods: [...mockGoods],
     host: {...mockHost},
@@ -117,14 +110,7 @@ const offers: Offer[] = [
     type: OfferType.Apartament,
   },
   {
-    city: {
-      location: {
-        lat: 52.3909553943508,
-        lng: 4.929309666406198,
-        zoom: 10,
-      },
-      name: 'Amsterdam',
-    },
+    city: {...mockCity},
     description: mockDescription,
     goods: [...mockGoods],
     host: {...mockHost},

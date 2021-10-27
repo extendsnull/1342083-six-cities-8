@@ -39,6 +39,23 @@ enum MapIconSize {
   Height = 39,
 }
 
+enum CityName {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
+
+const INITIAL_CITY = CityName.Paris;
+
+enum ActionType {
+  SetActiveCity = 'app/setActiveCity',
+  SetCities = 'app/setCities',
+  SetOffers = 'app/setOffers',
+}
+
 const humanizedOfferTypeMap = {
   [OfferType.Apartament]: 'Apartment',
   [OfferType.Private]: 'Private Room',
@@ -50,11 +67,14 @@ export {
   LAYER_URL,
   RANDOM_ID_LENGTH,
   RATING_MAX_VALUE,
-  humanizedOfferTypeMap,
+  INITIAL_CITY,
   AppRoute,
   AuthorizationStatus,
   OfferType,
   OfferCardType,
   MapIcon,
-  MapIconSize
+  MapIconSize,
+  CityName,
+  ActionType,
+  humanizedOfferTypeMap
 };

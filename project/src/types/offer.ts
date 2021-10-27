@@ -1,12 +1,10 @@
 import {OfferType} from '../const';
+import City from './city';
 import type User from './user';
 import type MapLocation from './map-location';
 
 type Offer = {
-  city: {
-    location: MapLocation;
-    name: string;
-  };
+  city: City;
   description: string;
   goods: string[];
   host: User;

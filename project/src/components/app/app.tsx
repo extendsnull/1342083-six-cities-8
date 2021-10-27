@@ -6,22 +6,20 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import OfferScreen from '../offer-screen/offer-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import type {Offer, Comment, MapLocation} from '../../types';
+import type {Comment} from '../../types';
 
 type AppProps = {
-  city: MapLocation,
-  offers: Offer[];
   comments: Comment[];
 }
 
 function App(props: AppProps): JSX.Element {
-  const {city, offers, comments} = props;
+  const {comments} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainScreen city={city} offers={offers} />
+          <MainScreen />
         </Route>
         <Route path={AppRoute.Login} exact>
           <LoginScreen />
@@ -31,11 +29,10 @@ function App(props: AppProps): JSX.Element {
           path={AppRoute.Favorites}
           exact
         >
-          <FavoritesScreen offers={offers} />
+          <FavoritesScreen />
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
           <OfferScreen
-            offers={offers}
             comments={comments}
             onReviewFormSubmit={() => {
               throw new Error('Function \'onReviewFormSubmit\' isn\'t implemented.');

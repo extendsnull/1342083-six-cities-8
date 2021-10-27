@@ -1,12 +1,11 @@
 import {useEffect, useRef} from 'react';
 import {Icon, Marker} from 'leaflet';
 import useMap from '../../hooks/use-map';
-import {MapLocation, Offer} from '../../types';
 import {MapIcon, MapIconSize} from '../../const';
+import {Offer} from '../../types';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
-  city: MapLocation;
   offers: Offer[];
   activeOffer: Offer | null;
 }
@@ -24,7 +23,8 @@ const activeIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const {city, offers, activeOffer} = props;
+  const {offers, activeOffer} = props;
+  const city = offers[0].city;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
