@@ -48,8 +48,6 @@ enum CityName {
   Dusseldorf = 'Dusseldorf',
 }
 
-const INITIAL_CITY = CityName.Paris;
-
 enum ActionType {
   SetActiveCity = 'app/setActiveCity',
   SetCities = 'app/setCities',
@@ -67,7 +65,6 @@ export {
   LAYER_URL,
   RANDOM_ID_LENGTH,
   RATING_MAX_VALUE,
-  INITIAL_CITY,
   AppRoute,
   AuthorizationStatus,
   OfferType,

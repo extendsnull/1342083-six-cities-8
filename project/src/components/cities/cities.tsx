@@ -18,12 +18,13 @@ function Cities(props: PropsFromRedux): JSX.Element {
   const {activeCity, offers} = props;
   const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
   const activeCityOffers = offers.filter((offer: Offer) => offer.city.name === activeCity);
+  const hasOffers = Boolean(activeCityOffers.length);
 
   const handleMouseOver = (offer: Offer): void => {
     setActiveOffer(offer);
   };
 
-  if (activeCityOffers.length) {
+  if (hasOffers) {
     return (
       <div className="cities">
         <div className="cities__places-container container">

@@ -1,8 +1,8 @@
-import {INITIAL_CITY, ActionType} from '../const';
+import {ActionType, CityName} from '../const';
 import type {Actions, State} from '../types';
 
 const initialState: State = {
-  activeCity: INITIAL_CITY,
+  activeCity: CityName.Paris,
   offers: [],
 };
 
