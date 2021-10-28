@@ -1,3 +1,4 @@
+import {connect, ConnectedProps} from 'react-redux';
 import {useParams} from 'react-router';
 import {Redirect} from 'react-router-dom';
 import Header from '../header/header';
@@ -6,7 +7,7 @@ import ReviewForm from '../review-form/review-form';
 import OfferCard from '../offer-card/offer-card';
 import {humanizedOfferTypeMap, AppRoute, OfferCardType} from '../../const';
 import {getClassNames, getRandomId, getRatingValue} from '../../utils';
-import type {Offer, Comment} from '../../types';
+import type {Comment, State} from '../../types';
 
 const MAX_IMAGES_COUNT = 6;
 const MAX_NEAR_OFFERS_COUNT = 3;
@@ -16,12 +17,19 @@ type History = {
 }
 
 type OfferScreenProps = {
-  offers: Offer[];
   comments: Comment[];
   onReviewFormSubmit: () => void;
 }
 
-function OfferScreen(props: OfferScreenProps): JSX.Element {
+const mapStateToProps = ({offers}: State) => ({
+  offers,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function OfferScreen(props: OfferScreenProps & PropsFromRedux): JSX.Element {
   const {offers, comments, onReviewFormSubmit} = props;
   const params = useParams<History>();
   const currentOffer = offers.find((offer) => offer.id === parseInt(params.id, 10));
@@ -173,4 +181,5 @@ function OfferScreen(props: OfferScreenProps): JSX.Element {
   );
 }
 
-export default OfferScreen;
+export {OfferScreen};
+export default connector(OfferScreen);

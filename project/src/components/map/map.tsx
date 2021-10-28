@@ -1,14 +1,13 @@
 import {useEffect, useRef} from 'react';
 import {Icon, Marker} from 'leaflet';
 import useMap from '../../hooks/use-map';
-import {MapLocation, Offer} from '../../types';
 import {MapIcon, MapIconSize} from '../../const';
+import {Offer} from '../../types';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
-  city: MapLocation;
   offers: Offer[];
-  activeOffer: Offer | undefined;
+  activeOffer: Offer | null;
 }
 
 const defaultIcon = new Icon({
@@ -24,14 +23,15 @@ const activeIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const {city, offers, activeOffer} = props;
+  const {offers, activeOffer} = props;
+  const city = offers[0].city;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
-      for (const offer of offers) {
+      offers.forEach((offer) => {
         const isActive = activeOffer?.id === offer.id;
 
         const marker = new Marker({
@@ -41,7 +41,7 @@ function Map(props: MapProps): JSX.Element {
 
         marker.setIcon(isActive ? activeIcon : defaultIcon);
         marker.addTo(map);
-      }
+      });
     }
 
   }, [map, offers, activeOffer]);
