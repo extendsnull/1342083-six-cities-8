@@ -1,10 +1,15 @@
-import axios, {AxiosInstance, AxiosResponse, AxiosError} from 'axios';
+import axios, {AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig} from 'axios';
+import {getToket} from './token';
 
 const URL = 'https://8.react.pages.academy/six-cities';
 const TIMEOUT = 1000;
 
 enum HttpCode {
   Unauthorized = 401,
+}
+
+enum Header {
+  XToken = 'X-Token',
 }
 
 type UnauthorizedCallback = () => void;
@@ -25,6 +30,18 @@ const createApi = (onUnauthorized: UnauthorizedCallback): AxiosInstance => {
       }
 
       return Promise.reject(error);
+    },
+  );
+
+  api.interceptors.request.use(
+    (config: AxiosRequestConfig) => {
+      const token = getToket();
+
+      if (token) {
+        config.headers[Header.XToken] = token;
+      }
+
+      return config;
     },
   );
 
