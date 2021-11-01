@@ -1,5 +1,5 @@
 import {MouseEvent} from 'react';
-import {Dispatch} from 'redux';
+import {bindActionCreators, Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {setActiveCity} from '../../store/action';
 import {AppRoute, CityName} from '../../const';
@@ -10,11 +10,15 @@ const mapStateToProps = ({activeCity}: State) => ({
   activeCity,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onSetActiveCity(city: CityName) {
-    dispatch(setActiveCity(city));
-  },
-});
+// const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+//   onSetActiveCity(city: CityName) {
+//     dispatch(setActiveCity(city));
+//   },
+// });
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => bindActionCreators({
+  onSetActiveCity: setActiveCity,
+}, dispatch);
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
