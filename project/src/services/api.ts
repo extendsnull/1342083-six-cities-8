@@ -2,7 +2,7 @@ import axios, {AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig} fro
 import {getToket} from './token';
 
 const URL = 'https://8.react.pages.academy/six-cities';
-const TIMEOUT = 1000;
+const TIMEOUT = 5000;
 
 enum HttpCode {
   Unauthorized = 401,
