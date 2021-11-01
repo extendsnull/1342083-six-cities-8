@@ -1,14 +1,18 @@
 import {ActionType, CityName} from '../const';
 import type {Offer} from '../types';
 
-const setActiveCity = (city: CityName) => ({
+const setActiveCity = (activeCity: CityName) => ({
   type: ActionType.SetActiveCity,
-  payload: city,
+  payload: {
+    activeCity,
+  },
 } as const);
 
 const setOffers = (offers: Offer[]) => ({
   type: ActionType.SetOffers,
-  payload: offers,
+  payload: {
+    offers,
+  },
 } as const);
 
 export {

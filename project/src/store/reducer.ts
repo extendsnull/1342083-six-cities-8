@@ -11,13 +11,13 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.SetActiveCity: {
       return {
         ...state,
-        activeCity: action.payload,
+        activeCity: action.payload.activeCity,
       };
     }
     case ActionType.SetOffers: {
       return {
         ...state,
-        offers: action.payload,
+        offers: action.payload.offers,
       };
     }
     default: {

@@ -49,9 +49,9 @@ enum CityName {
 }
 
 enum ActionType {
-  SetActiveCity = 'app/setActiveCity',
-  SetCities = 'app/setCities',
-  SetOffers = 'app/setOffers',
+  SetActiveCity = 'data/setActiveCity',
+  SetCities = 'data/setCities',
+  SetOffers = 'data/setOffers',
 }
 
 const humanizedOfferTypeMap = {
