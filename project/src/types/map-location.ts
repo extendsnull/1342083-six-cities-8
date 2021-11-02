@@ -1,7 +1,9 @@
+import {MapLocationKey} from '../const';
+
 type MapLocation = {
-  lat: number;
-  lng: number;
-  zoom: number;
+  [MapLocationKey.Latitude]: number;
+  [MapLocationKey.Longitude]: number;
+  [MapLocationKey.Zoom]: number;
 }
 
 export default MapLocation;

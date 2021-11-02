@@ -1,24 +1,24 @@
-import {OfferType} from '../const';
-import City from './city';
+import {OfferKey, OfferType} from '../const';
+import {City} from './city';
 import type User from './user';
 import type MapLocation from './map-location';
 
 type Offer = {
-  city: City;
-  description: string;
-  goods: string[];
-  host: User;
-  id: number;
-  images: string[];
-  isFavorite: boolean;
-  isPremium: boolean;
-  location: MapLocation;
-  maxAdults: number;
-  previewImage: string;
-  price: number;
-  rating: number;
-  title: string;
-  type: OfferType;
+  [OfferKey.City]: City;
+  [OfferKey.Description]: string;
+  [OfferKey.Goods]: string[];
+  [OfferKey.Host]: User;
+  [OfferKey.Id]: number;
+  [OfferKey.Images]: string[];
+  [OfferKey.IsFavorite]: boolean;
+  [OfferKey.IsPremium]: boolean;
+  [OfferKey.Location]: MapLocation;
+  [OfferKey.MaxAdults]: number;
+  [OfferKey.PreviewImage]: string;
+  [OfferKey.Price]: number;
+  [OfferKey.Rating]: number;
+  [OfferKey.Title]: string;
+  [OfferKey.Type]: OfferType;
 }
 
 export default Offer;

@@ -1,6 +1,5 @@
-const AUTH_TOKEN_KEY_NAME = 'extendsnull-six-cities-token';
-
-type Token = string;
+import {AUTH_TOKEN_KEY_NAME} from '../const';
+import {Token} from '../types';
 
 const getToket = (): Token => {
   const token = localStorage.getItem(AUTH_TOKEN_KEY_NAME);
