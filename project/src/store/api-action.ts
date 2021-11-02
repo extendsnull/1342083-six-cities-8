@@ -11,7 +11,7 @@ const fetchOffersAction = (): ThunkActionResult =>
     dispatch(setLoadState(true));
 
     const {data} = await api.get<RawOffer[]>(ApiRoute.Hotels);
-    const offers = data.map((rawOffer: RawOffer) => adaptOfferToClient(rawOffer));
+    const offers = data.map(adaptOfferToClient);
     const cities = getCities(offers);
 
     dispatch(setLoadState(false));
