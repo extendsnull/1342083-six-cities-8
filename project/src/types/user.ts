@@ -1,8 +1,10 @@
+import {UserKey} from '../const';
+
 type User = {
-  avatarUrl: string;
-  id: number;
-  isPro: boolean;
-  name: string;
+  [UserKey.AvatarUrl]: string;
+  [UserKey.Id]: number;
+  [UserKey.IsPro]: boolean;
+  [UserKey.Name]: string;
 }
 
 export default User;

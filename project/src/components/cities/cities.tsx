@@ -1,13 +1,15 @@
 import {useState} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
+import Spinner from '../spinner/spinner';
 import OfferCard from '../offer-card/offer-card';
 import Map from '../map/map';
-import {OfferCardType} from '../../const';
+import {CityKey, OfferCardType, OfferKey} from '../../const';
 import type {Offer, State} from '../../types';
 
-const mapStateToProps = ({activeCity, offers}: State) => ({
+const mapStateToProps = ({activeCity, offers, isLoad}: State) => ({
   activeCity,
   offers,
+  isLoad,
 });
 
 const connector = connect(mapStateToProps);
@@ -15,15 +17,17 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Cities(props: PropsFromRedux): JSX.Element {
-  const {activeCity, offers} = props;
+  const {activeCity, offers, isLoad} = props;
   const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
   const activeCityOffers = offers.filter((offer: Offer) => offer.city.name === activeCity);
+  const hasOffers = Boolean(activeCityOffers.length);
 
   const handleMouseOver = (offer: Offer): void => {
     setActiveOffer(offer);
   };
 
-  if (activeCityOffers.length) {
+  if (hasOffers) {
+    const offersByCity = offers.filter((offer) => offer[OfferKey.City][CityKey.Name] === activeCity);
     return (
       <div className="cities">
         <div className="cities__places-container container">
@@ -59,11 +63,25 @@ function Cities(props: PropsFromRedux): JSX.Element {
           <div className="cities__right-section">
             <section className="cities__map map">
               <Map
-                offers={activeCityOffers}
+                offers={offersByCity}
                 activeOffer={activeOffer}
               />
             </section>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoad) {
+    return (
+      <div className="cities">
+        <div className="cities__places-container container" style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        >
+          <Spinner />
         </div>
       </div>
     );

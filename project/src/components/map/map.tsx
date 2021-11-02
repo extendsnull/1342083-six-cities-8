@@ -2,8 +2,9 @@ import {useEffect, useRef} from 'react';
 import {Icon, Marker} from 'leaflet';
 import useMap from '../../hooks/use-map';
 import {MapIcon, MapIconSize} from '../../const';
-import {Offer} from '../../types';
+import {Offer, State} from '../../types';
 import 'leaflet/dist/leaflet.css';
+import { connect, ConnectedProps } from 'react-redux';
 
 type MapProps = {
   offers: Offer[];
@@ -22,12 +23,22 @@ const activeIcon = new Icon({
   iconAnchor: [MapIconSize.Width / 2, MapIconSize.Height],
 });
 
-function Map(props: MapProps): JSX.Element {
-  const {offers, activeOffer} = props;
-  const city = offers[0].city;
+const mapStateToProps = ({activeCity, cities}: State) => ({
+  activeCity,
+  cities,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MapProps;
+
+function Map(props: ConnectedComponentProps): JSX.Element {
+  const {offers, activeOffer, activeCity, cities} = props;
+  const activeCityData = cities[activeCity];
 
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, activeCityData);
 
   useEffect(() => {
     if (map) {
@@ -49,4 +60,5 @@ function Map(props: MapProps): JSX.Element {
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }
 
-export default Map;
+export {Map};
+export default connector(Map);
