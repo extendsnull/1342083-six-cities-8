@@ -6,10 +6,10 @@ import Map from '../map/map';
 import {CityKey, OfferCardType, OfferKey} from '../../const';
 import type {Offer, State} from '../../types';
 
-const mapStateToProps = ({activeCity, offers, isLoad}: State) => ({
+const mapStateToProps = ({activeCity, offers, isDataLoaded}: State) => ({
   activeCity,
   offers,
-  isLoad,
+  isDataLoaded,
 });
 
 const connector = connect(mapStateToProps);
@@ -17,7 +17,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Cities(props: PropsFromRedux): JSX.Element {
-  const {activeCity, offers, isLoad} = props;
+  const {activeCity, offers, isDataLoaded} = props;
   const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
   const activeCityOffers = offers.filter((offer: Offer) => offer.city.name === activeCity);
   const hasOffers = Boolean(activeCityOffers.length);
@@ -73,7 +73,7 @@ function Cities(props: PropsFromRedux): JSX.Element {
     );
   }
 
-  if (isLoad) {
+  if (isDataLoaded) {
     return (
       <div className="cities">
         <div className="cities__places-container container" style={{

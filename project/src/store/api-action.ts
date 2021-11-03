@@ -1,4 +1,4 @@
-import {ThunkActionResult} from '../types/actions';
+import {ThunkActionResult} from '../types';
 import {requireAuthorization, requireLogout, setCities, setLoadState, setOffers} from './action';
 import {ApiRoute, AuthorizationStatus} from '../const';
 import {AuthInfo, RawOffer} from '../types';

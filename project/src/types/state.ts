@@ -7,7 +7,7 @@ type State = {
   offers: Offer[];
   cities: Cities;
   authorizationStatus: AuthorizationStatus,
-  isLoad: boolean;
+  isDataLoaded: boolean;
 }
 
 export default State;
