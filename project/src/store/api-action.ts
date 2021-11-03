@@ -1,10 +1,10 @@
-import {ThunkActionResult} from '../types';
+import {AuthData, ThunkActionResult} from '../types';
 import {requireAuthorization, requireLogout, setCities, setLoadState, setOffers} from './action';
 import {ApiRoute, AuthorizationStatus} from '../const';
 import {AuthInfo, RawOffer} from '../types';
 import {removeToken, setToken} from '../services/token';
 import {adaptOfferToClient} from '../services/adapter';
-import { getCities } from '../utils';
+import {getCities} from '../utils';
 
 const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
@@ -26,9 +26,12 @@ const checkAuthAction = (): ThunkActionResult =>
     });
   };
 
-const loginAction = (): ThunkActionResult =>
+const loginAction = (authData: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data: {token}} = await api.post<AuthInfo>(ApiRoute.Login);
+    const {data: {token}} = await api.post<AuthInfo>(ApiRoute.Login, {
+      email: authData.login,
+      password: authData.password,
+    });
     setToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   };
