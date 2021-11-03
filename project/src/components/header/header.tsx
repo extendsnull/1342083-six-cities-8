@@ -1,13 +1,18 @@
-import {Link} from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
 import Logo from '../logo/logo';
-import {AppRoute} from '../../const';
+import HeaderNav from '../header-nav/header-nav';
+import {State} from '../../types';
 
-type HeaderProps = {
-  isAuthorized?: boolean;
-}
+const mapStateToProps = ({authorizationStatus}: State) => ({
+  authorizationStatus,
+});
 
-function Header(props: HeaderProps): JSX.Element {
-  const {isAuthorized} = props;
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function Header(props: PropsFromRedux): JSX.Element {
+  const {authorizationStatus} = props;
 
   return (
     <header className="header">
@@ -16,34 +21,15 @@ function Header(props: HeaderProps): JSX.Element {
           <div className="header__left">
             <Logo />
           </div>
-          {isAuthorized && (
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link
-                    className="header__nav-link header__nav-link--profile"
-                    to={AppRoute.Favorites}
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link
-                    className="header__nav-link"
-                    to={AppRoute.Main}
-                  >
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          )}
+
+          <HeaderNav authorizationStatus={authorizationStatus} />
         </div>
       </div>
+
+
     </header>
   );
 }
 
-export default Header;
+export {Header};
+export default connector(Header);
