@@ -5,7 +5,7 @@ import {AppRoute} from '../../const';
 function NotFoundScreen(): JSX.Element {
   return (
     <div className="page page--gray page--main">
-      <Header />
+      <Header hasNav />
 
       <main className="page__main page__main--index page__main--index-empty">
         <h1 className="visually-hidden">404 Not Found</h1>

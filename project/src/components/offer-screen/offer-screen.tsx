@@ -43,7 +43,7 @@ function OfferScreen(props: OfferScreenProps & PropsFromRedux): JSX.Element {
 
   return (
     <div className="page">
-      <Header />
+      <Header hasNav />
 
       <main className="page__main page__main--property">
         <section className="property">

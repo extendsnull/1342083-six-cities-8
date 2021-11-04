@@ -17,7 +17,7 @@ function FavoritesScreen(props: PropsFromRedux): JSX.Element {
 
   return (
     <div className="page">
-      <Header />
+      <Header hasNav />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

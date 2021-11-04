@@ -2,11 +2,11 @@ import Logo from '../logo/logo';
 import HeaderNav from '../header-nav/header-nav';
 
 type HeaderProps = {
-  hideNav?: boolean;
+  hasNav?: boolean;
 };
 
 function Header(props: HeaderProps): JSX.Element {
-  const {hideNav} = props;
+  const {hasNav} = props;
 
   return (
     <header className="header">
@@ -16,7 +16,7 @@ function Header(props: HeaderProps): JSX.Element {
             <Logo />
           </div>
 
-          {!hideNav && <HeaderNav />}
+          {hasNav && <HeaderNav />}
         </div>
       </div>
 
