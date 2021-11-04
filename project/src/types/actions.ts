@@ -10,7 +10,7 @@ import {
   requireLogout,
   redirectToRoute
 } from '../store/action';
-import type State from './state';
+import type {State} from './state';
 
 type Actions =
   | ReturnType<typeof setActiveCity>

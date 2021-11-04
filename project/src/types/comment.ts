@@ -1,11 +1,23 @@
-import type User from './user';
+import {CommentKey, RawCommentKey} from '../const';
+import type {RawUser, User} from './user';
+
+type RawComment = {
+  [RawCommentKey.Comment]: string;
+  [RawCommentKey.Date]: string;
+  [RawCommentKey.Id]: number;
+  [RawCommentKey.Rating]: number;
+  [RawCommentKey.User]: RawUser;
+};
 
 type Comment = {
-  comment: string;
-  date: string;
-  id: number;
-  rating: number;
-  user: User;
-}
+  [CommentKey.Comment]: string;
+  [CommentKey.Date]: string;
+  [CommentKey.Id]: number;
+  [CommentKey.Rating]: number;
+  [CommentKey.User]: User;
+};
 
-export default Comment;
+export type {
+  RawComment,
+  Comment
+};

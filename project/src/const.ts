@@ -140,6 +140,22 @@ enum OfferKey {
   Type = 'type',
 }
 
+enum RawCommentKey {
+  Comment = 'comment',
+  Date = 'date',
+  Id = 'id',
+  Rating = 'rating',
+  User = 'user',
+}
+
+enum CommentKey {
+  Comment = 'comment',
+  Date = 'date',
+  Id = 'id',
+  Rating = 'rating',
+  User = 'user',
+}
+
 enum RawAuthInfoKey {
   AvatarUrl = 'avatar_url',
   Email = 'email',
@@ -187,6 +203,8 @@ export {
   UserKey,
   RawOfferKey,
   OfferKey,
+  RawCommentKey,
+  CommentKey,
   RawAuthInfoKey,
   AuthInfoKey,
   humanizedOfferTypeMap

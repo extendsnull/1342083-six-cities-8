@@ -1,5 +1,10 @@
-import {CityKey, CityName} from '../const';
-import type MapLocation from './map-location';
+import {CityKey, CityName, RawCityKey} from '../const';
+import type {MapLocation, RawMapLocation} from './map-location';
+
+type RawCity = {
+  [RawCityKey.Location]: RawMapLocation;
+  [RawCityKey.Name]: CityName;
+}
 
 type City = {
   [CityKey.Location]: MapLocation;
@@ -11,6 +16,7 @@ type Cities = {
 }
 
 export type {
+  RawCity,
   City,
   Cities
 };

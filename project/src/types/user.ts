@@ -1,4 +1,11 @@
-import {UserKey} from '../const';
+import {RawUserKey, UserKey} from '../const';
+
+type RawUser = {
+  [RawUserKey.AvatarUrl]: string;
+  [RawUserKey.Id]: number;
+  [RawUserKey.IsPro]: boolean;
+  [RawUserKey.Name]: string;
+}
 
 type User = {
   [UserKey.AvatarUrl]: string;
@@ -7,4 +14,7 @@ type User = {
   [UserKey.Name]: string;
 }
 
-export default User;
+export type {
+  RawUser,
+  User
+};
