@@ -1,7 +1,8 @@
-import {requireAuthorization, requireLogout, setCities, setLoadState, setOffers} from './action';
-import {ApiRoute, AuthorizationStatus} from '../const';
+import {toast} from 'react-toastify';
+import {adaptAuthToClient, adaptOfferToClient} from '../services/adapter';
 import {removeToken, setToken} from '../services/token';
-import {adaptOfferToClient} from '../services/adapter';
+import {requireAuthorization, requireLogout, setAuthInfo, setCities, setLoadState, setOffers} from './action';
+import {ApiRoute, AuthorizationStatus} from '../const';
 import {getCities} from '../utils';
 import type {AuthData, RawAuthInfo, RawOffer, ThunkActionResult} from '../types';
 
@@ -20,20 +21,31 @@ const fetchOffersAction = (): ThunkActionResult =>
 
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get(ApiRoute.Login).then(() => {
+    await api.get<RawAuthInfo>(ApiRoute.Login).then(({data}) => {
+      const adaptedData = adaptAuthToClient(data);
+
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(setAuthInfo(adaptedData));
     });
   };
 
 const loginAction = (authData: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    try {
-      const {data: {token}} = await api.post<RawAuthInfo>(ApiRoute.Login, {
+    await api.post<RawAuthInfo>(ApiRoute.Login, {
       email: authData.login,
       password: authData.password,
-    });
-    setToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    })
+      .then(({data}) => {
+        const adaptedData = adaptAuthToClient(data);
+
+        setToken(adaptedData.token);
+        dispatch(requireAuthorization(AuthorizationStatus.Auth));
+        dispatch(setAuthInfo(adaptedData));
+
+      })
+      .catch((error) => {
+        toast.error(error.data.error);
+      });
   };
 
 const logoutAction = (): ThunkActionResult =>

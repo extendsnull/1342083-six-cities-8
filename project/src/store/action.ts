@@ -1,5 +1,5 @@
 import {ActionType, AuthorizationStatus, CityName} from '../const';
-import type {Cities, Offer} from '../types';
+import type {AuthInfo, Cities, Offer} from '../types';
 
 const setActiveCity = (activeCity: CityName) => ({
   type: ActionType.SetActiveCity,
@@ -40,11 +40,19 @@ const requireLogout = () => ({
   type: ActionType.RequireLogout,
 } as const);
 
+const setAuthInfo = (authInfo: AuthInfo) => ({
+  type: ActionType.SetAuthInfo,
+  payload: {
+    authInfo,
+  },
+} as const);
+
 export {
   setActiveCity,
   setOffers,
   setCities,
   setLoadState,
   requireAuthorization,
-  requireLogout
+  requireLogout,
+  setAuthInfo
 };

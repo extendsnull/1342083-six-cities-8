@@ -53,6 +53,7 @@ enum ActionType {
   SetActiveCity = 'data/setActiveCity',
   SetCities = 'data/setCities',
   SetOffers = 'data/setOffers',
+  SetAuthInfo = 'data/setAuthInfo',
   SetLoadState = 'app/setLoadState',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',

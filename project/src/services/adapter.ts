@@ -1,7 +1,9 @@
 import {
+  AuthInfoKey,
   CityKey,
   MapLocationKey,
   OfferKey,
+  RawAuthInfoKey,
   RawCityKey,
   RawMapLocationKey,
   RawOfferKey,
@@ -9,9 +11,11 @@ import {
   UserKey
 } from '../const';
 import type {
+  AuthInfo,
   City,
   MapLocation,
   Offer,
+  RawAuthInfo,
   RawCity,
   RawMapLocation,
   RawOffer,
@@ -55,6 +59,16 @@ const adaptOfferToClient = (rawOffer: RawOffer): Offer => ({
   [OfferKey.Type]: rawOffer[RawOfferKey.Type],
 });
 
+const adaptAuthToClient = (rawAuthInfo: RawAuthInfo): AuthInfo => ({
+  [AuthInfoKey.AvatarUrl]: rawAuthInfo[RawAuthInfoKey.AvatarUrl],
+  [AuthInfoKey.Email]: rawAuthInfo[RawAuthInfoKey.Email],
+  [AuthInfoKey.Id]: rawAuthInfo[RawAuthInfoKey.Id],
+  [AuthInfoKey.IsPro]: rawAuthInfo[RawAuthInfoKey.IsPro],
+  [AuthInfoKey.Name]: rawAuthInfo[RawAuthInfoKey.Name],
+  [AuthInfoKey.Token]: rawAuthInfo[RawAuthInfoKey.Token],
+});
+
 export {
-  adaptOfferToClient
+  adaptOfferToClient,
+  adaptAuthToClient
 };

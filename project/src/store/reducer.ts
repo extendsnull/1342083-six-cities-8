@@ -6,6 +6,7 @@ const initialState: State = {
   offers: [],
   cities: {},
   isDataLoaded: false,
+  authInfo: null,
   authorizationStatus: AuthorizationStatus.Unknown,
 };
 
@@ -45,6 +46,12 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NoAuth,
+      };
+    }
+    case ActionType.SetAuthInfo: {
+      return {
+        ...state,
+        authInfo: action.payload.authInfo,
       };
     }
     default: {
