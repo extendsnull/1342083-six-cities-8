@@ -1,5 +1,5 @@
 import {CityKey, CityName} from '../const';
-import MapLocation from './map-location';
+import type MapLocation from './map-location';
 
 type City = {
   [CityKey.Location]: MapLocation;

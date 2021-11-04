@@ -3,6 +3,10 @@ import Logo from '../logo/logo';
 import HeaderNav from '../header-nav/header-nav';
 import {State} from '../../types';
 
+type HeaderProps = {
+  hideNav?: boolean;
+};
+
 const mapStateToProps = ({authorizationStatus}: State) => ({
   authorizationStatus,
 });
@@ -10,9 +14,10 @@ const mapStateToProps = ({authorizationStatus}: State) => ({
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & HeaderProps;
 
-function Header(props: PropsFromRedux): JSX.Element {
-  const {authorizationStatus} = props;
+function Header(props: ConnectedComponentProps): JSX.Element {
+  const {hideNav, authorizationStatus} = props;
 
   return (
     <header className="header">
@@ -22,7 +27,7 @@ function Header(props: PropsFromRedux): JSX.Element {
             <Logo />
           </div>
 
-          <HeaderNav authorizationStatus={authorizationStatus} />
+          {!hideNav && <HeaderNav authorizationStatus={authorizationStatus} />}
         </div>
       </div>
 

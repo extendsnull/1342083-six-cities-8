@@ -8,7 +8,7 @@ import {
   requireAuthorization,
   requireLogout
 } from '../store/action';
-import State from './state';
+import type State from './state';
 
 type Actions =
   | ReturnType<typeof setActiveCity>
@@ -23,8 +23,7 @@ type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance,
 type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
 
 export type {
+  Actions,
   ThunkActionResult,
   ThunkAppDispatch
 };
-
-export default Actions;
