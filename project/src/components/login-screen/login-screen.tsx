@@ -1,4 +1,4 @@
-import {FormEvent, MouseEvent, useRef} from 'react';
+import {FormEvent, useRef} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {useHistory} from 'react-router';
 import {loginAction} from '../../store/api-action';
@@ -44,10 +44,6 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
     }
   };
 
-  const handleClick = (evt: MouseEvent<HTMLButtonElement>): void => {
-    history.push(AppRoute.Main);
-  };
-
   return (
     <div className="page page--gray page--login">
       <Header hideNav />
@@ -84,13 +80,7 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
                   required
                 />
               </div>
-              <button
-                className="login__submit form__submit button"
-                type="submit"
-                onClick={handleClick}
-              >
-                Sign in
-              </button>
+              <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">

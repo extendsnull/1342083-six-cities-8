@@ -1,12 +1,28 @@
+import {connect, ConnectedProps} from 'react-redux';
+import {logoutAction} from '../../store/api-action';
 import {Link} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute, AuthInfoKey, AuthorizationStatus} from '../../const';
+import type {State, ThunkAppDispatch} from '../../types';
 
-type HeaderNavProps = {
-  authorizationStatus: AuthorizationStatus;
-}
+const mapStateToProps = ({authorizationStatus, authInfo}: State) => ({
+  authorizationStatus,
+  authInfo,
+});
 
-function HeaderNav(props: HeaderNavProps): JSX.Element | null {
-  switch (props.authorizationStatus) {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onLogout() {
+    dispatch(logoutAction());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function HeaderNav(props: PropsFromRedux): JSX.Element | null {
+  const {authorizationStatus, authInfo, onLogout} = props;
+
+  switch (authorizationStatus) {
     case AuthorizationStatus.Auth: {
       return (
         <nav className="header__nav">
@@ -17,13 +33,15 @@ function HeaderNav(props: HeaderNavProps): JSX.Element | null {
                 to={AppRoute.Favorites}
               >
                 <div className="header__avatar-wrapper user__avatar-wrapper">
+                  <img className="user__avatar" src={authInfo?.[AuthInfoKey.AvatarUrl]} alt="" />
                 </div>
-                <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                <span className="header__user-name user__name">{authInfo?.[AuthInfoKey.Email]}</span>
               </Link>
             </li>
             <li className="header__nav-item">
               <Link
                 className="header__nav-link"
+                onClick={() => onLogout()}
                 to={AppRoute.Main}
               >
                 <span className="header__signout">Sign out</span>
@@ -57,4 +75,5 @@ function HeaderNav(props: HeaderNavProps): JSX.Element | null {
   }
 }
 
-export default HeaderNav;
+export {HeaderNav};
+export default connector(HeaderNav);
