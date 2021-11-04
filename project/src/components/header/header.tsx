@@ -28,8 +28,8 @@ type ConnectedComponentProps = PropsFromRedux & HeaderProps;
 function Header(props: ConnectedComponentProps): JSX.Element {
   const {hasNav, authorizationStatus, authInfo, onLogout} = props;
 
-  const getHeaderNav = (): JSX.Element | null => {
-    switch (authorizationStatus) {
+  const getHeaderNav = (status: AuthorizationStatus): JSX.Element | null => {
+    switch (status) {
       case AuthorizationStatus.Auth: {
         return (
           <nav className="header__nav">
@@ -90,7 +90,7 @@ function Header(props: ConnectedComponentProps): JSX.Element {
             <Logo />
           </div>
 
-          {hasNav && getHeaderNav()}
+          {hasNav && getHeaderNav(authorizationStatus)}
         </div>
       </div>
 
