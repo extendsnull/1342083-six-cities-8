@@ -4,7 +4,11 @@ import type User from './user';
 import type MapLocation from './map-location';
 import type {City, Cities} from './city';
 import type State from './state';
-import type Actions from './actions';
+import type {
+  Actions,
+  ThunkActionResult,
+  ThunkAppDispatch
+} from './actions';
 import type Token from './token';
 import type AuthData from './auth-data';
 import type AuthInfo from './auth-info';
@@ -14,6 +18,7 @@ import type {
   RawUser,
   RawOffer
 } from './raw-offer';
+import type RawAuthInfo from './raw-auth-info';
 
 export type {
   Comment,
@@ -24,11 +29,14 @@ export type {
   Cities,
   State,
   Actions,
+  ThunkActionResult,
+  ThunkAppDispatch,
   Token,
   AuthData,
   AuthInfo,
   RawMapLocation,
   RawCity,
   RawUser,
-  RawOffer
+  RawOffer,
+  RawAuthInfo
 };

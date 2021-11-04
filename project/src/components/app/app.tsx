@@ -1,11 +1,12 @@
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {Router as BrowserRouter, Switch, Route} from 'react-router-dom';
+import browserHistory from '../../browser-history';
 import PrivateRoute from '../private-route/private-route';
 import MainScreen from '../main-screen/main-screen';
 import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import OfferScreen from '../offer-screen/offer-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import type {Comment} from '../../types';
 
 type AppProps = {
@@ -16,7 +17,7 @@ function App(props: AppProps): JSX.Element {
   const {comments} = props;
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route path={AppRoute.Main} exact>
           <MainScreen />
@@ -24,11 +25,7 @@ function App(props: AppProps): JSX.Element {
         <Route path={AppRoute.Login} exact>
           <LoginScreen />
         </Route>
-        <PrivateRoute
-          authorizationStatus={AuthorizationStatus.Auth}
-          path={AppRoute.Favorites}
-          exact
-        >
+        <PrivateRoute path={AppRoute.Favorites} exact>
           <FavoritesScreen />
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>

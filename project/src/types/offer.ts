@@ -1,5 +1,5 @@
 import {OfferKey, OfferType} from '../const';
-import {City} from './city';
+import type {City} from './city';
 import type User from './user';
 import type MapLocation from './map-location';
 

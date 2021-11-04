@@ -53,7 +53,9 @@ enum ActionType {
   SetActiveCity = 'data/setActiveCity',
   SetCities = 'data/setCities',
   SetOffers = 'data/setOffers',
+  SetAuthInfo = 'data/setAuthInfo',
   SetLoadState = 'app/setLoadState',
+  RedirectToRoute = 'app/redirectToRoute',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
 }
@@ -138,6 +140,24 @@ enum OfferKey {
   Type = 'type',
 }
 
+enum RawAuthInfoKey {
+  AvatarUrl = 'avatar_url',
+  Email = 'email',
+  Id = 'id',
+  IsPro = 'is_pro',
+  Name = 'name',
+  Token = 'token',
+}
+
+enum AuthInfoKey {
+  AvatarUrl = 'avatarUrl',
+  Email = 'email',
+  Id = 'id',
+  IsPro = 'isPro',
+  Name = 'name',
+  Token = 'token',
+}
+
 const humanizedOfferTypeMap = {
   [OfferType.Apartament]: 'Apartment',
   [OfferType.Private]: 'Private Room',
@@ -167,5 +187,7 @@ export {
   UserKey,
   RawOfferKey,
   OfferKey,
+  RawAuthInfoKey,
+  AuthInfoKey,
   humanizedOfferTypeMap
 };

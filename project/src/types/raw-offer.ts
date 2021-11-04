@@ -1,11 +1,11 @@
 import {
+  CityName,
   OfferType,
   RawCityKey,
   RawMapLocationKey,
   RawOfferKey,
   RawUserKey
 } from '../const';
-import {CityName} from '../const';
 
 type RawMapLocation = {
   [RawMapLocationKey.Latitude]: number;
