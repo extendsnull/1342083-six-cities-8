@@ -1,4 +1,5 @@
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {Router as BrowserRouter, Switch, Route} from 'react-router-dom';
+import browserHistory from '../../browser-history';
 import PrivateRoute from '../private-route/private-route';
 import MainScreen from '../main-screen/main-screen';
 import LoginScreen from '../login-screen/login-screen';
@@ -16,7 +17,7 @@ function App(props: AppProps): JSX.Element {
   const {comments} = props;
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route path={AppRoute.Main} exact>
           <MainScreen />

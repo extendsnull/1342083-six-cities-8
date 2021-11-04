@@ -1,8 +1,8 @@
 import {toast} from 'react-toastify';
 import {adaptAuthToClient, adaptOfferToClient} from '../services/adapter';
 import {removeToken, setToken} from '../services/token';
-import {requireAuthorization, requireLogout, setAuthInfo, setCities, setLoadState, setOffers} from './action';
-import {ApiRoute, AuthorizationStatus} from '../const';
+import {redirectToRoute, requireAuthorization, requireLogout, setAuthInfo, setCities, setLoadState, setOffers} from './action';
+import {ApiRoute, AppRoute, AuthorizationStatus} from '../const';
 import {getCities} from '../utils';
 import type {AuthData, RawAuthInfo, RawOffer, ThunkActionResult} from '../types';
 
@@ -41,7 +41,7 @@ const loginAction = (authData: AuthData): ThunkActionResult =>
         setToken(adaptedData.token);
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
         dispatch(setAuthInfo(adaptedData));
-
+        dispatch(redirectToRoute(AppRoute.Main));
       })
       .catch((error) => {
         toast.error(error.data.error);

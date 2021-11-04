@@ -1,10 +1,9 @@
 import {FormEvent, useRef} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import {useHistory} from 'react-router';
 import {loginAction} from '../../store/api-action';
 import {Link} from 'react-router-dom';
 import Header from '../header/header';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import type {AuthData, State, ThunkAppDispatch} from '../../types';
 
 const mapStateToProps = ({authorizationStatus}: State) => ({
@@ -22,13 +21,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function LoginScreen(props: PropsFromRedux): JSX.Element {
-  const {authorizationStatus, onSubmit} = props;
-
-  const history = useHistory();
-
-  if (authorizationStatus === AuthorizationStatus.Auth) {
-    history.push(AppRoute.Main);
-  }
+  const {onSubmit} = props;
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);

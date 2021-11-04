@@ -1,4 +1,4 @@
-import {ActionType, AuthorizationStatus, CityName} from '../const';
+import {ActionType, AppRoute, AuthorizationStatus, CityName} from '../const';
 import type {AuthInfo, Cities, Offer} from '../types';
 
 const setActiveCity = (activeCity: CityName) => ({
@@ -29,6 +29,13 @@ const setLoadState = (isLoad: boolean) => ({
   },
 } as const);
 
+const setAuthInfo = (authInfo: AuthInfo) => ({
+  type: ActionType.SetAuthInfo,
+  payload: {
+    authInfo,
+  },
+} as const);
+
 const requireAuthorization = (status: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: {
@@ -40,11 +47,9 @@ const requireLogout = () => ({
   type: ActionType.RequireLogout,
 } as const);
 
-const setAuthInfo = (authInfo: AuthInfo) => ({
-  type: ActionType.SetAuthInfo,
-  payload: {
-    authInfo,
-  },
+const redirectToRoute = (url: AppRoute) => ({
+  type: ActionType.RedirectToRoute,
+  payload: url,
 } as const);
 
 export {
@@ -52,7 +57,8 @@ export {
   setOffers,
   setCities,
   setLoadState,
+  setAuthInfo,
   requireAuthorization,
   requireLogout,
-  setAuthInfo
+  redirectToRoute
 };
