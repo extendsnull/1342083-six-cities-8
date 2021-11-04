@@ -8,7 +8,6 @@ import redirect from './store/middlewares/redirect';
 import {reducer} from './store/reducer';
 import {requireAuthorization} from './store/action';
 import App from './components/app/app';
-import comments from './mocks/comments';
 import {ToastContainer} from 'react-toastify';
 import {createApi} from './services/api';
 import {AuthorizationStatus} from './const';
@@ -35,7 +34,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer />
-      <App comments={comments} />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

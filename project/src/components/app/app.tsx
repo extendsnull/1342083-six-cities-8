@@ -7,15 +7,8 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import OfferScreen from '../offer-screen/offer-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {AppRoute} from '../../const';
-import type {Comment} from '../../types';
 
-type AppProps = {
-  comments: Comment[];
-}
-
-function App(props: AppProps): JSX.Element {
-  const {comments} = props;
-
+function App(): JSX.Element {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -30,7 +23,6 @@ function App(props: AppProps): JSX.Element {
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
           <OfferScreen
-            comments={comments}
             onReviewFormSubmit={() => {
               throw new Error('Function \'onReviewFormSubmit\' isn\'t implemented.');
             }}

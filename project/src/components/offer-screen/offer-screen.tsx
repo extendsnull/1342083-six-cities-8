@@ -17,7 +17,6 @@ type History = {
 }
 
 type OfferScreenProps = {
-  comments: Comment[];
   onReviewFormSubmit: () => void;
 }
 
@@ -30,14 +29,13 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function OfferScreen(props: OfferScreenProps & PropsFromRedux): JSX.Element {
-  const {offers, comments, onReviewFormSubmit} = props;
+  const {offers, onReviewFormSubmit} = props;
   const params = useParams<History>();
   const currentOffer = offers.find((offer) => offer.id === parseInt(params.id, 10));
 
   if (!currentOffer) {
     return <Redirect to={AppRoute.NotFound} />;
   }
-
 
   const ratingValue: string = getRatingValue(currentOffer.rating);
 
@@ -140,22 +138,20 @@ function OfferScreen(props: OfferScreenProps & PropsFromRedux): JSX.Element {
                   </p>
                 </div>
               </div>
-              {Boolean(comments.length) && (
-                <section className="property__reviews reviews">
-                  <h2 className="reviews__title">
-                    Reviews &middot; <span className="reviews__amount">{comments.length}</span>
-                  </h2>
-                  <ul className="reviews__list">
-                    {comments.map((comment) => (
-                      <Review
-                        comment={comment}
-                        key={comment.id}
-                      />
-                    ))}
-                  </ul>
-                  <ReviewForm onReviewFormSubmit={onReviewFormSubmit} />
-                </section>
-              )}
+              <section className="property__reviews reviews">
+                {/* <h2 className="reviews__title">
+                  Reviews &middot; <span className="reviews__amount">{comments.length}</span>
+                </h2>
+                <ul className="reviews__list">
+                  {comments.map((comment) => (
+                    <Review
+                      comment={comment}
+                      key={comment.id}
+                    />
+                  ))}
+                </ul> */}
+                <ReviewForm onReviewFormSubmit={onReviewFormSubmit} />
+              </section>
             </div>
           </div>
           <section className="property__map map"></section>
