@@ -1,10 +1,24 @@
 import {ActionType, AppRoute, AuthorizationStatus, CityName} from '../const';
-import type {AuthInfo, Cities, Offer} from '../types';
+import type {AuthInfo, Cities, Comment, Offer} from '../types';
 
-const setActiveCity = (activeCity: CityName) => ({
-  type: ActionType.SetActiveCity,
+const setOffer = (offer: Offer) => ({
+  type: ActionType.SetOffer,
   payload: {
-    activeCity,
+    offer,
+  },
+} as const);
+
+const setNearbyOffers = (nearbyOffers: Offer[]) => ({
+  type: ActionType.SetNearbyOffers,
+  payload: {
+    nearbyOffers,
+  },
+} as const);
+
+const setComments = (comments: Comment[]) => ({
+  type: ActionType.SetComments,
+  payload: {
+    comments,
   },
 } as const);
 
@@ -22,10 +36,10 @@ const setCities = (cities: Cities) => ({
   },
 } as const);
 
-const setLoadState = (isLoad: boolean) => ({
-  type: ActionType.SetLoadState,
+const setActiveCity = (activeCity: CityName) => ({
+  type: ActionType.SetActiveCity,
   payload: {
-    isLoad,
+    activeCity,
   },
 } as const);
 
@@ -43,6 +57,13 @@ const requireAuthorization = (status: AuthorizationStatus) => ({
   },
 } as const);
 
+const setAuthorization = (isAuthorized: boolean) => ({
+  type: ActionType.SetAuthorization,
+  payload: {
+    isAuthorized,
+  },
+} as const);
+
 const requireLogout = () => ({
   type: ActionType.RequireLogout,
 } as const);
@@ -53,12 +74,15 @@ const redirectToRoute = (url: AppRoute) => ({
 } as const);
 
 export {
-  setActiveCity,
+  setOffer,
+  setNearbyOffers,
+  setComments,
   setOffers,
   setCities,
-  setLoadState,
+  setActiveCity,
   setAuthInfo,
   requireAuthorization,
+  setAuthorization,
   requireLogout,
   redirectToRoute
 };

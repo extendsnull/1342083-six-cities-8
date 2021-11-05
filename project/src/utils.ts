@@ -5,9 +5,11 @@ import {
   RANDOM_ID_LENGTH,
   RATING_MAX_VALUE,
   AppRoute,
-  OfferKey
+  OfferKey,
+  CityKey,
+  CityName
 } from './const';
-import {Cities, Offer} from './types';
+import type {Cities, Offer} from './types';
 
 const humanizeDate = (iso: string): string =>
   new Date(iso).toLocaleString('en-US', {
@@ -37,11 +39,27 @@ const getCities = (offers: Offer[]): Cities => {
   return cities;
 };
 
+const getOffersByCity = (
+  offers: Offer[],
+  activeCity: CityName,
+): Offer[] => offers.filter((offer) => offer[OfferKey.City][CityKey.Name] === activeCity);
+
+const replaceIdParam = (url: string, id: number): string => url.replace(':id', String(id));
+
+const scrollTop = (): void => {
+  if (window.scrollY > 0) {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+};
+
 export {
   humanizeDate,
   getClassNames,
   getOfferUrl,
   getRandomId,
   getRatingValue,
-  getCities
+  getCities,
+  getOffersByCity,
+  replaceIdParam,
+  scrollTop
 };

@@ -1,5 +1,14 @@
-import {AuthInfoKey} from '../const';
-import type Token from './token';
+import {AuthInfoKey, RawAuthInfoKey} from '../const';
+import type {Token} from './token';
+
+type RawAuthInfo = {
+  [RawAuthInfoKey.AvatarUrl]: string;
+  [RawAuthInfoKey.Email]: string;
+  [RawAuthInfoKey.Id]: number;
+  [RawAuthInfoKey.IsPro]: boolean;
+  [RawAuthInfoKey.Name]: string;
+  [RawAuthInfoKey.Token]: Token;
+};
 
 type AuthInfo = {
   [AuthInfoKey.AvatarUrl]: string;
@@ -10,4 +19,7 @@ type AuthInfo = {
   [AuthInfoKey.Token]: Token;
 };
 
-export default AuthInfo;
+export type {
+  RawAuthInfo,
+  AuthInfo
+};

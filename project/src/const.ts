@@ -50,20 +50,26 @@ enum CityName {
 }
 
 enum ActionType {
-  SetActiveCity = 'data/setActiveCity',
-  SetCities = 'data/setCities',
+  SetOffer = 'data/setOffer',
+  SetNearbyOffers = 'data/setNearbyOffers',
+  SetComments = 'data/setComments',
   SetOffers = 'data/setOffers',
+  SetCities = 'data/setCities',
+  SetActiveCity = 'data/setActiveCity',
   SetAuthInfo = 'data/setAuthInfo',
-  SetLoadState = 'app/setLoadState',
   RedirectToRoute = 'app/redirectToRoute',
   RequireAuthorization = 'user/requireAuthorization',
+  SetAuthorization = 'user/setAuthorization',
   RequireLogout = 'user/requireLogout',
 }
 
 enum ApiRoute {
   Hotels = '/hotels',
+  Hotels$Id = '/hotels/:id',
+  Hotels$IdNearby = '/hotels/:id/nearby',
   Favorite = '/favorite',
   Comments = '/comments',
+  Comments$Id = '/comments/:id',
   Login = '/login',
   Logout = '/logout',
 }
@@ -140,6 +146,27 @@ enum OfferKey {
   Type = 'type',
 }
 
+enum RawCommentKey {
+  Comment = 'comment',
+  Date = 'date',
+  Id = 'id',
+  Rating = 'rating',
+  User = 'user',
+}
+
+enum CommentKey {
+  Comment = 'comment',
+  Date = 'date',
+  Id = 'id',
+  Rating = 'rating',
+  User = 'user',
+}
+
+enum CommentPostKey {
+  Comment = 'comment',
+  Rating = 'rating',
+}
+
 enum RawAuthInfoKey {
   AvatarUrl = 'avatar_url',
   Email = 'email',
@@ -157,6 +184,22 @@ enum AuthInfoKey {
   Name = 'name',
   Token = 'token',
 }
+
+enum RatingTitle {
+  Perfect = 'perfect',
+  Good = 'good',
+  NotBad = 'not bad',
+  Badly = 'badly',
+  Terribly = 'terribly',
+}
+
+const ratingTitleToValueMap = {
+  [RatingTitle.Perfect]: 5,
+  [RatingTitle.Good]: 4,
+  [RatingTitle.NotBad]: 3,
+  [RatingTitle.Badly]: 2,
+  [RatingTitle.Terribly]: 1,
+};
 
 const humanizedOfferTypeMap = {
   [OfferType.Apartament]: 'Apartment',
@@ -187,7 +230,12 @@ export {
   UserKey,
   RawOfferKey,
   OfferKey,
+  RawCommentKey,
+  CommentKey,
+  CommentPostKey,
   RawAuthInfoKey,
   AuthInfoKey,
+  RatingTitle,
+  ratingTitleToValueMap,
   humanizedOfferTypeMap
 };

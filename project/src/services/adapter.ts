@@ -1,10 +1,12 @@
 import {
   AuthInfoKey,
   CityKey,
+  CommentKey,
   MapLocationKey,
   OfferKey,
   RawAuthInfoKey,
   RawCityKey,
+  RawCommentKey,
   RawMapLocationKey,
   RawOfferKey,
   RawUserKey,
@@ -13,10 +15,12 @@ import {
 import type {
   AuthInfo,
   City,
+  Comment,
   MapLocation,
   Offer,
   RawAuthInfo,
   RawCity,
+  RawComment,
   RawMapLocation,
   RawOffer,
   RawUser,
@@ -39,6 +43,14 @@ const adaptUserToClient = (rawUser: RawUser): User => ({
   [UserKey.Id]: rawUser[RawUserKey.Id],
   [UserKey.IsPro]: rawUser[RawUserKey.IsPro],
   [UserKey.Name]: rawUser[RawUserKey.Name],
+});
+
+const adaptCommentToClient = (rawComment: RawComment): Comment => ({
+  [CommentKey.Comment]: rawComment[RawCommentKey.Comment],
+  [CommentKey.Date]: rawComment[RawCommentKey.Date],
+  [CommentKey.Id]: rawComment[RawCommentKey.Id],
+  [CommentKey.Rating]: rawComment[RawCommentKey.Rating],
+  [CommentKey.User]: adaptUserToClient(rawComment[RawCommentKey.User]),
 });
 
 const adaptOfferToClient = (rawOffer: RawOffer): Offer => ({
@@ -69,6 +81,7 @@ const adaptAuthToClient = (rawAuthInfo: RawAuthInfo): AuthInfo => ({
 });
 
 export {
+  adaptCommentToClient,
   adaptOfferToClient,
   adaptAuthToClient
 };

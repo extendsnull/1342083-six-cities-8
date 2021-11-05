@@ -1,83 +1,78 @@
-import {useState, ChangeEvent, FormEvent} from 'react';
+import {useState, ChangeEvent, FormEvent, useRef} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
+import {reviewFormSubmitAction} from '../../store/api-action';
+import {CommentPostKey} from '../../const';
+import Rating from '../rating/rating';
+import type {CommentPost, Offer, ThunkAppDispatch} from '../../types';
 
 const REVIEW_MIN_LENGTH = 50;
 
 type ReviewFormProps = {
-  onReviewFormSubmit: (review: string, rating: number) => void;
-}
+  offer: Offer;
+};
 
-function ReviewForm(props: ReviewFormProps): JSX.Element {
-  const {onReviewFormSubmit} = props;
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onReviewFormSubmit(id: number, comment: CommentPost) {
+    dispatch(reviewFormSubmitAction(id, comment));
+  },
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & ReviewFormProps;
+
+function ReviewForm(props: ConnectedComponentProps): JSX.Element {
+  const {offer, onReviewFormSubmit} = props;
+
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
+  const formRef = useRef<HTMLFormElement | null>(null);
+
   const isDisabled = !rating || review.length < REVIEW_MIN_LENGTH;
 
-  const handleRatingChange = (evt: ChangeEvent<HTMLFormElement>): void => {
-    const target: HTMLInputElement | null = evt.target.closest('input[type="radio"]');
-    if (target) {
-      setRating(Number(target.value));
-    }
+  const resetForm = (): void => {
+    setRating(0);
+    setReview('');
   };
+
+  const handleCommentChange = (evt: ChangeEvent<HTMLTextAreaElement>): void => setReview(evt.target.value);
+
+  const onRatingChange = (value: number): void => setRating(value);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
-    onReviewFormSubmit(review, rating);
-  };
 
-  const handleTextAreaChange = (evt: ChangeEvent<HTMLTextAreaElement>): void => setReview(evt.target.value);
+    const comment = {
+      [CommentPostKey.Rating]: rating,
+      [CommentPostKey.Comment]: review,
+    };
+
+    onReviewFormSubmit(offer.id, comment);
+    resetForm();
+  };
 
   return (
     <form
       className="reviews__form form"
       action="/"
       method="post"
-      onChange={handleRatingChange}
       onSubmit={handleSubmit}
+      ref={formRef}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
-
-        <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-      </div>
+      <Rating
+        currentRating={rating}
+        isDisabled={isDisabled}
+        onRatingChange={onRatingChange}
+      />
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleTextAreaChange}
+        onChange={handleCommentChange}
+        value={review}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -90,4 +85,5 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
   );
 }
 
-export default ReviewForm;
+export {ReviewForm};
+export default connector(ReviewForm);

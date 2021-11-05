@@ -1,4 +1,10 @@
-import {MapLocationKey} from '../const';
+import {MapLocationKey, RawMapLocationKey} from '../const';
+
+type RawMapLocation = {
+  [RawMapLocationKey.Latitude]: number;
+  [RawMapLocationKey.Longitude]: number;
+  [RawMapLocationKey.Zoom]: number;
+}
 
 type MapLocation = {
   [MapLocationKey.Latitude]: number;
@@ -6,4 +12,7 @@ type MapLocation = {
   [MapLocationKey.Zoom]: number;
 }
 
-export default MapLocation;
+export type {
+  RawMapLocation,
+  MapLocation
+};

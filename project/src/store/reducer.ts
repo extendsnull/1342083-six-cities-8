@@ -5,17 +5,32 @@ const initialState: State = {
   activeCity: CityName.Paris,
   offers: [],
   cities: {},
-  isDataLoaded: false,
   authInfo: null,
   authorizationStatus: AuthorizationStatus.Unknown,
+  isAuthorized: false,
+  offer: null,
+  comments: [],
+  nearbyOffers: [],
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
   switch (action.type) {
-    case ActionType.SetActiveCity: {
+    case ActionType.SetOffer: {
       return {
         ...state,
-        activeCity: action.payload.activeCity,
+        offer: action.payload.offer,
+      };
+    }
+    case ActionType.SetNearbyOffers: {
+      return {
+        ...state,
+        nearbyOffers: action.payload.nearbyOffers,
+      };
+    }
+    case ActionType.SetComments: {
+      return {
+        ...state,
+        comments: action.payload.comments,
       };
     }
     case ActionType.SetOffers: {
@@ -30,16 +45,22 @@ const reducer = (state: State = initialState, action: Actions): State => {
         cities: action.payload.cities,
       };
     }
-    case ActionType.SetLoadState: {
+    case ActionType.SetActiveCity: {
       return {
         ...state,
-        isDataLoaded: action.payload.isLoad,
+        activeCity: action.payload.activeCity,
       };
     }
     case ActionType.RequireAuthorization: {
       return {
         ...state,
         authorizationStatus: action.payload.authorizationStatus,
+      };
+    }
+    case ActionType.SetAuthorization: {
+      return {
+        ...state,
+        isAuthorized: action.payload.isAuthorized,
       };
     }
     case ActionType.RequireLogout: {

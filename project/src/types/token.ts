@@ -1,3 +1,5 @@
 type Token = string;
 
-export default Token;
+export type {
+  Token
+};

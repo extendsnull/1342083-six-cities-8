@@ -1,7 +1,25 @@
-import {OfferKey, OfferType} from '../const';
-import type {City} from './city';
-import type User from './user';
-import type MapLocation from './map-location';
+import {OfferKey, OfferType, RawOfferKey} from '../const';
+import type {RawCity, City} from './city';
+import type {RawMapLocation, MapLocation} from './map-location';
+import type {RawUser, User} from './user';
+
+type RawOffer = {
+  [RawOfferKey.City]: RawCity;
+  [RawOfferKey.Description]: string;
+  [RawOfferKey.Goods]: string[];
+  [RawOfferKey.Host]: RawUser;
+  [RawOfferKey.Id]: number;
+  [RawOfferKey.Images]: string[];
+  [RawOfferKey.IsFavorite]: boolean;
+  [RawOfferKey.IsPremium]: boolean;
+  [RawOfferKey.Location]: RawMapLocation;
+  [RawOfferKey.MaxAdults]: number;
+  [RawOfferKey.PreviewImage]: string;
+  [RawOfferKey.Price]: number;
+  [RawOfferKey.Rating]: number;
+  [RawOfferKey.Title]: string;
+  [RawOfferKey.Type]: OfferType;
+};
 
 type Offer = {
   [OfferKey.City]: City;
@@ -21,4 +39,7 @@ type Offer = {
   [OfferKey.Type]: OfferType;
 }
 
-export default Offer;
+export type {
+  RawOffer,
+  Offer
+};

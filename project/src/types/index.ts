@@ -1,42 +1,70 @@
-import type Comment from './comment';
-import type Offer from './offer';
-import type User from './user';
-import type MapLocation from './map-location';
-import type {City, Cities} from './city';
-import type State from './state';
 import type {
   Actions,
   ThunkActionResult,
   ThunkAppDispatch
 } from './actions';
-import type Token from './token';
-import type AuthData from './auth-data';
-import type AuthInfo from './auth-info';
+
+import type {AuthData} from './auth-data';
+
+import type {
+  RawAuthInfo,
+  AuthInfo
+} from './auth-info';
+
+import type {
+  RawCity,
+  City,
+  Cities
+} from './city';
+
+import type {CommentPost} from './comment-post';
+
+import type {
+  RawComment,
+  Comment
+} from './comment';
+
+import type {History} from './history';
+
 import type {
   RawMapLocation,
-  RawCity,
+  MapLocation
+} from './map-location';
+
+import type {
+  RawOffer,
+  Offer
+} from './offer';
+
+import type {State} from './state';
+
+import type {Token} from './token';
+
+import type {
   RawUser,
-  RawOffer
-} from './raw-offer';
-import type RawAuthInfo from './raw-auth-info';
+  User
+} from './user';
 
 export type {
-  Comment,
-  Offer,
-  User,
-  MapLocation,
-  City,
-  Cities,
-  State,
   Actions,
   ThunkActionResult,
   ThunkAppDispatch,
-  Token,
   AuthData,
+  RawAuthInfo,
   AuthInfo,
-  RawMapLocation,
   RawCity,
-  RawUser,
+  City,
+  Cities,
+  CommentPost,
+  RawComment,
+  Comment,
+  History,
+  RawMapLocation,
+  MapLocation,
   RawOffer,
-  RawAuthInfo
+  Offer,
+  State,
+  Token,
+  RawUser,
+  User
 };
