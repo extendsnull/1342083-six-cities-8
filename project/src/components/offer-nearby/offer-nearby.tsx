@@ -8,31 +8,25 @@ type OfferNearbyProps = {
   offers: Offer[];
 };
 
-function OfferNearby(props: OfferNearbyProps): JSX.Element | null {
-  const {offers} = props;
+function OfferNearby(props: OfferNearbyProps): JSX.Element {
+  const nearbyOffers = props.offers.slice(0, MAX_NEAR_OFFERS_COUNT);
 
-  if (offers.length) {
-    const nearbyOffers = offers.slice(0, MAX_NEAR_OFFERS_COUNT);
-
-    return (
-      <div className="container">
-        <section className="near-places places">
-          <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <div className="near-places__list places__list">
-            {nearbyOffers.map((offer) => (
-              <OfferCard
-                offer={offer}
-                type={OfferCardType.Near}
-                key={offer.id}
-              />
-            ))}
-          </div>
-        </section>
-      </div>
-    );
-  }
-
-  return null;
+  return (
+    <div className="container">
+      <section className="near-places places">
+        <h2 className="near-places__title">Other places in the neighbourhood</h2>
+        <div className="near-places__list places__list">
+          {nearbyOffers.map((offer) => (
+            <OfferCard
+              offer={offer}
+              type={OfferCardType.Near}
+              key={offer.id}
+            />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
 }
 
 export default OfferNearby;

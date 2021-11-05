@@ -8,10 +8,16 @@ const setOffer = (offer: Offer) => ({
   },
 } as const);
 
-const setOfferDetails = (nearbyOffers: Offer[], comments: Comment[]) => ({
-  type: ActionType.SetOfferDetails,
+const setNearbyOffers = (nearbyOffers: Offer[]) => ({
+  type: ActionType.SetNearbyOffers,
   payload: {
     nearbyOffers,
+  },
+} as const);
+
+const setComments = (comments: Comment[]) => ({
+  type: ActionType.SetComments,
+  payload: {
     comments,
   },
 } as const);
@@ -51,6 +57,13 @@ const requireAuthorization = (status: AuthorizationStatus) => ({
   },
 } as const);
 
+const setAuthorization = (isAuthorized: boolean) => ({
+  type: ActionType.SetAuthorization,
+  payload: {
+    isAuthorized,
+  },
+} as const);
+
 const requireLogout = () => ({
   type: ActionType.RequireLogout,
 } as const);
@@ -62,12 +75,14 @@ const redirectToRoute = (url: AppRoute) => ({
 
 export {
   setOffer,
-  setOfferDetails,
+  setNearbyOffers,
+  setComments,
   setOffers,
   setCities,
   setActiveCity,
   setAuthInfo,
   requireAuthorization,
+  setAuthorization,
   requireLogout,
   redirectToRoute
 };

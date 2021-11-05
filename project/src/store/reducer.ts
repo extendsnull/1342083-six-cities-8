@@ -7,6 +7,7 @@ const initialState: State = {
   cities: {},
   authInfo: null,
   authorizationStatus: AuthorizationStatus.Unknown,
+  isAuthorized: false,
   offer: null,
   comments: [],
   nearbyOffers: [],
@@ -20,10 +21,15 @@ const reducer = (state: State = initialState, action: Actions): State => {
         offer: action.payload.offer,
       };
     }
-    case ActionType.SetOfferDetails: {
+    case ActionType.SetNearbyOffers: {
       return {
         ...state,
         nearbyOffers: action.payload.nearbyOffers,
+      };
+    }
+    case ActionType.SetComments: {
+      return {
+        ...state,
         comments: action.payload.comments,
       };
     }
@@ -49,6 +55,12 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {
         ...state,
         authorizationStatus: action.payload.authorizationStatus,
+      };
+    }
+    case ActionType.SetAuthorization: {
+      return {
+        ...state,
+        isAuthorized: action.payload.isAuthorized,
       };
     }
     case ActionType.RequireLogout: {

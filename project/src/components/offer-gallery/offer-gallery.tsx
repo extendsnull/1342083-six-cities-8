@@ -6,26 +6,20 @@ type OfferGalleryProps = {
   images: string[];
 };
 
-function OfferGallery(props: OfferGalleryProps): JSX.Element | null {
-  const {images} = props;
+function OfferGallery(props: OfferGalleryProps): JSX.Element {
+  const gallery = props.images.slice(0, MAX_IMAGES_COUNT);
 
-  if (images.length) {
-    const gallery = images.slice(0, MAX_IMAGES_COUNT);
-
-    return (
-      <div className="property__gallery-container container">
-        <div className="property__gallery">
-          {gallery.map((image) => (
-            <div className="property__image-wrapper" key={getRandomId()}>
-              <img className="property__image" src={image} alt="" />
-            </div>
-          ))}
-        </div>
+  return (
+    <div className="property__gallery-container container">
+      <div className="property__gallery">
+        {gallery.map((image) => (
+          <div className="property__image-wrapper" key={getRandomId()}>
+            <img className="property__image" src={image} alt="" />
+          </div>
+        ))}
       </div>
-    );
-  }
-
-  return null;
+    </div>
+  );
 }
 
 export default OfferGallery;

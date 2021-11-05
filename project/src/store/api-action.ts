@@ -3,45 +3,45 @@ import {adaptAuthToClient, adaptCommentToClient, adaptOfferToClient} from '../se
 import {removeToken, setToken} from '../services/token';
 import {
   setOffer,
-  setOfferDetails,
   setOffers,
   setCities,
   setAuthInfo,
   requireAuthorization,
   requireLogout,
-  redirectToRoute
+  redirectToRoute,
+  setNearbyOffers,
+  setComments,
+  setAuthorization
 } from './action';
 import {ApiRoute, AppRoute, AuthorizationStatus} from '../const';
 import {getCities, replaceIdParam} from '../utils';
-import type {AuthData, RawAuthInfo, RawComment, RawOffer, ThunkActionResult} from '../types';
+import type {AuthData, CommentPost, RawAuthInfo, RawComment, RawOffer, ThunkActionResult} from '../types';
 
 const fetchOfferAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    try {
-      const url = replaceIdParam(ApiRoute.Hotels$Id, id);
-      const {data: offerData} = await api.get<RawOffer>(url);
-      dispatch(setOffer(adaptOfferToClient(offerData)));
-    } catch {
-      dispatch(redirectToRoute(AppRoute.NotFound));
-    }
+    const url = replaceIdParam(ApiRoute.Hotels$Id, id);
+    await await api.get<RawOffer>(url)
+      .then(({data: offerData}) => {
+        dispatch(setOffer(adaptOfferToClient(offerData)));
+      })
+      .catch((error) => {
+        dispatch(redirectToRoute(AppRoute.NotFound));
+      });
 
-    try {
-      const nearbyUrl = replaceIdParam(ApiRoute.Hotels$IdNearby, id);
-      const commentsUrl = replaceIdParam(ApiRoute.Comments$Id, id);
-      const [
-        {data: nearbyOffersData},
-        {data: commentsData},
-      ] = await Promise.all([
-        api.get<RawOffer[]>(nearbyUrl),
-        api.get<RawComment[]>(commentsUrl),
-      ]);
-      dispatch(setOfferDetails(
-        nearbyOffersData.map(adaptOfferToClient),
-        commentsData.map(adaptCommentToClient),
-      ));
-    } catch {
-      dispatch(setOfferDetails([], []));
-    }
+    const nearbyUrl = replaceIdParam(ApiRoute.Hotels$IdNearby, id);
+    const commentsUrl = replaceIdParam(ApiRoute.Comments$Id, id);
+    await Promise.all([
+      api.get<RawOffer[]>(nearbyUrl),
+      api.get<RawComment[]>(commentsUrl),
+    ])
+      .then((response) => {
+        const [{data: nearbyOffersData}, {data: commentsData}] = response;
+        dispatch(setNearbyOffers(nearbyOffersData.map(adaptOfferToClient)));
+        dispatch(setComments(commentsData.map(adaptCommentToClient)));
+      })
+      .catch((error) => {
+        toast.error(error.data.error);
+      });
   };
 
 const fetchOffersAction = (): ThunkActionResult =>
@@ -54,12 +54,28 @@ const fetchOffersAction = (): ThunkActionResult =>
     dispatch(setCities(cities));
   };
 
+const reviewFormSubmitAction = (
+  id: number,
+  comment: CommentPost,
+): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const url = replaceIdParam(ApiRoute.Comments$Id, id);
+    await api.post<RawComment[]>(url, comment)
+      .then(({data: comments}) => {
+        dispatch(setComments(comments.map(adaptCommentToClient)));
+      })
+      .catch((error) => {
+        toast.error(error.data.error);
+      });
+  };
+
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get<RawAuthInfo>(ApiRoute.Login).then(({data}) => {
       const adaptedData = adaptAuthToClient(data);
 
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(setAuthorization(true));
       dispatch(setAuthInfo(adaptedData));
     });
   };
@@ -75,6 +91,7 @@ const loginAction = (authData: AuthData): ThunkActionResult =>
 
         setToken(adaptedData.token);
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
+        dispatch(setAuthorization(true));
         dispatch(setAuthInfo(adaptedData));
         dispatch(redirectToRoute(AppRoute.Main));
       })
@@ -87,6 +104,7 @@ const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.delete(ApiRoute.Logout);
     removeToken();
+    dispatch(setAuthorization(false));
     dispatch(requireLogout());
   };
 
@@ -94,6 +112,7 @@ const logoutAction = (): ThunkActionResult =>
 export {
   fetchOfferAction,
   fetchOffersAction,
+  reviewFormSubmitAction,
   checkAuthAction,
   loginAction,
   logoutAction

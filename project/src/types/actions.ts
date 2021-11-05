@@ -2,12 +2,14 @@ import {AxiosInstance} from 'axios';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {
   setOffer,
-  setOfferDetails,
+  setNearbyOffers,
+  setComments,
   setOffers,
   setCities,
   setActiveCity,
   setAuthInfo,
   requireAuthorization,
+  setAuthorization,
   requireLogout,
   redirectToRoute
 } from '../store/action';
@@ -15,12 +17,14 @@ import type {State} from './state';
 
 type Actions =
   | ReturnType<typeof setOffer>
-  | ReturnType<typeof setOfferDetails>
+  | ReturnType<typeof setNearbyOffers>
+  | ReturnType<typeof setComments>
   | ReturnType<typeof setOffers>
   | ReturnType<typeof setCities>
   | ReturnType<typeof setActiveCity>
   | ReturnType<typeof setAuthInfo>
   | ReturnType<typeof requireAuthorization>
+  | ReturnType<typeof setAuthorization>
   | ReturnType<typeof requireLogout>
   | ReturnType<typeof redirectToRoute>;
 

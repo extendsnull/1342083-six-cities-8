@@ -9,6 +9,7 @@ type State = {
   offers: Offer[];
   cities: Cities;
   authorizationStatus: AuthorizationStatus,
+  isAuthorized: boolean;
   authInfo: AuthInfo | null,
   offer: Offer | null;
   comments: Comment[];

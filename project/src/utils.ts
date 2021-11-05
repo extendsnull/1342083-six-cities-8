@@ -46,6 +46,12 @@ const getOffersByCity = (
 
 const replaceIdParam = (url: string, id: number): string => url.replace(':id', String(id));
 
+const scrollTop = (): void => {
+  if (window.scrollY > 0) {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+};
+
 export {
   humanizeDate,
   getClassNames,
@@ -54,5 +60,6 @@ export {
   getRatingValue,
   getCities,
   getOffersByCity,
-  replaceIdParam
+  replaceIdParam,
+  scrollTop
 };

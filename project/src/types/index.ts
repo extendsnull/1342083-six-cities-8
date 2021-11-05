@@ -17,6 +17,8 @@ import type {
   Cities
 } from './city';
 
+import type {CommentPost} from './comment-post';
+
 import type {
   RawComment,
   Comment
@@ -53,6 +55,7 @@ export type {
   RawCity,
   City,
   Cities,
+  CommentPost,
   RawComment,
   Comment,
   History,
