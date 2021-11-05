@@ -11,7 +11,7 @@ import type {
   RawOffer,
   RawUser,
   User
-} from '../types';
+} from './types';
 
 const adaptLocationToClient = (rawLocation: RawMapLocation): MapLocation => ({
   lat: rawLocation.latitude,
