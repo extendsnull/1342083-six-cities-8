@@ -3,11 +3,11 @@ import {connect, ConnectedProps} from 'react-redux';
 import {fetchOfferAction} from '../../store/api-action';
 import {useParams} from 'react-router';
 import Header from '../header/header';
-import Review from '../review/review';
-import ReviewForm from '../review-form/review-form';
 import Spinner from '../spinner/spinner';
 import OfferGallery from '../offer-gallery/offer-gallery';
 import OfferGoods from '../offer-goods/offer-goods';
+import Reviews from '../reviews/reviews';
+import Map from '../map/map';
 import OfferNearby from '../offer-nearby/offer-nearby';
 import {humanizedOfferTypeMap} from '../../const';
 import {getClassNames, getRatingValue, scrollTop} from '../../utils';
@@ -37,8 +37,8 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function OfferScreen(props: PropsFromRedux): JSX.Element | null {
   const {
-    isAuthorized,
     comments,
+    isAuthorized,
     nearbyOffers,
     offer,
     onFetchOffer,
@@ -128,7 +128,13 @@ function OfferScreen(props: PropsFromRedux): JSX.Element | null {
                       'user__avatar-wrapper',
                     ])}
                   >
-                    <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                    <img
+                      className="property__avatar user__avatar"
+                      src={offer.host.avatarUrl}
+                      width="74"
+                      height="74"
+                      alt="Host avatar"
+                    />
                   </div>
                   <span className="property__user-name">{offer.host.name}</span>
                   {offer.host.isPro && (
@@ -139,23 +145,16 @@ function OfferScreen(props: PropsFromRedux): JSX.Element | null {
                   <p className="property__text">{offer.description}</p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews &middot; <span className="reviews__amount">{comments.length}</span>
-                </h2>
-                <ul className="reviews__list">
-                  {comments.map((comment) => (
-                    <Review
-                      comment={comment}
-                      key={comment.id}
-                    />
-                  ))}
-                </ul>
-                {isAuthorized && <ReviewForm offer={offer} />}
-              </section>
+              <Reviews
+                offer={offer}
+                comments={comments}
+                isAuthorized={isAuthorized}
+              />
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map offers={nearbyOffers} />
+          </section>
         </section>
         <OfferNearby offers={nearbyOffers} />
       </main>
