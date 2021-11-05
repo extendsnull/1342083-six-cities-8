@@ -44,6 +44,8 @@ const getOffersByCity = (
   activeCity: CityName,
 ): Offer[] => offers.filter((offer) => offer[OfferKey.City][CityKey.Name] === activeCity);
 
+const replaceIdParam = (url: string, id: number): string => url.replace(':id', String(id));
+
 export {
   humanizeDate,
   getClassNames,
@@ -51,5 +53,6 @@ export {
   getRandomId,
   getRatingValue,
   getCities,
-  getOffersByCity
+  getOffersByCity,
+  replaceIdParam
 };

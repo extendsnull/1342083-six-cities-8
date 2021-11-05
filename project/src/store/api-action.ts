@@ -12,25 +12,28 @@ import {
   redirectToRoute
 } from './action';
 import {ApiRoute, AppRoute, AuthorizationStatus} from '../const';
-import {getCities} from '../utils';
+import {getCities, replaceIdParam} from '../utils';
 import type {AuthData, RawAuthInfo, RawComment, RawOffer, ThunkActionResult} from '../types';
 
 const fetchOfferAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      const {data: offerData} = await api.get<RawOffer>(`/hotels/${id}`);
+      const url = replaceIdParam(ApiRoute.Hotels$Id, id);
+      const {data: offerData} = await api.get<RawOffer>(url);
       dispatch(setOffer(adaptOfferToClient(offerData)));
     } catch {
       dispatch(redirectToRoute(AppRoute.NotFound));
     }
 
     try {
+      const nearbyUrl = replaceIdParam(ApiRoute.Hotels$IdNearby, id);
+      const commentsUrl = replaceIdParam(ApiRoute.Comments$Id, id);
       const [
         {data: nearbyOffersData},
         {data: commentsData},
       ] = await Promise.all([
-        api.get<RawOffer[]>(`/hotels/${id}/nearby`),
-        api.get<RawComment[]>(`/comments/${id}`),
+        api.get<RawOffer[]>(nearbyUrl),
+        api.get<RawComment[]>(commentsUrl),
       ]);
       dispatch(setOfferDetails(
         nearbyOffersData.map(adaptOfferToClient),

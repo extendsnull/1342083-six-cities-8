@@ -63,8 +63,11 @@ enum ActionType {
 
 enum ApiRoute {
   Hotels = '/hotels',
+  Hotels$Id = '/hotels/:id',
+  Hotels$IdNearby = '/hotels/:id/nearby',
   Favorite = '/favorite',
   Comments = '/comments',
+  Comments$Id = '/comments/:id',
   Login = '/login',
   Logout = '/logout',
 }
