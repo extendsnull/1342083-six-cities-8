@@ -8,7 +8,6 @@ import {
   setAuthInfo,
   setCities,
   setComments,
-  setLoadState,
   setNearbyOffers,
   setOffer,
   setOffers
@@ -19,13 +18,10 @@ import type {AuthData, RawAuthInfo, RawComment, RawOffer, ThunkActionResult} fro
 
 const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    dispatch(setLoadState(true));
-
     const {data} = await api.get<RawOffer[]>(ApiRoute.Hotels);
     const offers = data.map(adaptOfferToClient);
     const cities = getCities(offers);
 
-    dispatch(setLoadState(false));
     dispatch(setOffers(offers));
     dispatch(setCities(cities));
   };

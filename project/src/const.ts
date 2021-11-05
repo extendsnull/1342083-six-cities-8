@@ -54,7 +54,6 @@ enum ActionType {
   SetCities = 'data/setCities',
   SetOffers = 'data/setOffers',
   SetAuthInfo = 'data/setAuthInfo',
-  SetLoadState = 'app/setLoadState',
   RedirectToRoute = 'app/redirectToRoute',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',

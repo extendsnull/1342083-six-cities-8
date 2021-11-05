@@ -4,7 +4,6 @@ import {
   setActiveCity,
   setOffers,
   setCities,
-  setLoadState,
   setAuthInfo,
   requireAuthorization,
   requireLogout,
@@ -19,7 +18,6 @@ type Actions =
   | ReturnType<typeof setActiveCity>
   | ReturnType<typeof setOffers>
   | ReturnType<typeof setCities>
-  | ReturnType<typeof setLoadState>
   | ReturnType<typeof setAuthInfo>
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof requireLogout>

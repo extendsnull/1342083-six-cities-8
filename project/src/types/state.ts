@@ -10,7 +10,6 @@ type State = {
   cities: Cities;
   authorizationStatus: AuthorizationStatus,
   authInfo: AuthInfo | null,
-  isDataLoaded: boolean;
   offer: Offer | null;
   comments: Comment[];
   nearbyOffers: Offer[];

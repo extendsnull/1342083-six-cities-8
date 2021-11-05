@@ -22,13 +22,6 @@ const setCities = (cities: Cities) => ({
   },
 } as const);
 
-const setLoadState = (isLoad: boolean) => ({
-  type: ActionType.SetLoadState,
-  payload: {
-    isLoad,
-  },
-} as const);
-
 const setAuthInfo = (authInfo: AuthInfo) => ({
   type: ActionType.SetAuthInfo,
   payload: {
@@ -77,7 +70,6 @@ export {
   setActiveCity,
   setOffers,
   setCities,
-  setLoadState,
   setAuthInfo,
   requireAuthorization,
   requireLogout,
