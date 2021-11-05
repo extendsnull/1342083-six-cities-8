@@ -8,7 +8,10 @@ import {
   setAuthInfo,
   requireAuthorization,
   requireLogout,
-  redirectToRoute
+  redirectToRoute,
+  setOffer,
+  setNearbyOffers,
+  setComments
 } from '../store/action';
 import type {State} from './state';
 
@@ -20,7 +23,10 @@ type Actions =
   | ReturnType<typeof setAuthInfo>
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof requireLogout>
-  | ReturnType<typeof redirectToRoute>;
+  | ReturnType<typeof redirectToRoute>
+  | ReturnType<typeof setOffer>
+  | ReturnType<typeof setNearbyOffers>
+  | ReturnType<typeof setComments>;
 
 type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

@@ -22,6 +22,8 @@ import type {
   Comment
 } from './comment';
 
+import type {History} from './history';
+
 import type {
   RawMapLocation,
   MapLocation
@@ -53,6 +55,7 @@ export type {
   Cities,
   RawComment,
   Comment,
+  History,
   RawMapLocation,
   MapLocation,
   RawOffer,

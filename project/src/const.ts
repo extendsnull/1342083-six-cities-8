@@ -58,6 +58,9 @@ enum ActionType {
   RedirectToRoute = 'app/redirectToRoute',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
+  SetOffer = 'data/setOffer',
+  SetComments = 'data/setCommments',
+  SetNearbyOffers = 'data/setNearbyOffers',
 }
 
 enum ApiRoute {
