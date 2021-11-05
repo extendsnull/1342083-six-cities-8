@@ -18,7 +18,7 @@ enum AuthorizationStatus {
 
 enum OfferType {
   Apartament = 'apartment',
-  Private = 'private',
+  Room = 'room',
   House = 'house',
   Hotel = 'hotel',
 }
@@ -202,7 +202,7 @@ const ratingTitleToValueMap = {
 
 const humanizedOfferTypeMap = {
   [OfferType.Apartament]: 'Apartment',
-  [OfferType.Private]: 'Private Room',
+  [OfferType.Room]: 'Private Room',
   [OfferType.House]: 'House',
   [OfferType.Hotel]: 'Hotel',
 };
