@@ -1,5 +1,3 @@
-import {getRandomId} from '../../utils';
-
 const MAX_IMAGES_COUNT = 6;
 
 type OfferGalleryProps = {
@@ -13,7 +11,7 @@ function OfferGallery(props: OfferGalleryProps): JSX.Element {
     <div className="property__gallery-container container">
       <div className="property__gallery">
         {gallery.map((image) => (
-          <div className="property__image-wrapper" key={getRandomId()}>
+          <div className="property__image-wrapper" key={image}>
             <img className="property__image" src={image} alt="" />
           </div>
         ))}

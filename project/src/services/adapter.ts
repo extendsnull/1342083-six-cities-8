@@ -1,17 +1,3 @@
-import {
-  AuthInfoKey,
-  CityKey,
-  CommentKey,
-  MapLocationKey,
-  OfferKey,
-  RawAuthInfoKey,
-  RawCityKey,
-  RawCommentKey,
-  RawMapLocationKey,
-  RawOfferKey,
-  RawUserKey,
-  UserKey
-} from '../const';
 import type {
   AuthInfo,
   City,
@@ -28,56 +14,56 @@ import type {
 } from '../types';
 
 const adaptLocationToClient = (rawLocation: RawMapLocation): MapLocation => ({
-  [MapLocationKey.Latitude]: rawLocation[RawMapLocationKey.Latitude],
-  [MapLocationKey.Longitude]: rawLocation[RawMapLocationKey.Longitude],
-  [MapLocationKey.Zoom]: rawLocation[RawMapLocationKey.Zoom],
+  lat: rawLocation.latitude,
+  lng: rawLocation.longitude,
+  zoom: rawLocation.zoom,
 });
 
 const adaptCityToClient = (rawCity: RawCity): City => ({
-  [CityKey.Location]: adaptLocationToClient(rawCity[RawCityKey.Location]),
-  [CityKey.Name]: rawCity[RawCityKey.Name],
+  location: adaptLocationToClient(rawCity.location),
+  name: rawCity.name,
 });
 
 const adaptUserToClient = (rawUser: RawUser): User => ({
-  [UserKey.AvatarUrl]: rawUser[RawUserKey.AvatarUrl],
-  [UserKey.Id]: rawUser[RawUserKey.Id],
-  [UserKey.IsPro]: rawUser[RawUserKey.IsPro],
-  [UserKey.Name]: rawUser[RawUserKey.Name],
+  avatarUrl: rawUser.avatar_url,
+  id: rawUser.id,
+  isPro: rawUser.is_pro,
+  name: rawUser.name,
 });
 
 const adaptCommentToClient = (rawComment: RawComment): Comment => ({
-  [CommentKey.Comment]: rawComment[RawCommentKey.Comment],
-  [CommentKey.Date]: rawComment[RawCommentKey.Date],
-  [CommentKey.Id]: rawComment[RawCommentKey.Id],
-  [CommentKey.Rating]: rawComment[RawCommentKey.Rating],
-  [CommentKey.User]: adaptUserToClient(rawComment[RawCommentKey.User]),
+  comment: rawComment.comment,
+  date: rawComment.date,
+  id: rawComment.id,
+  rating: rawComment.rating,
+  user: adaptUserToClient(rawComment.user),
 });
 
 const adaptOfferToClient = (rawOffer: RawOffer): Offer => ({
-  [OfferKey.City]: adaptCityToClient(rawOffer[RawOfferKey.City]),
-  [OfferKey.Description]: rawOffer[RawOfferKey.Description],
-  [OfferKey.Goods]: rawOffer[RawOfferKey.Goods],
-  [OfferKey.Host]: adaptUserToClient(rawOffer[RawOfferKey.Host]),
-  [OfferKey.Id]: rawOffer[RawOfferKey.Id],
-  [OfferKey.Images]: rawOffer[RawOfferKey.Images],
-  [OfferKey.IsFavorite]: rawOffer[RawOfferKey.IsFavorite],
-  [OfferKey.IsPremium]: rawOffer[RawOfferKey.IsPremium],
-  [OfferKey.Location]: adaptLocationToClient(rawOffer[RawOfferKey.Location]),
-  [OfferKey.MaxAdults]: rawOffer[RawOfferKey.MaxAdults],
-  [OfferKey.PreviewImage]: rawOffer[RawOfferKey.PreviewImage],
-  [OfferKey.Price]: rawOffer[RawOfferKey.Price],
-  [OfferKey.Rating]: rawOffer[RawOfferKey.Rating],
-  [OfferKey.Title]: rawOffer[RawOfferKey.Title],
-  [OfferKey.Type]: rawOffer[RawOfferKey.Type],
+  city: adaptCityToClient(rawOffer.city),
+  description: rawOffer.description,
+  goods: rawOffer.goods,
+  host: adaptUserToClient(rawOffer.host),
+  id: rawOffer.id,
+  images: rawOffer.images,
+  isFavorite: rawOffer.is_favorite,
+  isPremium: rawOffer.is_premium,
+  location: adaptLocationToClient(rawOffer.location),
+  maxAdults: rawOffer.max_adults,
+  previewImage: rawOffer.preview_image,
+  price: rawOffer.price,
+  rating: rawOffer.rating,
+  title: rawOffer.title,
+  type: rawOffer.type,
 });
 
 const adaptAuthToClient = (rawAuthInfo: RawAuthInfo): AuthInfo => ({
-  [AuthInfoKey.AvatarUrl]: rawAuthInfo[RawAuthInfoKey.AvatarUrl],
-  [AuthInfoKey.Email]: rawAuthInfo[RawAuthInfoKey.Email],
-  [AuthInfoKey.Id]: rawAuthInfo[RawAuthInfoKey.Id],
-  [AuthInfoKey.IsPro]: rawAuthInfo[RawAuthInfoKey.IsPro],
-  [AuthInfoKey.Name]: rawAuthInfo[RawAuthInfoKey.Name],
-  [AuthInfoKey.Token]: rawAuthInfo[RawAuthInfoKey.Token],
+  avatarUrl: rawAuthInfo.avatar_url,
+  email: rawAuthInfo.email,
+  id: rawAuthInfo.id,
+  isPro: rawAuthInfo.is_pro,
+  name: rawAuthInfo.name,
+  token: rawAuthInfo.token,
 });
 
 export {

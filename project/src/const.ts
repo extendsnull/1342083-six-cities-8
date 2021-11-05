@@ -1,5 +1,4 @@
 const LAYER_URL = 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png';
-const RANDOM_ID_LENGTH = 6;
 const RATING_MAX_VALUE = 5;
 const AUTH_TOKEN_KEY_NAME = 'extendsnull-six-cities-token';
 
@@ -210,7 +209,6 @@ const humanizedOfferTypeMap = {
 
 export {
   LAYER_URL,
-  RANDOM_ID_LENGTH,
   RATING_MAX_VALUE,
   AUTH_TOKEN_KEY_NAME,
   AppRoute,

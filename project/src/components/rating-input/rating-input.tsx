@@ -1,5 +1,3 @@
-import {MouseEvent} from 'react';
-
 type RatingInputProps = {
   value: number;
   title: string;
@@ -12,7 +10,7 @@ function RatingInput(props: RatingInputProps): JSX.Element {
   const {value, title, isChecked, isDisabled, onRatingChange} = props;
   const id = `${value}-stars`;
 
-  const handleRatingLabelClick = (evt: MouseEvent<HTMLLabelElement>) => onRatingChange(value);
+  const handleRatingLabelClick = () => onRatingChange(value);
 
   return (
     <>
