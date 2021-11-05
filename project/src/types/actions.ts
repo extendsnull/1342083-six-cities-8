@@ -1,30 +1,28 @@
 import {AxiosInstance} from 'axios';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {
-  setActiveCity,
+  setOffer,
+  setOfferDetails,
   setOffers,
   setCities,
+  setActiveCity,
   setAuthInfo,
   requireAuthorization,
   requireLogout,
-  redirectToRoute,
-  setOffer,
-  setNearbyOffers,
-  setComments
+  redirectToRoute
 } from '../store/action';
 import type {State} from './state';
 
 type Actions =
-  | ReturnType<typeof setActiveCity>
+  | ReturnType<typeof setOffer>
+  | ReturnType<typeof setOfferDetails>
   | ReturnType<typeof setOffers>
   | ReturnType<typeof setCities>
+  | ReturnType<typeof setActiveCity>
   | ReturnType<typeof setAuthInfo>
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof requireLogout>
-  | ReturnType<typeof redirectToRoute>
-  | ReturnType<typeof setOffer>
-  | ReturnType<typeof setNearbyOffers>
-  | ReturnType<typeof setComments>;
+  | ReturnType<typeof redirectToRoute>;
 
 type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

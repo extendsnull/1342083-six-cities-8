@@ -50,16 +50,15 @@ enum CityName {
 }
 
 enum ActionType {
-  SetActiveCity = 'data/setActiveCity',
-  SetCities = 'data/setCities',
+  SetOffer = 'data/setOffer',
+  SetOfferDetails = 'data/setOfferDetails',
   SetOffers = 'data/setOffers',
+  SetCities = 'data/setCities',
+  SetActiveCity = 'data/setActiveCity',
   SetAuthInfo = 'data/setAuthInfo',
   RedirectToRoute = 'app/redirectToRoute',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
-  SetOffer = 'data/setOffer',
-  SetComments = 'data/setCommments',
-  SetNearbyOffers = 'data/setNearbyOffers',
 }
 
 enum ApiRoute {

@@ -14,10 +14,17 @@ const initialState: State = {
 
 const reducer = (state: State = initialState, action: Actions): State => {
   switch (action.type) {
-    case ActionType.SetActiveCity: {
+    case ActionType.SetOffer: {
       return {
         ...state,
-        activeCity: action.payload.activeCity,
+        offer: action.payload.offer,
+      };
+    }
+    case ActionType.SetOfferDetails: {
+      return {
+        ...state,
+        nearbyOffers: action.payload.nearbyOffers,
+        comments: action.payload.comments,
       };
     }
     case ActionType.SetOffers: {
@@ -30,6 +37,12 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {
         ...state,
         cities: action.payload.cities,
+      };
+    }
+    case ActionType.SetActiveCity: {
+      return {
+        ...state,
+        activeCity: action.payload.activeCity,
       };
     }
     case ActionType.RequireAuthorization: {
@@ -48,24 +61,6 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {
         ...state,
         authInfo: action.payload.authInfo,
-      };
-    }
-    case ActionType.SetOffer: {
-      return {
-        ...state,
-        offer: action.payload.offer,
-      };
-    }
-    case ActionType.SetNearbyOffers: {
-      return {
-        ...state,
-        nearbyOffers: action.payload.nearbyOffers,
-      };
-    }
-    case ActionType.SetComments: {
-      return {
-        ...state,
-        comments: action.payload.comments,
       };
     }
     default: {
