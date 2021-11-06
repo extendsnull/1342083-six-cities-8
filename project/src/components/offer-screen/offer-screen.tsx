@@ -153,7 +153,7 @@ function OfferScreen(props: PropsFromRedux): JSX.Element | null {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={nearbyOffers} />
+            <Map offers={nearbyOffers} activeOffer={null} />
           </section>
         </section>
         <OfferNearby offers={nearbyOffers} />

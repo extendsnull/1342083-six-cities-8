@@ -8,7 +8,7 @@ import { connect, ConnectedProps } from 'react-redux';
 
 type MapProps = {
   offers: Offer[];
-  activeOffer?: Offer | null;
+  activeOffer: Offer | null;
 }
 
 const defaultIcon = new Icon({
