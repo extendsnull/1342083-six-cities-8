@@ -192,6 +192,13 @@ enum RatingTitle {
   Terribly = 'terribly',
 }
 
+enum SortType {
+  Popular = 'popular',
+  PriceAscent = 'price-ascent',
+  PriceDescent = 'price-descent',
+  RatingDescent = 'rating-descent',
+}
+
 const ratingTitleToValue = {
   [RatingTitle.Perfect]: 5,
   [RatingTitle.Good]: 4,
@@ -205,6 +212,13 @@ const humanizedOfferToType = {
   [OfferType.Room]: 'Private Room',
   [OfferType.House]: 'House',
   [OfferType.Hotel]: 'Hotel',
+};
+
+const sortTypeToLabel = {
+  [SortType.Popular]: 'Popular',
+  [SortType.PriceAscent]: 'Price: low to high',
+  [SortType.PriceDescent]: 'Price: high to low',
+  [SortType.RatingDescent]: 'Top rated first',
 };
 
 export {
@@ -234,6 +248,8 @@ export {
   RawAuthInfoKey,
   AuthInfoKey,
   RatingTitle,
+  SortType,
   ratingTitleToValue,
-  humanizedOfferToType
+  humanizedOfferToType,
+  sortTypeToLabel
 };

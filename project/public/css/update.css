@@ -14,3 +14,13 @@
   justify-content: center;
   padding-bottom: 0;
 }
+
+.places__sorting-arrow {
+  top: 50%;
+  transition: transform 150ms linear;
+  transform: translateY(-50%);
+}
+
+.places__sorting-type--active .places__sorting-arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
