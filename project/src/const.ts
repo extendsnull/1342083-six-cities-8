@@ -192,7 +192,7 @@ enum RatingTitle {
   Terribly = 'terribly',
 }
 
-const ratingTitleToValueMap = {
+const ratingTitleToValue = {
   [RatingTitle.Perfect]: 5,
   [RatingTitle.Good]: 4,
   [RatingTitle.NotBad]: 3,
@@ -200,7 +200,7 @@ const ratingTitleToValueMap = {
   [RatingTitle.Terribly]: 1,
 };
 
-const humanizedOfferTypeMap = {
+const humanizedOfferToType = {
   [OfferType.Apartament]: 'Apartment',
   [OfferType.Room]: 'Private Room',
   [OfferType.House]: 'House',
@@ -234,6 +234,6 @@ export {
   RawAuthInfoKey,
   AuthInfoKey,
   RatingTitle,
-  ratingTitleToValueMap,
-  humanizedOfferTypeMap
+  ratingTitleToValue,
+  humanizedOfferToType
 };
