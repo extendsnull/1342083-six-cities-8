@@ -8,7 +8,7 @@ import { connect, ConnectedProps } from 'react-redux';
 
 type MapProps = {
   offers: Offer[];
-  activeOffer: Offer | null;
+  activeOffer?: Offer | null;
 }
 
 const defaultIcon = new Icon({
@@ -37,12 +37,12 @@ function Map(props: ConnectedComponentProps): JSX.Element {
   const {offers, activeOffer, activeCity, cities} = props;
   const activeCityData = cities[activeCity];
 
-  const mapRef = useRef(null);
+  const mapRef = useRef<HTMLDivElement | null>(null);
   const map = useMap(mapRef, activeCityData);
 
   useEffect(() => {
     if (map) {
-      offers.forEach((offer) => {
+      const markers = offers.map((offer) => {
         const isActive = activeOffer?.id === offer.id;
 
         const marker = new Marker({
@@ -52,7 +52,13 @@ function Map(props: ConnectedComponentProps): JSX.Element {
 
         marker.setIcon(isActive ? activeIcon : defaultIcon);
         marker.addTo(map);
+
+        return marker;
       });
+
+      return () => {
+        markers.forEach((marker) => marker.remove());
+      };
     }
 
   }, [map, offers, activeOffer]);

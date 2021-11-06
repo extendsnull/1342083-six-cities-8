@@ -1,5 +1,4 @@
 const LAYER_URL = 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png';
-const RANDOM_ID_LENGTH = 6;
 const RATING_MAX_VALUE = 5;
 const AUTH_TOKEN_KEY_NAME = 'extendsnull-six-cities-token';
 
@@ -19,7 +18,7 @@ enum AuthorizationStatus {
 
 enum OfferType {
   Apartament = 'apartment',
-  Private = 'private',
+  Room = 'room',
   House = 'house',
   Hotel = 'hotel',
 }
@@ -203,14 +202,13 @@ const ratingTitleToValueMap = {
 
 const humanizedOfferTypeMap = {
   [OfferType.Apartament]: 'Apartment',
-  [OfferType.Private]: 'Private Room',
+  [OfferType.Room]: 'Private Room',
   [OfferType.House]: 'House',
   [OfferType.Hotel]: 'Hotel',
 };
 
 export {
   LAYER_URL,
-  RANDOM_ID_LENGTH,
   RATING_MAX_VALUE,
   AUTH_TOKEN_KEY_NAME,
   AppRoute,

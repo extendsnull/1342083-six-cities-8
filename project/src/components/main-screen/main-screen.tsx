@@ -36,17 +36,23 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
     setActiveOffer(offer);
   };
 
-  const getScreen = () => {
-    if (isLoaded) {
-      return (
+  if (isLoaded) {
+    return (
+      <div className="page page--gray page--main">
+        <Header hasNav />
+        <Tabs />
         <main className="page__main page__main--spinner">
           <Spinner />
         </main>
-      );
-    }
+      </div>
+    );
+  }
 
-    if (hasOffers) {
-      return (
+  if (hasOffers) {
+    return (
+      <div className="page page--gray page--main">
+        <Header hasNav />
+        <Tabs />
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="cities">
@@ -91,10 +97,14 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
             </div>
           </div>
         </main>
-      );
-    }
+      </div>
+    );
+  }
 
-    return (
+  return (
+    <div className="page page--gray page--main">
+      <Header hasNav />
+      <Tabs />
       <main className="page__main page__main--index page__main--index-empty">
         <h1 className="visually-hidden">Cities</h1>
         <div className="cities">
@@ -109,14 +119,6 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
           </div>
         </div>
       </main>
-    );
-  };
-
-  return (
-    <div className="page page--gray page--main">
-      <Header hasNav />
-      <Tabs />
-      {getScreen()}
     </div>
   );
 }

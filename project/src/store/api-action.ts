@@ -1,5 +1,5 @@
 import {toast} from 'react-toastify';
-import {adaptAuthToClient, adaptCommentToClient, adaptOfferToClient} from '../services/adapter';
+import {adaptAuthToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
 import {removeToken, setToken} from '../services/token';
 import {
   setOffer,
