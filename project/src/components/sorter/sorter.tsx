@@ -1,9 +1,27 @@
 import {useState} from 'react';
+import {Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
 import {getClassNames} from '../../utils';
 import {SortType, sortTypeToLabel} from '../../const';
+import type {Actions, State} from '../../types';
+import { setSortType } from '../../store/action';
 
-function Sorter(): JSX.Element {
-  const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Popular);
+const mapStateToProps = ({sortType}: State) => ({
+  sortType,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onSortTypeChange(sortType: SortType) {
+    dispatch(setSortType(sortType));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function Sorter(props: PropsFromRedux): JSX.Element {
+  const {sortType: currentSortType, onSortTypeChange} = props;
   const [active, setActive] = useState(false);
 
   const handleSortingTypeClick = () => {
@@ -21,7 +39,7 @@ function Sorter(): JSX.Element {
         tabIndex={0}
         onClick={handleSortingTypeClick}
       >
-        Popular
+        {sortTypeToLabel[currentSortType]}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -39,7 +57,7 @@ function Sorter(): JSX.Element {
               {'places__option--active': currentSortType === sortType},
             )}
             tabIndex={0}
-            onClick={() => setCurrentSortType(sortType)}
+            onClick={() => onSortTypeChange(sortType)}
             key={key}
           >
             {sortTypeToLabel[sortType]}
@@ -50,4 +68,5 @@ function Sorter(): JSX.Element {
   );
 }
 
-export default Sorter;
+export {Sorter};
+export default connector(Sorter);

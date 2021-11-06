@@ -1,4 +1,4 @@
-import {ActionType, AppRoute, AuthorizationStatus, CityName} from '../const';
+import {ActionType, AppRoute, AuthorizationStatus, CityName, SortType} from '../const';
 import type {AuthInfo, Cities, Comment, Offer} from '../types';
 
 const setOffer = (offer: Offer) => ({
@@ -43,6 +43,13 @@ const setActiveCity = (activeCity: CityName) => ({
   },
 } as const);
 
+const setSortType = (sortType: SortType) => ({
+  type: ActionType.SetSortType,
+  payload: {
+    sortType,
+  },
+} as const);
+
 const setAuthInfo = (authInfo: AuthInfo) => ({
   type: ActionType.SetAuthInfo,
   payload: {
@@ -80,6 +87,7 @@ export {
   setOffers,
   setCities,
   setActiveCity,
+  setSortType,
   setAuthInfo,
   requireAuthorization,
   setAuthorization,

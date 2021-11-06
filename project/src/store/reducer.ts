@@ -1,4 +1,4 @@
-import {ActionType, AuthorizationStatus, CityName} from '../const';
+import {ActionType, AuthorizationStatus, CityName, SortType} from '../const';
 import type {Actions, State} from '../types';
 
 const initialState: State = {
@@ -8,6 +8,7 @@ const initialState: State = {
   authInfo: null,
   authorizationStatus: AuthorizationStatus.Unknown,
   isAuthorized: false,
+  sortType: SortType.Popular,
   offer: null,
   comments: [],
   nearbyOffers: [],
@@ -55,6 +56,12 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {
         ...state,
         authorizationStatus: action.payload.authorizationStatus,
+      };
+    }
+    case ActionType.SetSortType: {
+      return {
+        ...state,
+        sortType: action.payload.sortType,
       };
     }
     case ActionType.SetAuthorization: {
