@@ -208,7 +208,7 @@ const ratingTitleToValue = {
   [RatingTitle.Terribly]: 1,
 };
 
-const humanizedOfferToType = {
+const offerTypeToReadable = {
   [OfferType.Apartament]: 'Apartment',
   [OfferType.Room]: 'Private Room',
   [OfferType.House]: 'House',
@@ -251,6 +251,6 @@ export {
   RatingTitle,
   SortType,
   ratingTitleToValue,
-  humanizedOfferToType,
+  offerTypeToReadable,
   sortTypeToLabel
 };

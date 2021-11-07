@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {humanizedOfferToType, OfferCardType} from '../../const';
+import {offerTypeToReadable, OfferCardType} from '../../const';
 import {getClassNames, getOfferUrl, getRatingValue} from '../../utils';
 import type {LocationDescriptor} from 'history';
 import type {Offer} from '../../types';
@@ -98,7 +98,7 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={offerUrl}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{humanizedOfferToType[offer.type]}</p>
+        <p className="place-card__type">{offerTypeToReadable[offer.type]}</p>
       </div>
     </article>
   );

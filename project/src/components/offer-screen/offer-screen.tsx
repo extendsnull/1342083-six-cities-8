@@ -9,7 +9,7 @@ import OfferGoods from '../offer-goods/offer-goods';
 import Reviews from '../reviews/reviews';
 import Map from '../map/map';
 import OfferNearby from '../offer-nearby/offer-nearby';
-import {humanizedOfferToType} from '../../const';
+import {offerTypeToReadable} from '../../const';
 import {getClassNames, getRatingValue, scrollTop} from '../../utils';
 import type {History, State, ThunkAppDispatch} from '../../types';
 
@@ -104,7 +104,7 @@ function OfferScreen(props: PropsFromRedux): JSX.Element | null {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {humanizedOfferToType[offer.type]}
+                  {offerTypeToReadable[offer.type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {offer.maxAdults} Bedrooms
