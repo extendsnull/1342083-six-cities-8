@@ -1,6 +1,6 @@
 import {AuthorizationStatus, CityName, SortType} from '../const';
 import type {AuthorizationInfo, Cities, Comment, Offer} from '../types';
-import {sortOffersByType} from '../utils';
+import {getOffersByCity, sortOffersByType} from '../utils';
 import {NameSpace} from './const';
 import type {State} from './types';
 
@@ -8,10 +8,10 @@ const getOffer = (state: State): Offer | null => state[NameSpace.Data].offer;
 
 const getOffers = (state: State): Offer[] => state[NameSpace.Data].offers;
 
-const getOffersBySortType = (state: State): Offer[] =>
-  sortOffersByType(state[NameSpace.Data].offers, state[NameSpace.Data].sortType);
+const getFilteredAndSortedOffers = (state: State): Offer[] =>
+  sortOffersByType(getOffersByCity(state[NameSpace.Data].offers, state[NameSpace.Data].activeCity), state[NameSpace.Data].sortType);
 
-const getСities = (state: State): Cities => state[NameSpace.Data].cities;
+const getCities = (state: State): Cities => state[NameSpace.Data].cities;
 
 const getNearbyOffers = (state: State): Offer[] => state[NameSpace.Data].nearbyOffers;
 
@@ -30,8 +30,8 @@ const getAuthorizationInfo= (state: State): AuthorizationInfo | null => state[Na
 export {
   getOffer,
   getOffers,
-  getOffersBySortType,
-  getСities,
+  getFilteredAndSortedOffers,
+  getCities,
   getNearbyOffers,
   getComments,
   getActiveCity,
