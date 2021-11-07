@@ -56,6 +56,7 @@ enum ActionType {
   SetCities = 'data/setCities',
   SetActiveCity = 'data/setActiveCity',
   SetAuthInfo = 'data/setAuthInfo',
+  SetSortType = 'data/setSortType',
   RedirectToRoute = 'app/redirectToRoute',
   RequireAuthorization = 'user/requireAuthorization',
   SetAuthorization = 'user/setAuthorization',
@@ -192,7 +193,14 @@ enum RatingTitle {
   Terribly = 'terribly',
 }
 
-const ratingTitleToValueMap = {
+enum SortType {
+  Popular = 'popular',
+  PriceAscent = 'price-ascent',
+  PriceDescent = 'price-descent',
+  RatingDescent = 'rating-descent',
+}
+
+const ratingTitleToValue = {
   [RatingTitle.Perfect]: 5,
   [RatingTitle.Good]: 4,
   [RatingTitle.NotBad]: 3,
@@ -200,11 +208,18 @@ const ratingTitleToValueMap = {
   [RatingTitle.Terribly]: 1,
 };
 
-const humanizedOfferTypeMap = {
+const humanizedOfferToType = {
   [OfferType.Apartament]: 'Apartment',
   [OfferType.Room]: 'Private Room',
   [OfferType.House]: 'House',
   [OfferType.Hotel]: 'Hotel',
+};
+
+const sortTypeToLabel = {
+  [SortType.Popular]: 'Popular',
+  [SortType.PriceAscent]: 'Price: low to high',
+  [SortType.PriceDescent]: 'Price: high to low',
+  [SortType.RatingDescent]: 'Top rated first',
 };
 
 export {
@@ -234,6 +249,8 @@ export {
   RawAuthInfoKey,
   AuthInfoKey,
   RatingTitle,
-  ratingTitleToValueMap,
-  humanizedOfferTypeMap
+  SortType,
+  ratingTitleToValue,
+  humanizedOfferToType,
+  sortTypeToLabel
 };

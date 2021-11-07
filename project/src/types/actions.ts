@@ -8,6 +8,7 @@ import {
   setCities,
   setActiveCity,
   setAuthInfo,
+  setSortType,
   requireAuthorization,
   setAuthorization,
   requireLogout,
@@ -23,6 +24,7 @@ type Actions =
   | ReturnType<typeof setCities>
   | ReturnType<typeof setActiveCity>
   | ReturnType<typeof setAuthInfo>
+  | ReturnType<typeof setSortType>
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof setAuthorization>
   | ReturnType<typeof requireLogout>

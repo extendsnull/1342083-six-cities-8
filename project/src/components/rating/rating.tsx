@@ -1,5 +1,5 @@
 import RatingInput from '../rating-input/rating-input';
-import {ratingTitleToValueMap} from '../../const';
+import {ratingTitleToValue} from '../../const';
 
 type RatingProps = {
   currentRating: number;
@@ -12,7 +12,7 @@ function Rating(props: RatingProps): JSX.Element {
 
   return (
     <div className="reviews__rating-form form__rating">
-      {Object.entries(ratingTitleToValueMap).map(([title, value]) => {
+      {Object.entries(ratingTitleToValue).map(([title, value]) => {
         const isChecked = rating === value;
 
         return (

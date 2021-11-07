@@ -3,7 +3,8 @@ import {generatePath} from 'react-router';
 import {
   RATING_MAX_VALUE,
   AppRoute,
-  CityName
+  CityName,
+  SortType
 } from './const';
 import type {Cities, Offer} from './types';
 
@@ -33,6 +34,24 @@ const getCities = (offers: Offer[]): Cities => {
   return cities;
 };
 
+const sortOffersByType = (offers: Offer[], sortType: SortType): Offer[] => {
+  switch (sortType) {
+    case SortType.PriceAscent: {
+      return offers.slice().sort((firstOffer, secondOffer) => firstOffer.price - secondOffer.price);
+    }
+
+    case SortType.PriceDescent: {
+      return offers.slice().sort((firstOffer, secondOffer) => secondOffer.price - firstOffer.price);
+    }
+
+    case SortType.RatingDescent: {
+      return offers.slice().sort((firstOffer, secondOffer) => secondOffer.rating - firstOffer.rating);
+    }
+  }
+
+  return offers;
+};
+
 const getOffersByCity = (
   offers: Offer[],
   activeCity: CityName,
@@ -52,6 +71,7 @@ export {
   getOfferUrl,
   getRatingValue,
   getCities,
+  sortOffersByType,
   getOffersByCity,
   replaceIdParam,
   scrollTop

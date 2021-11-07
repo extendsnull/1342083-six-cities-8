@@ -1,4 +1,4 @@
-import {AuthorizationStatus, CityName} from '../const';
+import {AuthorizationStatus, CityName, SortType} from '../const';
 import type {Offer} from './offer';
 import type {Cities} from './city';
 import type {Comment} from './comment';
@@ -11,6 +11,7 @@ type State = {
   authorizationStatus: AuthorizationStatus,
   isAuthorized: boolean;
   authInfo: AuthInfo | null,
+  sortType: SortType,
   offer: Offer | null;
   comments: Comment[];
   nearbyOffers: Offer[];
