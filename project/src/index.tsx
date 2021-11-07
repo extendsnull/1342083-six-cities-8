@@ -1,6 +1,6 @@
+import {configureStore} from '@reduxjs/toolkit';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
 import {ToastContainer} from 'react-toastify';
 import App from './components/app/app';
