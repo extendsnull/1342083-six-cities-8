@@ -1,14 +1,10 @@
 import {combineReducers} from 'redux';
-import {data, user} from './reducers';
-
-enum NameSpace {
-  Data = 'DATA',
-  User = 'USER',
-}
+import {NameSpace} from './const';
+import {dataReducer, userReducer} from './reducers';
 
 const rootReducer = combineReducers({
-  [NameSpace.Data]: data,
-  [NameSpace.User]: user,
+  [NameSpace.Data]: dataReducer,
+  [NameSpace.User]: userReducer,
 });
 
 type RootState = ReturnType<typeof rootReducer>;

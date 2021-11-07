@@ -11,24 +11,12 @@ const initialState: AppData = {
   sortType: SortType.Popular,
 };
 
-const data = (state = initialState, action: Actions): AppData => {
+const dataReducer = (state = initialState, action: Actions): AppData => {
   switch (action.type) {
     case ActionType.SetOffer: {
       return {
         ...state,
         offer: action.payload,
-      };
-    }
-    case ActionType.SetNearbyOffers: {
-      return {
-        ...state,
-        nearbyOffers: action.payload,
-      };
-    }
-    case ActionType.SetComments: {
-      return {
-        ...state,
-        comments: action.payload,
       };
     }
     case ActionType.SetOffers: {
@@ -41,6 +29,18 @@ const data = (state = initialState, action: Actions): AppData => {
       return {
         ...state,
         cities: action.payload,
+      };
+    }
+    case ActionType.SetNearbyOffers: {
+      return {
+        ...state,
+        nearbyOffers: action.payload,
+      };
+    }
+    case ActionType.SetComments: {
+      return {
+        ...state,
+        comments: action.payload,
       };
     }
     case ActionType.SetActiveCity: {
@@ -62,5 +62,5 @@ const data = (state = initialState, action: Actions): AppData => {
 };
 
 export {
-  data
+  dataReducer
 };

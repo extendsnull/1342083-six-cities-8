@@ -7,7 +7,7 @@ const initialState: UserProcess = {
   authorizationInfo: null,
 };
 
-const user = (state = initialState, action: Actions): UserProcess => {
+const userReducer = (state = initialState, action: Actions): UserProcess => {
   switch (action.type) {
     case ActionType.RequireAuthorization: {
       return {
@@ -40,5 +40,5 @@ const user = (state = initialState, action: Actions): UserProcess => {
 };
 
 export {
-  user
+  userReducer
 };

@@ -1,2 +1,2 @@
-export {data} from './data';
-export {user} from './user';
+export {dataReducer} from './data-reducer';
+export {userReducer} from './user-reducer';
