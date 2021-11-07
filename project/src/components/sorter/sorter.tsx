@@ -1,36 +1,21 @@
 import {useState} from 'react';
-import {Dispatch} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {SortType, sortTypeToLabel} from '../../const';
 import {setSortType} from '../../store/actions';
 import {getSortType} from '../../store/selectors';
-import type {State} from '../../store/types';
 import {getClassNames} from '../../utils';
 
-const mapStateToProps = (state: State) => ({
-  sortType: getSortType(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onSortTypeChange(sortType: SortType) {
-    dispatch(setSortType(sortType));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Sorter(props: PropsFromRedux): JSX.Element {
-  const {sortType: currentSortType, onSortTypeChange} = props;
+function Sorter(): JSX.Element {
+  const currentSortType = useSelector(getSortType);
   const [isActive, setIsActive] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const handleTogglerClick = () => {
     setIsActive((prevActive) => !prevActive);
   };
 
   const handleSortTypeChange = (sortType: SortType) => () => {
-    onSortTypeChange(sortType);
+    dispatch(setSortType(sortType));
     setIsActive(false);
   };
 
@@ -63,8 +48,8 @@ function Sorter(props: PropsFromRedux): JSX.Element {
               {'places__option--active': currentSortType === sortType},
             )}
             tabIndex={0}
-            onClick={handleSortTypeChange(sortType)}
             key={key}
+            onClick={handleSortTypeChange(sortType)}
           >
             {sortTypeToLabel[sortType]}
           </li>
@@ -74,5 +59,4 @@ function Sorter(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {Sorter};
-export default connector(Sorter);
+export default Sorter;

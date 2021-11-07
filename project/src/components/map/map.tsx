@@ -1,12 +1,11 @@
-import {useEffect, useRef} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
 import {Icon, Marker} from 'leaflet';
-import useMap from '../../hooks/use-map';
+import {useEffect, useRef} from 'react';
+import {useSelector} from 'react-redux';
 import {MapIcon, MapIconSize} from '../../const';
+import useMap from '../../hooks/use-map';
+import {getActiveCity, getCities} from '../../store/selectors';
 import type {Offer} from '../../types';
-import type {State} from '../../store/types';
 import 'leaflet/dist/leaflet.css';
-import {getActiveCity, getСities} from '../../store/selectors';
 
 type MapProps = {
   offers: Offer[];
@@ -25,20 +24,11 @@ const activeIcon = new Icon({
   iconAnchor: [MapIconSize.Width / 2, MapIconSize.Height],
 });
 
-const mapStateToProps = (state: State) => ({
-  activeCity: getActiveCity(state),
-  cities: getСities(state),
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & MapProps;
-
-function Map(props: ConnectedComponentProps): JSX.Element {
-  const {offers, activeOffer, activeCity, cities} = props;
+function Map(props: MapProps): JSX.Element {
+  const {offers, activeOffer} = props;
+  const cities = useSelector(getCities);
+  const activeCity = useSelector(getActiveCity);
   const activeCityData = cities[activeCity];
-
   const mapRef = useRef<HTMLDivElement | null>(null);
   const map = useMap(mapRef, activeCityData);
 
@@ -65,8 +55,7 @@ function Map(props: ConnectedComponentProps): JSX.Element {
 
   }, [map, offers, activeOffer]);
 
-  return <div style={{height: '100%'}} ref={mapRef}></div>;
+  return <div ref={mapRef}></div>;
 }
 
-export {Map};
-export default connector(Map);
+export default Map;

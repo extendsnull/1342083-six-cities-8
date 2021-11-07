@@ -1,37 +1,27 @@
 import {useEffect, useState} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {OfferCardType} from '../../const';
-import type {State} from '../../store/types';
-import {getActiveCity, getOffersBySortType} from '../../store/selectors';
+import {getActiveCity, getFilteredAndSortedOffers} from '../../store/selectors';
+import Tabs from '../tabs/tabs';
 import type {Offer} from '../../types';
 import Header from '../header/header';
-import Tabs from '../tabs/tabs';
-import Spinner from '../spinner/spinner';
-import Sorter from '../sorter/sorter';
-import OfferCard from '../offer-card/offer-card';
 import Map from '../map/map';
+import OfferCard from '../offer-card/offer-card';
+import Sorter from '../sorter/sorter';
+import Spinner from '../spinner/spinner';
 
-const mapStateToProps = (state: State) => ({
-  offers: getOffersBySortType(state),
-  activeCity: getActiveCity(state),
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function MainScreen(props: PropsFromRedux): JSX.Element {
-  const {offers, activeCity} = props;
-  const hasOffers = Boolean(offers.length);
-
+function MainScreen(): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
   const [isLoaded, setLoading] = useState(true);
+  const offers = useSelector(getFilteredAndSortedOffers);
+  const activeCity = useSelector(getActiveCity);
+  const hasOffers = Boolean(offers.length);
 
   useEffect(() => {
-    if (offers.length) {
+    if (hasOffers) {
       setLoading(false);
     }
-  }, [offers]);
+  }, [hasOffers]);
 
   const handleMouseOver = (offer: Offer): void => {
     setActiveOffer(offer);
@@ -40,7 +30,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
   if (isLoaded) {
     return (
       <div className="page page--gray page--main">
-        <Header hasNav />
+        <Header />
         <Tabs />
         <main className="page__main page__main--spinner">
           <Spinner />
@@ -52,7 +42,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
   if (hasOffers) {
     return (
       <div className="page page--gray page--main">
-        <Header hasNav />
+        <Header />
         <Tabs />
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
@@ -65,9 +55,9 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
                 <div className="cities__places-list places__list tabs__content">
                   {offers.map((offer: Offer) => (
                     <OfferCard
-                      key={offer.id}
                       type={OfferCardType.Cities}
                       offer={offer}
+                      key={offer.id}
                       onMouseOver={handleMouseOver}
                     />
                   ))}
@@ -75,10 +65,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map
-                    offers={offers}
-                    activeOffer={activeOffer}
-                  />
+                  <Map offers={offers} activeOffer={activeOffer}/>
                 </section>
               </div>
             </div>
@@ -90,7 +77,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
-      <Header hasNav />
+      <Header />
       <Tabs />
       <main className="page__main page__main--index page__main--index-empty">
         <h1 className="visually-hidden">Cities</h1>
@@ -99,7 +86,9 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
             <section className="cities__no-places">
               <div className="cities__status-wrapper tabs__content">
                 <b className="cities__status">No places to stay available</b>
-                <p className="cities__status-description">We could not find any property available at the moment in {activeCity}</p>
+                <p className="cities__status-description">
+                  We could not find any property available at the moment in {activeCity}
+                </p>
               </div>
             </section>
             <div className="cities__right-section"></div>
@@ -110,5 +99,4 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {MainScreen};
-export default connector(MainScreen);
+export default MainScreen;

@@ -24,3 +24,11 @@
 .places__sorting-type--active .places__sorting-arrow {
   transform: translateY(-50%) rotate(180deg);
 }
+
+.map > .leaflet-container {
+  height: 100%;
+}
+
+.cities__not-found-link:hover {
+  color: #4481c3;
+}

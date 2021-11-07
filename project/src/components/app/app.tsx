@@ -1,12 +1,12 @@
 import {Router as BrowserRouter, Switch, Route} from 'react-router-dom';
 import browserHistory from '../../browser-history';
-import PrivateRoute from '../private-route/private-route';
-import MainScreen from '../main-screen/main-screen';
-import LoginScreen from '../login-screen/login-screen';
-import FavoritesScreen from '../favorites-screen/favorites-screen';
-import OfferScreen from '../offer-screen/offer-screen';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {AppRoute} from '../../const';
+import FavoritesScreen from '../favorites-screen/favorites-screen';
+import LoginScreen from '../login-screen/login-screen';
+import MainScreen from '../main-screen/main-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import OfferScreen from '../offer-screen/offer-screen';
+import PrivateRoute from '../private-route/private-route';
 
 function App(): JSX.Element {
   return (

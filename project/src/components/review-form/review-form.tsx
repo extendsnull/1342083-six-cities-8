@@ -1,10 +1,9 @@
 import {useState, ChangeEvent, FormEvent, useRef} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {reviewFormSubmitAction} from '../../store/api-action';
+import {useDispatch} from 'react-redux';
 import {CommentPostKey} from '../../const';
+import type {Offer} from '../../types';
+import {reviewFormSubmitAction} from '../../store/api-action';
 import Rating from '../rating/rating';
-import type {CommentPost, Offer} from '../../types';
-import type {ThunkAppDispatch} from '../../store/types';
 
 const REVIEW_MIN_LENGTH = 50;
 
@@ -12,25 +11,13 @@ type ReviewFormProps = {
   offer: Offer;
 };
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onReviewFormSubmit(id: number, comment: CommentPost) {
-    dispatch(reviewFormSubmitAction(id, comment));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & ReviewFormProps;
-
-function ReviewForm(props: ConnectedComponentProps): JSX.Element {
-  const {offer, onReviewFormSubmit} = props;
-
+function ReviewForm(props: ReviewFormProps): JSX.Element {
+  const {offer} = props;
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
   const formRef = useRef<HTMLFormElement | null>(null);
-
   const isDisabled = !rating || review.length < REVIEW_MIN_LENGTH;
+  const dispatch = useDispatch();
 
   const resetForm = (): void => {
     setRating(0);
@@ -49,7 +36,7 @@ function ReviewForm(props: ConnectedComponentProps): JSX.Element {
       [CommentPostKey.Comment]: review,
     };
 
-    onReviewFormSubmit(offer.id, comment);
+    dispatch(reviewFormSubmitAction(offer.id, comment));
     resetForm();
   };
 
@@ -58,8 +45,8 @@ function ReviewForm(props: ConnectedComponentProps): JSX.Element {
       className="reviews__form form"
       action="/"
       method="post"
-      onSubmit={handleSubmit}
       ref={formRef}
+      onSubmit={handleSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <Rating
@@ -72,8 +59,8 @@ function ReviewForm(props: ConnectedComponentProps): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleCommentChange}
         value={review}
+        onChange={handleCommentChange}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -86,5 +73,4 @@ function ReviewForm(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {ReviewForm};
-export default connector(ReviewForm);
+export default ReviewForm;

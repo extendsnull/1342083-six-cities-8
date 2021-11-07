@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom';
-import {offerTypeToReadable, OfferCardType} from '../../const';
-import {getClassNames, getOfferUrl, getRatingValue} from '../../utils';
 import type {LocationDescriptor} from 'history';
+import {offerTypeToReadable, OfferCardType} from '../../const';
 import type {Offer} from '../../types';
+import {getClassNames, getOfferUrl, getRatingValue} from '../../utils';
 
 enum DefaultImageSize {
   Width = 260,
@@ -23,7 +23,6 @@ type PlaceCardProps = {
 function OfferCard(props: PlaceCardProps): JSX.Element {
   const {type, offer, onMouseOver} = props;
   const ratingValue: string = getRatingValue(offer.rating);
-
   const offerUrl: LocationDescriptor<Offer> = {
     pathname: getOfferUrl(offer.id),
     state: offer,
@@ -37,10 +36,10 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
 
   return (
     <article
-      className={getClassNames([
+      className={getClassNames(
         type === OfferCardType.Cities ? `${type}__place-card` : `${type}__card`,
         'place-card',
-      ])}
+      )}
       onMouseOver={handleMouseOver}
     >
       {offer.isPremium && (
@@ -49,26 +48,26 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
         </div>
       )}
       <div
-        className={getClassNames([
+        className={getClassNames(
           `${type}__image-wrapper`,
           'place-card__image-wrapper',
-        ])}
+        )}
       >
         <Link to={offerUrl}>
           <img
             className="place-card__image"
+            alt=""
             src={offer.previewImage}
             width={type === OfferCardType.Favorites ? FavoriteImageSize.Width : DefaultImageSize.Width}
             height={type === OfferCardType.Favorites ? FavoriteImageSize.Height : DefaultImageSize.Height}
-            alt=""
           />
         </Link>
       </div>
       <div
-        className={getClassNames([
+        className={getClassNames(
           `${type}__card-info`,
           'place-card__info',
-        ])}
+        )}
       >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">

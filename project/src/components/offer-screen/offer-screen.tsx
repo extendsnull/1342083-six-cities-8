@@ -1,56 +1,35 @@
 import {useEffect} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {fetchOfferAction} from '../../store/api-action';
+import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router';
+import {offerTypeToReadable} from '../../const';
+import {fetchOfferAction} from '../../store/api-action';
+import {getComments, getIsAuthorized, getNearbyOffers, getOffer} from '../../store/selectors';
+import type {History} from '../../types';
+import {getClassNames, getRatingValue, scrollToTop} from '../../utils';
 import Header from '../header/header';
-import Spinner from '../spinner/spinner';
+import Map from '../map/map';
 import OfferGallery from '../offer-gallery/offer-gallery';
 import OfferGoods from '../offer-goods/offer-goods';
-import Reviews from '../reviews/reviews';
-import Map from '../map/map';
 import OfferNearby from '../offer-nearby/offer-nearby';
-import {offerTypeToReadable} from '../../const';
-import {getClassNames, getRatingValue, scrollTop} from '../../utils';
-import type {History} from '../../types';
-import type {State, ThunkAppDispatch} from '../../store/types';
-import {getComments, getIsAuthorized, getNearbyOffers, getOffer} from '../../store/selectors';
+import Reviews from '../reviews/reviews';
+import Spinner from '../spinner/spinner';
 
-const mapStateToProps = (state: State) => ({
-  offer: getOffer(state),
-  nearbyOffers: getNearbyOffers(state),
-  comments: getComments(state),
-  isAuthorized: getIsAuthorized(state),
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onFetchOffer(id: number) {
-    dispatch(fetchOfferAction(id));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function OfferScreen(props: PropsFromRedux): JSX.Element | null {
-  const {
-    comments,
-    isAuthorized,
-    nearbyOffers,
-    offer,
-    onFetchOffer,
-  } = props;
-
+function OfferScreen(): JSX.Element | null {
+  const comments = useSelector(getComments);
+  const isAuthorized = useSelector(getIsAuthorized);
+  const nearbyOffers = useSelector(getNearbyOffers);
+  const offer = useSelector(getOffer);
+  const dispatch = useDispatch();
   const params = useParams<History>();
   const id = parseInt(params.id, 10);
 
   useEffect(() => {
-    onFetchOffer(id);
-  }, [id, onFetchOffer]);
+    dispatch(fetchOfferAction(id));
+  }, [id, dispatch]);
 
   useEffect(() => {
     if (offer) {
-      scrollTop();
+      scrollToTop();
     }
   }, [offer]);
 
@@ -127,10 +106,10 @@ function OfferScreen(props: PropsFromRedux): JSX.Element | null {
                   >
                     <img
                       className="property__avatar user__avatar"
-                      src={offer.host.avatarUrl}
                       width="74"
                       height="74"
                       alt="Host avatar"
+                      src={offer.host.avatarUrl}
                     />
                   </div>
                   <span className="property__user-name">{offer.host.name}</span>
@@ -160,11 +139,10 @@ function OfferScreen(props: PropsFromRedux): JSX.Element | null {
 
   return (
     <div className="page">
-      <Header hasNav />
+      <Header />
       {getScreen()}
     </div>
   );
 }
 
-export {OfferScreen};
-export default connector(OfferScreen);
+export default OfferScreen;

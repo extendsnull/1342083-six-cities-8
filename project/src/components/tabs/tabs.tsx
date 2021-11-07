@@ -1,28 +1,18 @@
 import {MouseEvent} from 'react';
-import {Dispatch} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {AppRoute, CityName} from '../../const';
 import {setActiveCity} from '../../store/actions';
 import {getActiveCity} from '../../store/selectors';
-import type {State} from '../../store/types';
 import {getClassNames} from '../../utils';
 
-const mapStateToProps = (state: State) => ({
-  activeCity: getActiveCity(state),
-});
+function Tabs(): JSX.Element {
+  const activeCity = useSelector(getActiveCity);
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onSetActiveCity(city: CityName) {
+  const handleLocationClick = (city: CityName) => (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
     dispatch(setActiveCity(city));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Tabs(props: PropsFromRedux): JSX.Element {
-  const {activeCity, onSetActiveCity} = props;
+  };
 
   return (
     <div className="tabs">
@@ -37,10 +27,7 @@ function Tabs(props: PropsFromRedux): JSX.Element {
                   {'tabs__item--active': city === activeCity},
                 ])}
                 href={AppRoute.Main}
-                onClick={(evt: MouseEvent<HTMLAnchorElement>) => {
-                  evt.preventDefault();
-                  onSetActiveCity(city);
-                }}
+                onClick={handleLocationClick(city)}
               >
                 <span>{city}</span>
               </a>
@@ -52,5 +39,4 @@ function Tabs(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {Tabs};
-export default connector(Tabs);
+export default Tabs;

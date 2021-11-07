@@ -16,13 +16,13 @@ function RatingInput(props: RatingInputProps): JSX.Element {
     <>
       <input
         className="form__rating-input visually-hidden"
-        id={id}
         name="rating"
         type="radio"
+        required
+        id={id}
         value={value}
         checked={isChecked}
         disabled={isDisabled}
-        required
       />
       <label
         className="reviews__rating-label form__rating-label"

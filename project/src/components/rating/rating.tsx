@@ -1,5 +1,5 @@
-import RatingInput from '../rating-input/rating-input';
 import {ratingTitleToValue} from '../../const';
+import RatingInput from '../rating-input/rating-input';
 
 type RatingProps = {
   currentRating: number;
@@ -21,8 +21,8 @@ function Rating(props: RatingProps): JSX.Element {
             title={title}
             isChecked={isChecked}
             isDisabled={isDisabled}
-            onRatingChange={onRatingChange}
             key={title}
+            onRatingChange={onRatingChange}
           />
         );
       })}
