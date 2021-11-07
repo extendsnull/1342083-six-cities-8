@@ -8,12 +8,13 @@ import OfferCard from '../offer-card/offer-card';
 import Map from '../map/map';
 import {OfferCardType} from '../../const';
 import {getOffersByCity, sortOffersByType} from '../../utils';
-import type {Offer, State} from '../../types';
+import type {Offer} from '../../types';
+import {State} from '../../store/types';
 
-const mapStateToProps = ({activeCity, offers, sortType}: State) => ({
-  offers,
-  activeCity,
-  sortType,
+const mapStateToProps = ({DATA}: State) => ({
+  offers: DATA.offers,
+  activeCity: DATA.activeCity,
+  sortType: DATA.sortType,
 });
 
 const connector = connect(mapStateToProps);

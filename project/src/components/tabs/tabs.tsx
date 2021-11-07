@@ -3,11 +3,11 @@ import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {setActiveCity} from '../../store/action';
 import {AppRoute, CityName} from '../../const';
-import type {Actions, State} from '../../types';
 import {getClassNames} from '../../utils';
+import type {Actions, State} from '../../store/types';
 
-const mapStateToProps = ({activeCity}: State) => ({
-  activeCity,
+const mapStateToProps = ({DATA}: State) => ({
+  activeCity: DATA.activeCity,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

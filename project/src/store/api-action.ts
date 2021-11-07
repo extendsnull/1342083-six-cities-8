@@ -5,7 +5,7 @@ import {
   setOffer,
   setOffers,
   setCities,
-  setAuthInfo,
+  setAuthorizationInfo,
   requireAuthorization,
   requireLogout,
   redirectToRoute,
@@ -15,7 +15,8 @@ import {
 } from './action';
 import {ApiRoute, AppRoute, AuthorizationStatus} from '../const';
 import {getCities, replaceIdParam} from '../utils';
-import type {AuthData, CommentPost, RawAuthInfo, RawComment, RawOffer, ThunkActionResult} from '../types';
+import type {AuthorizationData, CommentPost, RawAuthorizationInfo, RawComment, RawOffer} from '../types';
+import type {ThunkActionResult} from '../store/types';
 
 const fetchOfferAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
@@ -71,18 +72,18 @@ const reviewFormSubmitAction = (
 
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get<RawAuthInfo>(ApiRoute.Login).then(({data}) => {
+    await api.get<RawAuthorizationInfo>(ApiRoute.Login).then(({data}) => {
       const adaptedData = adaptAuthToClient(data);
 
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(setAuthorization(true));
-      dispatch(setAuthInfo(adaptedData));
+      dispatch(setAuthorizationInfo(adaptedData));
     });
   };
 
-const loginAction = (authData: AuthData): ThunkActionResult =>
+const loginAction = (authData: AuthorizationData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.post<RawAuthInfo>(ApiRoute.Login, {
+    await api.post<RawAuthorizationInfo>(ApiRoute.Login, {
       email: authData.login,
       password: authData.password,
     })
@@ -92,7 +93,7 @@ const loginAction = (authData: AuthData): ThunkActionResult =>
         setToken(adaptedData.token);
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
         dispatch(setAuthorization(true));
-        dispatch(setAuthInfo(adaptedData));
+        dispatch(setAuthorizationInfo(adaptedData));
         dispatch(redirectToRoute(AppRoute.Main));
       })
       .catch((error) => {

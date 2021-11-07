@@ -4,10 +4,10 @@ import {connect, ConnectedProps} from 'react-redux';
 import {setSortType} from '../../store/action';
 import {getClassNames} from '../../utils';
 import {SortType, sortTypeToLabel} from '../../const';
-import type {Actions, State} from '../../types';
+import type {Actions, State} from '../../store/types';
 
-const mapStateToProps = ({sortType}: State) => ({
-  sortType,
+const mapStateToProps = ({DATA}: State) => ({
+  sortType: DATA.sortType,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

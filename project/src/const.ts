@@ -55,7 +55,7 @@ enum ActionType {
   SetOffers = 'data/setOffers',
   SetCities = 'data/setCities',
   SetActiveCity = 'data/setActiveCity',
-  SetAuthInfo = 'data/setAuthInfo',
+  SetAuthorizationInfo = 'data/setAuthorizationInfo',
   SetSortType = 'data/setSortType',
   RedirectToRoute = 'app/redirectToRoute',
   RequireAuthorization = 'user/requireAuthorization',
@@ -167,7 +167,7 @@ enum CommentPostKey {
   Rating = 'rating',
 }
 
-enum RawAuthInfoKey {
+enum RawAuthorizationInfoKey{
   AvatarUrl = 'avatar_url',
   Email = 'email',
   Id = 'id',
@@ -176,7 +176,7 @@ enum RawAuthInfoKey {
   Token = 'token',
 }
 
-enum AuthInfoKey {
+enum AuthorizationInfoKey{
   AvatarUrl = 'avatarUrl',
   Email = 'email',
   Id = 'id',
@@ -246,8 +246,8 @@ export {
   RawCommentKey,
   CommentKey,
   CommentPostKey,
-  RawAuthInfoKey,
-  AuthInfoKey,
+  RawAuthorizationInfoKey,
+  AuthorizationInfoKey,
   RatingTitle,
   SortType,
   ratingTitleToValue,

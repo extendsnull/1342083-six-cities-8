@@ -1,74 +1,54 @@
 import {ActionType, AppRoute, AuthorizationStatus, CityName, SortType} from '../const';
-import type {AuthInfo, Cities, Comment, Offer} from '../types';
+import type {AuthorizationInfo, Cities, Comment, Offer} from '../types';
 
 const setOffer = (offer: Offer) => ({
   type: ActionType.SetOffer,
-  payload: {
-    offer,
-  },
+  payload: offer,
 } as const);
 
 const setNearbyOffers = (nearbyOffers: Offer[]) => ({
   type: ActionType.SetNearbyOffers,
-  payload: {
-    nearbyOffers,
-  },
+  payload: nearbyOffers,
 } as const);
 
 const setComments = (comments: Comment[]) => ({
   type: ActionType.SetComments,
-  payload: {
-    comments,
-  },
+  payload: comments,
 } as const);
 
 const setOffers = (offers: Offer[]) => ({
   type: ActionType.SetOffers,
-  payload: {
-    offers,
-  },
+  payload: offers,
 } as const);
 
 const setCities = (cities: Cities) => ({
   type: ActionType.SetCities,
-  payload: {
-    cities,
-  },
+  payload: cities,
 } as const);
 
 const setActiveCity = (activeCity: CityName) => ({
   type: ActionType.SetActiveCity,
-  payload: {
-    activeCity,
-  },
+  payload: activeCity,
 } as const);
 
 const setSortType = (sortType: SortType) => ({
   type: ActionType.SetSortType,
-  payload: {
-    sortType,
-  },
+  payload: sortType,
 } as const);
 
-const setAuthInfo = (authInfo: AuthInfo) => ({
-  type: ActionType.SetAuthInfo,
-  payload: {
-    authInfo,
-  },
+const setAuthorizationInfo = (authInfo: AuthorizationInfo) => ({
+  type: ActionType.SetAuthorizationInfo,
+  payload: authInfo,
 } as const);
 
-const requireAuthorization = (status: AuthorizationStatus) => ({
+const requireAuthorization = (authorizationStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
-  payload: {
-    authorizationStatus: status,
-  },
+  payload: authorizationStatus,
 } as const);
 
 const setAuthorization = (isAuthorized: boolean) => ({
   type: ActionType.SetAuthorization,
-  payload: {
-    isAuthorized,
-  },
+  payload: isAuthorized,
 } as const);
 
 const requireLogout = () => ({
@@ -88,7 +68,7 @@ export {
   setCities,
   setActiveCity,
   setSortType,
-  setAuthInfo,
+  setAuthorizationInfo,
   requireAuthorization,
   setAuthorization,
   requireLogout,

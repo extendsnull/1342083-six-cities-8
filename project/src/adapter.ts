@@ -1,10 +1,10 @@
 import type {
-  AuthInfo,
+  AuthorizationInfo,
   City,
   Comment,
   MapLocation,
   Offer,
-  RawAuthInfo,
+  RawAuthorizationInfo,
   RawCity,
   RawComment,
   RawMapLocation,
@@ -57,13 +57,13 @@ const adaptOfferToClient = (rawOffer: RawOffer): Offer => ({
   type: rawOffer.type,
 });
 
-const adaptAuthToClient = (rawAuthInfo: RawAuthInfo): AuthInfo => ({
-  avatarUrl: rawAuthInfo.avatar_url,
-  email: rawAuthInfo.email,
-  id: rawAuthInfo.id,
-  isPro: rawAuthInfo.is_pro,
-  name: rawAuthInfo.name,
-  token: rawAuthInfo.token,
+const adaptAuthToClient = (rawAuthorizationInfo: RawAuthorizationInfo): AuthorizationInfo => ({
+  avatarUrl: rawAuthorizationInfo.avatar_url,
+  email: rawAuthorizationInfo.email,
+  id: rawAuthorizationInfo.id,
+  isPro: rawAuthorizationInfo.is_pro,
+  name: rawAuthorizationInfo.name,
+  token: rawAuthorizationInfo.token,
 });
 
 export {

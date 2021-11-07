@@ -1,15 +1,9 @@
-export type {
-  Actions,
-  ThunkActionResult,
-  ThunkAppDispatch
-} from './actions';
-
-export type {AuthData} from './auth-data';
+export type {AuthorizationData} from './authorization-data';
 
 export type {
-  RawAuthInfo,
-  AuthInfo
-} from './auth-info';
+  RawAuthorizationInfo,
+  AuthorizationInfo
+} from './authorization-info';
 
 export type {
   RawCity,
@@ -35,8 +29,6 @@ export type {
   RawOffer,
   Offer
 } from './offer';
-
-export type {State} from './state';
 
 export type {Token} from './token';
 

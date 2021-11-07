@@ -2,10 +2,10 @@ import {connect, ConnectedProps} from 'react-redux';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import FavoritesList from '../favorites-list/favorites-list';
-import type {State} from '../../types';
+import {State} from '../../store/types';
 
-const mapStateToProps = ({offers}: State) => ({
-  offers,
+const mapStateToProps = ({DATA}: State) => ({
+  offers: DATA.offers,
 });
 
 const connector = connect(mapStateToProps);

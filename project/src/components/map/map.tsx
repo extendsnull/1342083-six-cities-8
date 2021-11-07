@@ -1,10 +1,11 @@
 import {useEffect, useRef} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 import {Icon, Marker} from 'leaflet';
 import useMap from '../../hooks/use-map';
 import {MapIcon, MapIconSize} from '../../const';
-import {Offer, State} from '../../types';
+import type {Offer} from '../../types';
+import type {State} from '../../store/types';
 import 'leaflet/dist/leaflet.css';
-import { connect, ConnectedProps } from 'react-redux';
 
 type MapProps = {
   offers: Offer[];
@@ -23,9 +24,9 @@ const activeIcon = new Icon({
   iconAnchor: [MapIconSize.Width / 2, MapIconSize.Height],
 });
 
-const mapStateToProps = ({activeCity, cities}: State) => ({
-  activeCity,
-  cities,
+const mapStateToProps = ({DATA}: State) => ({
+  activeCity: DATA.activeCity,
+  cities: DATA.cities,
 });
 
 const connector = connect(mapStateToProps);

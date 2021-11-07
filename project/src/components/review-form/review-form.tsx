@@ -3,7 +3,8 @@ import {connect, ConnectedProps} from 'react-redux';
 import {reviewFormSubmitAction} from '../../store/api-action';
 import {CommentPostKey} from '../../const';
 import Rating from '../rating/rating';
-import type {CommentPost, Offer, ThunkAppDispatch} from '../../types';
+import type {CommentPost, Offer} from '../../types';
+import type {ThunkAppDispatch} from '../../store/types';
 
 const REVIEW_MIN_LENGTH = 50;
 

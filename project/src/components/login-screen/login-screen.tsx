@@ -4,15 +4,16 @@ import {loginAction} from '../../store/api-action';
 import {Link} from 'react-router-dom';
 import Header from '../header/header';
 import {AppRoute} from '../../const';
-import type {AuthData, State, ThunkAppDispatch} from '../../types';
+import type {State, ThunkAppDispatch} from '../../store/types';
+import type {AuthorizationData} from '../../types';
 
-const mapStateToProps = ({authorizationStatus}: State) => ({
-  authorizationStatus,
+const mapStateToProps = ({USER}: State) => ({
+  authorizationStatus: USER.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(authData: AuthData) {
-    dispatch(loginAction(authData));
+  onSubmit(authorizationData: AuthorizationData) {
+    dispatch(loginAction(authorizationData));
   },
 });
 

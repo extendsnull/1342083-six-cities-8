@@ -11,18 +11,14 @@ import Map from '../map/map';
 import OfferNearby from '../offer-nearby/offer-nearby';
 import {offerTypeToReadable} from '../../const';
 import {getClassNames, getRatingValue, scrollTop} from '../../utils';
-import type {History, State, ThunkAppDispatch} from '../../types';
+import type {History} from '../../types';
+import type {State, ThunkAppDispatch} from '../../store/types';
 
-const mapStateToProps = ({
-  isAuthorized,
-  comments,
-  nearbyOffers,
-  offer,
-}: State) => ({
-  isAuthorized,
-  comments,
-  nearbyOffers,
-  offer,
+const mapStateToProps = ({DATA, USER}: State) => ({
+  offer: DATA.offer,
+  nearbyOffers: DATA.nearbyOffers,
+  comments: DATA.comments,
+  isAuthorized: USER.isAuthorized,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

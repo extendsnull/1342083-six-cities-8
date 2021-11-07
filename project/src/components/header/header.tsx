@@ -2,16 +2,16 @@ import {connect, ConnectedProps} from 'react-redux';
 import {logoutAction} from '../../store/api-action';
 import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
-import {AppRoute, AuthInfoKey, AuthorizationStatus} from '../../const';
-import type {State, ThunkAppDispatch} from '../../types';
+import {AppRoute, AuthorizationInfoKey, AuthorizationStatus} from '../../const';
+import {State, ThunkAppDispatch} from '../../store/types';
 
 type HeaderProps = {
   hasNav?: boolean;
 };
 
-const mapStateToProps = ({authorizationStatus, authInfo}: State) => ({
-  authorizationStatus,
-  authInfo,
+const mapStateToProps = ({USER}: State) => ({
+  authorizationStatus: USER.authorizationStatus,
+  authorizationInfo: USER.authorizationInfo,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -26,7 +26,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & HeaderProps;
 
 function Header(props: ConnectedComponentProps): JSX.Element {
-  const {hasNav, authorizationStatus, authInfo, onLogout} = props;
+  const {hasNav, authorizationStatus, authorizationInfo, onLogout} = props;
 
   const getHeaderNav = (status: AuthorizationStatus): JSX.Element | null => {
     switch (status) {
@@ -40,9 +40,9 @@ function Header(props: ConnectedComponentProps): JSX.Element {
                   to={AppRoute.Favorites}
                 >
                   <div className="header__avatar-wrapper user__avatar-wrapper">
-                    <img className="user__avatar" src={authInfo?.[AuthInfoKey.AvatarUrl]} alt="" />
+                    <img className="user__avatar" src={authorizationInfo?.[AuthorizationInfoKey.AvatarUrl]} alt="" />
                   </div>
-                  <span className="header__user-name user__name">{authInfo?.[AuthInfoKey.Email]}</span>
+                  <span className="header__user-name user__name">{authorizationInfo?.[AuthorizationInfoKey.Email]}</span>
                 </Link>
               </li>
               <li className="header__nav-item">
