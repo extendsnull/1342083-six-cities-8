@@ -1,17 +1,17 @@
 import {MouseEvent} from 'react';
 import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
-import {setActiveCity} from '../../store/action';
 import {AppRoute, CityName} from '../../const';
-import {getClassNames} from '../../utils';
-import type {Actions, State} from '../../store/types';
+import {setActiveCity} from '../../store/actions';
 import {getActiveCity} from '../../store/selectors';
+import type {State} from '../../store/types';
+import {getClassNames} from '../../utils';
 
 const mapStateToProps = (state: State) => ({
   activeCity: getActiveCity(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   onSetActiveCity(city: CityName) {
     dispatch(setActiveCity(city));
   },

@@ -1,31 +1,18 @@
 import {AxiosInstance} from 'axios';
+import {Action} from 'redux';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {
-  setOffer,
-  setNearbyOffers,
-  setComments,
-  setOffers,
-  setCities,
-  setActiveCity,
-  setAuthorizationInfo,
-  setSortType,
-  requireAuthorization,
-  setAuthorization,
-  requireLogout,
-  redirectToRoute
-} from '../store/action';
 import {
   AuthorizationStatus,
   CityName,
   SortType
 } from '../const';
-import type {RootState} from './root-reducer';
 import type {
   AuthorizationInfo,
   Cities,
   Comment,
   Offer
 } from '../types';
+import type {RootState} from './root-reducer';
 
 type AppData = {
   offer: Offer | null;
@@ -45,29 +32,14 @@ type UserProcess = {
 
 type State = RootState;
 
-type Actions =
-  | ReturnType<typeof setOffer>
-  | ReturnType<typeof setNearbyOffers>
-  | ReturnType<typeof setComments>
-  | ReturnType<typeof setOffers>
-  | ReturnType<typeof setCities>
-  | ReturnType<typeof setActiveCity>
-  | ReturnType<typeof setAuthorizationInfo>
-  | ReturnType<typeof setSortType>
-  | ReturnType<typeof requireAuthorization>
-  | ReturnType<typeof setAuthorization>
-  | ReturnType<typeof requireLogout>
-  | ReturnType<typeof redirectToRoute>;
+type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;
 
-type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
-
-type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
+type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Action>;
 
 export type {
   AppData,
   UserProcess,
   State,
-  Actions,
   ThunkActionResult,
   ThunkAppDispatch
 };

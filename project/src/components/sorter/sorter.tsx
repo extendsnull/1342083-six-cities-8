@@ -1,17 +1,17 @@
 import {useState} from 'react';
 import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
-import {setSortType} from '../../store/action';
-import {getClassNames} from '../../utils';
 import {SortType, sortTypeToLabel} from '../../const';
-import type {Actions, State} from '../../store/types';
+import {setSortType} from '../../store/actions';
 import {getSortType} from '../../store/selectors';
+import type {State} from '../../store/types';
+import {getClassNames} from '../../utils';
 
 const mapStateToProps = (state: State) => ({
   sortType: getSortType(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   onSortTypeChange(sortType: SortType) {
     dispatch(setSortType(sortType));
   },

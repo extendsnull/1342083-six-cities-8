@@ -1,22 +1,22 @@
 import {toast} from 'react-toastify';
-import {adaptAuthToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
-import {removeToken, setToken} from '../services/token';
 import {
-  setOffer,
-  setOffers,
-  setCities,
-  setAuthorizationInfo,
+  redirectToRoute,
   requireAuthorization,
   requireLogout,
-  redirectToRoute,
-  setNearbyOffers,
+  setAuthorizationInfo,
+  setCities,
   setComments,
-  setAuthorization
-} from './action';
+  setIsAuthorized,
+  setNearbyOffers,
+  setOffer,
+  setOffers
+} from './actions';
+import {adaptAuthToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
 import {ApiRoute, AppRoute, AuthorizationStatus} from '../const';
-import {getCities, replaceIdParam} from '../utils';
-import type {AuthorizationData, CommentPost, RawAuthorizationInfo, RawComment, RawOffer} from '../types';
+import {removeToken, setToken} from '../services/token';
 import type {ThunkActionResult} from '../store/types';
+import type {AuthorizationData, CommentPost, RawAuthorizationInfo, RawComment, RawOffer} from '../types';
+import {getCities, replaceIdParam} from '../utils';
 
 const fetchOfferAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
@@ -76,7 +76,7 @@ const checkAuthAction = (): ThunkActionResult =>
       const adaptedData = adaptAuthToClient(data);
 
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      dispatch(setAuthorization(true));
+      dispatch(setIsAuthorized(true));
       dispatch(setAuthorizationInfo(adaptedData));
     });
   };
@@ -92,7 +92,7 @@ const loginAction = (authData: AuthorizationData): ThunkActionResult =>
 
         setToken(adaptedData.token);
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
-        dispatch(setAuthorization(true));
+        dispatch(setIsAuthorized(true));
         dispatch(setAuthorizationInfo(adaptedData));
         dispatch(redirectToRoute(AppRoute.Main));
       })
@@ -105,7 +105,6 @@ const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.delete(ApiRoute.Logout);
     removeToken();
-    dispatch(setAuthorization(false));
     dispatch(requireLogout());
   };
 

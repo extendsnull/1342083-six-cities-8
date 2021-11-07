@@ -1,5 +1,12 @@
-import {ActionType, AuthorizationStatus} from '../../const';
-import type {Actions, UserProcess} from '../types';
+import {createReducer} from '@reduxjs/toolkit';
+import {AuthorizationStatus} from '../../const';
+import {
+  requireAuthorization,
+  requireLogout,
+  setAuthorizationInfo,
+  setIsAuthorized
+} from '../actions';
+import type {UserProcess} from '../types';
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -7,37 +14,22 @@ const initialState: UserProcess = {
   authorizationInfo: null,
 };
 
-const userReducer = (state = initialState, action: Actions): UserProcess => {
-  switch (action.type) {
-    case ActionType.RequireAuthorization: {
-      return {
-        ...state,
-        authorizationStatus: action.payload,
-      };
-    }
-    case ActionType.SetAuthorization: {
-      return {
-        ...state,
-        isAuthorized: action.payload,
-      };
-    }
-    case ActionType.RequireLogout: {
-      return {
-        ...state,
-        authorizationStatus: AuthorizationStatus.NoAuth,
-      };
-    }
-    case ActionType.SetAuthorizationInfo: {
-      return {
-        ...state,
-        authorizationInfo: action.payload,
-      };
-    }
-    default: {
-      return state;
-    }
-  }
-};
+const userReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(requireLogout, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.isAuthorized = false;
+    })
+    .addCase(setIsAuthorized, (state, action) => {
+      state.isAuthorized = action.payload;
+    })
+    .addCase(setAuthorizationInfo, (state, action) => {
+      state.authorizationInfo = action.payload;
+    });
+});
 
 export {
   userReducer

@@ -1,5 +1,15 @@
-import {ActionType, CityName, SortType} from '../../const';
-import type {Actions, AppData} from '../types';
+import {createReducer} from '@reduxjs/toolkit';
+import {CityName, SortType} from '../../const';
+import {
+  setActiveCity,
+  setCities,
+  setComments,
+  setNearbyOffers,
+  setOffer,
+  setOffers,
+  setSortType
+} from '../actions';
+import type {AppData} from '../types';
 
 const initialState: AppData = {
   offer: null,
@@ -11,55 +21,30 @@ const initialState: AppData = {
   sortType: SortType.Popular,
 };
 
-const dataReducer = (state = initialState, action: Actions): AppData => {
-  switch (action.type) {
-    case ActionType.SetOffer: {
-      return {
-        ...state,
-        offer: action.payload,
-      };
-    }
-    case ActionType.SetOffers: {
-      return {
-        ...state,
-        offers: action.payload,
-      };
-    }
-    case ActionType.SetCities: {
-      return {
-        ...state,
-        cities: action.payload,
-      };
-    }
-    case ActionType.SetNearbyOffers: {
-      return {
-        ...state,
-        nearbyOffers: action.payload,
-      };
-    }
-    case ActionType.SetComments: {
-      return {
-        ...state,
-        comments: action.payload,
-      };
-    }
-    case ActionType.SetActiveCity: {
-      return {
-        ...state,
-        activeCity: action.payload,
-      };
-    }
-    case ActionType.SetSortType: {
-      return {
-        ...state,
-        sortType: action.payload,
-      };
-    }
-    default: {
-      return state;
-    }
-  }
-};
+const dataReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(setOffer, (state, action) => {
+      state.offer = action.payload;
+    })
+    .addCase(setOffers, (state, action) => {
+      state.offers = action.payload;
+    })
+    .addCase(setCities, (state, action) => {
+      state.cities = action.payload;
+    })
+    .addCase(setNearbyOffers, (state, action) => {
+      state.nearbyOffers = action.payload;
+    })
+    .addCase(setComments, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(setActiveCity, (state, action) => {
+      state.activeCity = action.payload;
+    })
+    .addCase(setSortType, (state, action) => {
+      state.sortType = action.payload;
+    });
+});
 
 export {
   dataReducer
