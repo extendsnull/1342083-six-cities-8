@@ -6,9 +6,10 @@ import Header from '../header/header';
 import {AppRoute} from '../../const';
 import type {State, ThunkAppDispatch} from '../../store/types';
 import type {AuthorizationData} from '../../types';
+import {getAuthorizationStatus} from '../../store/selectors';
 
-const mapStateToProps = ({USER}: State) => ({
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state: State) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

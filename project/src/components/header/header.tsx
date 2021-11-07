@@ -4,14 +4,15 @@ import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
 import {AppRoute, AuthorizationInfoKey, AuthorizationStatus} from '../../const';
 import {State, ThunkAppDispatch} from '../../store/types';
+import {getAuthorizationInfo, getAuthorizationStatus} from '../../store/selectors';
 
 type HeaderProps = {
   hasNav?: boolean;
 };
 
-const mapStateToProps = ({USER}: State) => ({
-  authorizationStatus: USER.authorizationStatus,
-  authorizationInfo: USER.authorizationInfo,
+const mapStateToProps = (state: State) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  authorizationInfo: getAuthorizationInfo(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

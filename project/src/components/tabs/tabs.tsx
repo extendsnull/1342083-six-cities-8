@@ -5,9 +5,10 @@ import {setActiveCity} from '../../store/action';
 import {AppRoute, CityName} from '../../const';
 import {getClassNames} from '../../utils';
 import type {Actions, State} from '../../store/types';
+import {getActiveCity} from '../../store/selectors';
 
-const mapStateToProps = ({DATA}: State) => ({
-  activeCity: DATA.activeCity,
+const mapStateToProps = (state: State) => ({
+  activeCity: getActiveCity(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

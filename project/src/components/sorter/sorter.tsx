@@ -5,9 +5,10 @@ import {setSortType} from '../../store/action';
 import {getClassNames} from '../../utils';
 import {SortType, sortTypeToLabel} from '../../const';
 import type {Actions, State} from '../../store/types';
+import {getSortType} from '../../store/selectors';
 
-const mapStateToProps = ({DATA}: State) => ({
-  sortType: DATA.sortType,
+const mapStateToProps = (state: State) => ({
+  sortType: getSortType(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

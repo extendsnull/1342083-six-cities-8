@@ -13,12 +13,13 @@ import {offerTypeToReadable} from '../../const';
 import {getClassNames, getRatingValue, scrollTop} from '../../utils';
 import type {History} from '../../types';
 import type {State, ThunkAppDispatch} from '../../store/types';
+import {getComments, getIsAuthorized, getNearbyOffers, getOffer} from '../../store/selectors';
 
-const mapStateToProps = ({DATA, USER}: State) => ({
-  offer: DATA.offer,
-  nearbyOffers: DATA.nearbyOffers,
-  comments: DATA.comments,
-  isAuthorized: USER.isAuthorized,
+const mapStateToProps = (state: State) => ({
+  offer: getOffer(state),
+  nearbyOffers: getNearbyOffers(state),
+  comments: getComments(state),
+  isAuthorized: getIsAuthorized(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

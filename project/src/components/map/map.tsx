@@ -6,6 +6,7 @@ import {MapIcon, MapIconSize} from '../../const';
 import type {Offer} from '../../types';
 import type {State} from '../../store/types';
 import 'leaflet/dist/leaflet.css';
+import {getActiveCity, getСities} from '../../store/selectors';
 
 type MapProps = {
   offers: Offer[];
@@ -24,9 +25,9 @@ const activeIcon = new Icon({
   iconAnchor: [MapIconSize.Width / 2, MapIconSize.Height],
 });
 
-const mapStateToProps = ({DATA}: State) => ({
-  activeCity: DATA.activeCity,
-  cities: DATA.cities,
+const mapStateToProps = (state: State) => ({
+  activeCity: getActiveCity(state),
+  cities: getСities(state),
 });
 
 const connector = connect(mapStateToProps);

@@ -10,11 +10,12 @@ import {OfferCardType} from '../../const';
 import {getOffersByCity, sortOffersByType} from '../../utils';
 import type {Offer} from '../../types';
 import {State} from '../../store/types';
+import {getActiveCity, getOffers, getSortType} from '../../store/selectors';
 
-const mapStateToProps = ({DATA}: State) => ({
-  offers: DATA.offers,
-  activeCity: DATA.activeCity,
-  sortType: DATA.sortType,
+const mapStateToProps = (state: State) => ({
+  offers: getOffers(state),
+  activeCity: getActiveCity(state),
+  sortType: getSortType(state),
 });
 
 const connector = connect(mapStateToProps);

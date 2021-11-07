@@ -3,9 +3,10 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import FavoritesList from '../favorites-list/favorites-list';
 import {State} from '../../store/types';
+import {getOffers} from '../../store/selectors';
 
-const mapStateToProps = ({DATA}: State) => ({
-  offers: DATA.offers,
+const mapStateToProps = (state: State) => ({
+  offers: getOffers(state),
 });
 
 const connector = connect(mapStateToProps);
