@@ -1,21 +1,19 @@
 import {useEffect, useState} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
+import {OfferCardType} from '../../const';
+import type {State} from '../../store/types';
+import {getActiveCity, getOffersBySortType} from '../../store/selectors';
+import type {Offer} from '../../types';
 import Header from '../header/header';
 import Tabs from '../tabs/tabs';
 import Spinner from '../spinner/spinner';
 import Sorter from '../sorter/sorter';
 import OfferCard from '../offer-card/offer-card';
 import Map from '../map/map';
-import {OfferCardType} from '../../const';
-import {getOffersByCity, sortOffersByType} from '../../utils';
-import type {Offer} from '../../types';
-import {State} from '../../store/types';
-import {getActiveCity, getOffers, getSortType} from '../../store/selectors';
 
 const mapStateToProps = (state: State) => ({
-  offers: getOffers(state),
+  offers: getOffersBySortType(state),
   activeCity: getActiveCity(state),
-  sortType: getSortType(state),
 });
 
 const connector = connect(mapStateToProps);
@@ -23,10 +21,8 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function MainScreen(props: PropsFromRedux): JSX.Element {
-  const {offers, activeCity, sortType} = props;
-  const offersByCity = getOffersByCity(offers, activeCity);
-  const sortedOffers = sortOffersByType(offersByCity, sortType);
-  const hasOffers = Boolean(sortedOffers.length);
+  const {offers, activeCity} = props;
+  const hasOffers = Boolean(offers.length);
 
   const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
   const [isLoaded, setLoading] = useState(true);
@@ -64,10 +60,10 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{sortedOffers.length} places to stay in {activeCity}</b>
+                <b className="places__found">{offers.length} places to stay in {activeCity}</b>
                 <Sorter />
                 <div className="cities__places-list places__list tabs__content">
-                  {sortedOffers.map((offer: Offer) => (
+                  {offers.map((offer: Offer) => (
                     <OfferCard
                       key={offer.id}
                       type={OfferCardType.Cities}
@@ -80,7 +76,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
               <div className="cities__right-section">
                 <section className="cities__map map">
                   <Map
-                    offers={sortedOffers}
+                    offers={offers}
                     activeOffer={activeOffer}
                   />
                 </section>
