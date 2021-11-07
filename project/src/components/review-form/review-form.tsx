@@ -1,4 +1,4 @@
-import {useState, ChangeEvent, FormEvent, useRef} from 'react';
+import {useState, ChangeEvent, FormEvent, useRef, useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 import {CommentPostKey} from '../../const';
 import type {Offer} from '../../types';
@@ -26,7 +26,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
 
   const handleCommentChange = (evt: ChangeEvent<HTMLTextAreaElement>): void => setReview(evt.target.value);
 
-  const onRatingChange = (value: number): void => setRating(value);
+  const onRatingChange = useCallback((value: number): void => setRating(value), []);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
@@ -51,7 +51,6 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <Rating
         currentRating={rating}
-        isDisabled={isDisabled}
         onRatingChange={onRatingChange}
       />
       <textarea

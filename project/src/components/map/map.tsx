@@ -1,5 +1,5 @@
 import {Icon, Marker} from 'leaflet';
-import {useEffect, useRef} from 'react';
+import {memo, useEffect, useRef} from 'react';
 import {useSelector} from 'react-redux';
 import {MapIcon, MapIconSize} from '../../const';
 import useMap from '../../hooks/use-map';
@@ -58,4 +58,4 @@ function Map(props: MapProps): JSX.Element {
   return <div ref={mapRef}></div>;
 }
 
-export default Map;
+export default memo(Map);

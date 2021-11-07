@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {Link} from 'react-router-dom';
 import type {LocationDescriptor} from 'history';
 import {offerTypeToReadable, OfferCardType} from '../../const';
@@ -103,4 +104,4 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
   );
 }
 
-export default OfferCard;
+export default memo(OfferCard);

@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationInfoKey} from '../../const';
@@ -84,4 +85,4 @@ function Header(props: HeaderProps): JSX.Element {
   );
 }
 
-export default Header;
+export default memo(Header);

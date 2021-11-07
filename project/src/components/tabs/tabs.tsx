@@ -1,4 +1,4 @@
-import {MouseEvent} from 'react';
+import {memo, MouseEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRoute, CityName} from '../../const';
 import {setActiveCity} from '../../store/actions';
@@ -39,4 +39,4 @@ function Tabs(): JSX.Element {
   );
 }
 
-export default Tabs;
+export default memo(Tabs);

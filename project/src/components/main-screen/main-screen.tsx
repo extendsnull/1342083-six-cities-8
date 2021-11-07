@@ -1,20 +1,23 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {OfferCardType} from '../../const';
-import {getActiveCity, getFilteredAndSortedOffers} from '../../store/selectors';
-import Tabs from '../tabs/tabs';
+import {getActiveCity, getOffersByCity, getSortType} from '../../store/selectors';
 import type {Offer} from '../../types';
+import {sortOffersByType} from '../../utils';
 import Header from '../header/header';
 import Map from '../map/map';
 import OfferCard from '../offer-card/offer-card';
 import Sorter from '../sorter/sorter';
 import Spinner from '../spinner/spinner';
+import Tabs from '../tabs/tabs';
 
 function MainScreen(): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
   const [isLoaded, setLoading] = useState(true);
-  const offers = useSelector(getFilteredAndSortedOffers);
+  const offers = useSelector(getOffersByCity);
+  const sortType = useSelector(getSortType);
   const activeCity = useSelector(getActiveCity);
+  const offersBySortType = useMemo(() => sortOffersByType(offers, sortType), [offers, sortType]);
   const hasOffers = Boolean(offers.length);
 
   useEffect(() => {
@@ -23,9 +26,9 @@ function MainScreen(): JSX.Element {
     }
   }, [hasOffers]);
 
-  const handleMouseOver = (offer: Offer): void => {
+  const onMouseOver = useCallback((offer: Offer): void => {
     setActiveOffer(offer);
-  };
+  }, []);
 
   if (isLoaded) {
     return (
@@ -53,12 +56,12 @@ function MainScreen(): JSX.Element {
                 <b className="places__found">{offers.length} places to stay in {activeCity}</b>
                 <Sorter />
                 <div className="cities__places-list places__list tabs__content">
-                  {offers.map((offer: Offer) => (
+                  {offersBySortType.map((offer: Offer) => (
                     <OfferCard
                       type={OfferCardType.Cities}
                       offer={offer}
                       key={offer.id}
-                      onMouseOver={handleMouseOver}
+                      onMouseOver={onMouseOver}
                     />
                   ))}
                 </div>

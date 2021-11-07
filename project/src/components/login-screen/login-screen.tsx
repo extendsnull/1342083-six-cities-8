@@ -1,8 +1,8 @@
 import {FormEvent, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {Redirect} from 'react-router';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import {redirectToRoute} from '../../store/actions';
 import {loginAction} from '../../store/api-action';
 import {getIsAuthorized} from '../../store/selectors';
 import Header from '../header/header';
@@ -10,10 +10,6 @@ import Header from '../header/header';
 function LoginScreen(): JSX.Element {
   const isAuthorized = useSelector(getIsAuthorized);
   const dispatch = useDispatch();
-
-  if (isAuthorized) {
-    dispatch(redirectToRoute(AppRoute.Main));
-  }
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -28,6 +24,10 @@ function LoginScreen(): JSX.Element {
       }));
     }
   };
+
+  if (isAuthorized) {
+    return <Redirect to={AppRoute.Main} />;
+  }
 
   return (
     <div className="page page--gray page--login">

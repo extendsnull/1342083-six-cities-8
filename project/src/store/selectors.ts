@@ -1,15 +1,13 @@
+import {createSelector} from 'reselect';
 import {AuthorizationStatus, CityName, SortType} from '../const';
 import type {AuthorizationInfo, Cities, Comment, Offer} from '../types';
-import {filterOffersByCity, sortOffersByType} from '../utils';
+import {filterOffersByCity} from '../utils';
 import {NameSpace} from './const';
 import type {State} from './types';
 
 const getOffer = (state: State): Offer | null => state[NameSpace.Data].offer;
 
 const getOffers = (state: State): Offer[] => state[NameSpace.Data].offers;
-
-const getFilteredAndSortedOffers = (state: State): Offer[] =>
-  sortOffersByType(filterOffersByCity(state[NameSpace.Data].offers, state[NameSpace.Data].activeCity), state[NameSpace.Data].sortType);
 
 const getCities = (state: State): Cities => state[NameSpace.Data].cities;
 
@@ -27,10 +25,15 @@ const getIsAuthorized = (state: State): boolean => state[NameSpace.User].isAutho
 
 const getAuthorizationInfo= (state: State): AuthorizationInfo | null => state[NameSpace.User].authorizationInfo;
 
+const getOffersByCity = createSelector(
+  getOffers,
+  getActiveCity,
+  (offers: Offer[], activeCity: CityName) => filterOffersByCity(offers, activeCity),
+);
+
 export {
   getOffer,
   getOffers,
-  getFilteredAndSortedOffers,
   getCities,
   getNearbyOffers,
   getComments,
@@ -38,5 +41,6 @@ export {
   getSortType,
   getAuthorizationStatus,
   getIsAuthorized,
-  getAuthorizationInfo
+  getAuthorizationInfo,
+  getOffersByCity
 };

@@ -2,12 +2,11 @@ type RatingInputProps = {
   value: number;
   title: string;
   isChecked: boolean;
-  isDisabled: boolean;
   onRatingChange: (value: number) => void;
 };
 
 function RatingInput(props: RatingInputProps): JSX.Element {
-  const {value, title, isChecked, isDisabled, onRatingChange} = props;
+  const {value, title, isChecked, onRatingChange} = props;
   const id = `${value}-stars`;
 
   const handleRatingLabelClick = () => onRatingChange(value);
@@ -22,7 +21,6 @@ function RatingInput(props: RatingInputProps): JSX.Element {
         id={id}
         value={value}
         checked={isChecked}
-        disabled={isDisabled}
       />
       <label
         className="reviews__rating-label form__rating-label"

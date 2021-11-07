@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {memo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {SortType, sortTypeToLabel} from '../../const';
 import {setSortType} from '../../store/actions';
@@ -15,7 +15,10 @@ function Sorter(): JSX.Element {
   };
 
   const handleSortTypeChange = (sortType: SortType) => () => {
-    dispatch(setSortType(sortType));
+    if (sortType !== currentSortType) {
+      dispatch(setSortType(sortType));
+    }
+
     setIsActive(false);
   };
 
@@ -59,4 +62,4 @@ function Sorter(): JSX.Element {
   );
 }
 
-export default Sorter;
+export default memo(Sorter);
