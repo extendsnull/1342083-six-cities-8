@@ -1,14 +1,14 @@
-import RatingInput from '../rating-input/rating-input';
+import {memo} from 'react';
 import {ratingTitleToValue} from '../../const';
+import RatingInput from '../rating-input/rating-input';
 
 type RatingProps = {
   currentRating: number;
-  isDisabled: boolean;
   onRatingChange: (value: number) => void;
 };
 
 function Rating(props: RatingProps): JSX.Element {
-  const {currentRating: rating, isDisabled, onRatingChange} = props;
+  const {currentRating: rating, onRatingChange} = props;
 
   return (
     <div className="reviews__rating-form form__rating">
@@ -20,9 +20,8 @@ function Rating(props: RatingProps): JSX.Element {
             value={value}
             title={title}
             isChecked={isChecked}
-            isDisabled={isDisabled}
-            onRatingChange={onRatingChange}
             key={title}
+            onRatingChange={onRatingChange}
           />
         );
       })}
@@ -30,4 +29,4 @@ function Rating(props: RatingProps): JSX.Element {
   );
 }
 
-export default Rating;
+export default memo(Rating);

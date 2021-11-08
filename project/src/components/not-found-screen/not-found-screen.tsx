@@ -1,12 +1,11 @@
 import {Link} from 'react-router-dom';
-import Header from '../header/header';
 import {AppRoute} from '../../const';
+import Header from '../header/header';
 
 function NotFoundScreen(): JSX.Element {
   return (
     <div className="page page--gray page--main">
-      <Header hasNav />
-
+      <Header />
       <main className="page__main page__main--index page__main--index-empty">
         <h1 className="visually-hidden">404 Not Found</h1>
         <div className="cities">
@@ -15,10 +14,7 @@ function NotFoundScreen(): JSX.Element {
               <div className="cities__status-wrapper tabs__content">
                 <b className="cities__status">Not found</b>
                 <p className="cities__status-description">
-                  <Link
-                    style={{textDecoration: 'underline'}}
-                    to={AppRoute.Main}
-                  >
+                  <Link className="cities__not-found-link" to={AppRoute.Main}>
                     Back to main page
                   </Link>
                 </p>

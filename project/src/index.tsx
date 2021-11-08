@@ -1,40 +1,39 @@
+import {configureStore} from '@reduxjs/toolkit';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {applyMiddleware, createStore} from 'redux';
 import {Provider} from 'react-redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
-import redirect from './store/middlewares/redirect';
-import {reducer} from './store/reducer';
-import {requireAuthorization} from './store/action';
-import App from './components/app/app';
 import {ToastContainer} from 'react-toastify';
-import {createApi} from './services/api';
+import App from './components/app/app';
 import {AuthorizationStatus} from './const';
+import {createApi} from './services/api';
+import {requireAuthorization} from './store/actions';
 import {checkAuthAction, fetchOffersAction} from './store/api-action';
-import type {ThunkAppDispatch} from './types';
+import redirect from './store/middlewares/redirect';
+import {rootReducer as reducer} from './store/root-reducer';
 import 'react-toastify/dist/ReactToastify.css';
 
 const api = createApi(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
 );
 
-const store = createStore(
+const store = configureStore({
   reducer,
-  composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api)),
-    applyMiddleware(redirect),
-  ),
-);
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    thunk: {extraArgument: api},
+  }).concat(redirect),
+});
 
-(store.dispatch as ThunkAppDispatch)(checkAuthAction());
-(store.dispatch as ThunkAppDispatch)(fetchOffersAction());
+store.dispatch(checkAuthAction());
+store.dispatch(fetchOffersAction());
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ToastContainer />
-      <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root'));
+  (
+    <React.StrictMode>
+      <Provider store={store}>
+        <ToastContainer />
+        <App />
+      </Provider>
+    </React.StrictMode>
+  ),
+  document.getElementById('root'),
+);

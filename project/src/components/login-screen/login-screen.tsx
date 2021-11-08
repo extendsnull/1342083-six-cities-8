@@ -1,27 +1,15 @@
 import {FormEvent, useRef} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {loginAction} from '../../store/api-action';
+import {useDispatch, useSelector} from 'react-redux';
+import {Redirect} from 'react-router';
 import {Link} from 'react-router-dom';
-import Header from '../header/header';
 import {AppRoute} from '../../const';
-import type {AuthData, State, ThunkAppDispatch} from '../../types';
+import {loginAction} from '../../store/api-action';
+import {getIsAuthorized} from '../../store/selectors';
+import Header from '../header/header';
 
-const mapStateToProps = ({authorizationStatus}: State) => ({
-  authorizationStatus,
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(authData: AuthData) {
-    dispatch(loginAction(authData));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function LoginScreen(props: PropsFromRedux): JSX.Element {
-  const {onSubmit} = props;
+function LoginScreen(): JSX.Element {
+  const isAuthorized = useSelector(getIsAuthorized);
+  const dispatch = useDispatch();
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -30,17 +18,20 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current && passwordRef.current) {
-      onSubmit({
+      dispatch(loginAction({
         login: loginRef.current?.value,
         password: passwordRef.current?.value,
-      });
+      }));
     }
   };
 
+  if (isAuthorized) {
+    return <Redirect to={AppRoute.Main} />;
+  }
+
   return (
     <div className="page page--gray page--login">
-      <Header />
-
+      <Header hasNav={false} />
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -54,23 +45,23 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
-                  ref={loginRef}
                   className="login__input form__input"
                   type="email"
                   name="email"
                   placeholder="Email"
                   required
+                  ref={loginRef}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
-                  ref={passwordRef}
                   className="login__input form__input"
                   type="password"
                   name="password"
                   placeholder="Password"
                   required
+                  ref={passwordRef}
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
@@ -78,10 +69,7 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link
-                className="locations__item-link"
-                to={AppRoute.Main}
-              >
+              <Link className="locations__item-link" to={AppRoute.Main}>
                 <span>Amsterdam</span>
               </Link>
             </div>
@@ -92,5 +80,4 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {LoginScreen};
-export default connector(LoginScreen);
+export default LoginScreen;

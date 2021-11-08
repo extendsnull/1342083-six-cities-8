@@ -1,6 +1,6 @@
 import {MutableRefObject, useEffect, useState} from 'react';
 import {Map, TileLayer} from 'leaflet';
-import {MapLocation} from '../types';
+import type {MapLocation} from '../types';
 import {LAYER_URL} from '../const';
 
 function useMap(

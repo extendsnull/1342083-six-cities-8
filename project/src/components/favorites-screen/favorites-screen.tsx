@@ -1,24 +1,15 @@
-import {connect, ConnectedProps} from 'react-redux';
-import Header from '../header/header';
-import Footer from '../footer/footer';
+import {useSelector} from 'react-redux';
 import FavoritesList from '../favorites-list/favorites-list';
-import type {State} from '../../types';
+import Footer from '../footer/footer';
+import Header from '../header/header';
+import {getOffers} from '../../store/selectors';
 
-const mapStateToProps = ({offers}: State) => ({
-  offers,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function FavoritesScreen(props: PropsFromRedux): JSX.Element {
-  const {offers} = props;
+function FavoritesScreen(): JSX.Element {
+  const offers = useSelector(getOffers);
 
   return (
     <div className="page">
-      <Header hasNav />
-
+      <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -27,11 +18,9 @@ function FavoritesScreen(props: PropsFromRedux): JSX.Element {
           </section>
         </div>
       </main>
-
       <Footer />
     </div>
   );
 }
 
-export {FavoritesList};
-export default connector(FavoritesScreen);
+export default FavoritesScreen;

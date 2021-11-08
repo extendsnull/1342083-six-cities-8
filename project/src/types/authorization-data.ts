@@ -1,8 +1,8 @@
-type AuthData = {
+type AuthorizationData = {
   login: string;
   password: string;
 }
 
 export type {
-  AuthData
+  AuthorizationData
 };

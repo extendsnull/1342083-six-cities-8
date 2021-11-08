@@ -7,10 +7,10 @@ function Logo(): JSX.Element {
   const location = useLocation();
   const isMainScreen = location.pathname === AppRoute.Main;
 
-  const logoClassNames: string = getClassNames([
+  const logoClassNames = getClassNames(
     'header__logo-link',
     {'header__logo-link--active': isMainScreen},
-  ]);
+  );
 
   const logoImg = <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />;
 

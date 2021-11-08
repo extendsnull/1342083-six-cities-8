@@ -1,36 +1,25 @@
-import {useState} from 'react';
-import {Dispatch} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
-import {setSortType} from '../../store/action';
-import {getClassNames} from '../../utils';
+import {memo, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {SortType, sortTypeToLabel} from '../../const';
-import type {Actions, State} from '../../types';
+import {setSortType} from '../../store/actions';
+import {getSortType} from '../../store/selectors';
+import {getClassNames} from '../../utils';
 
-const mapStateToProps = ({sortType}: State) => ({
-  sortType,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onSortTypeChange(sortType: SortType) {
-    dispatch(setSortType(sortType));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Sorter(props: PropsFromRedux): JSX.Element {
-  const {sortType: currentSortType, onSortTypeChange} = props;
-  const [active, setActive] = useState(false);
+function Sorter(): JSX.Element {
+  const currentSortType = useSelector(getSortType);
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const handleTogglerClick = () => {
-    setActive((prevActive) => !prevActive);
+    setIsActive((prevActive) => !prevActive);
   };
 
-  const changeSortType = (sortType: SortType) => {
-    onSortTypeChange(sortType);
-    setActive(false);
+  const handleSortTypeChange = (sortType: SortType) => () => {
+    if (sortType !== currentSortType) {
+      dispatch(setSortType(sortType));
+    }
+
+    setIsActive(false);
   };
 
   return (
@@ -39,7 +28,7 @@ function Sorter(props: PropsFromRedux): JSX.Element {
       <span
         className={getClassNames(
           'places__sorting-type',
-          {'places__sorting-type--active': active},
+          {'places__sorting-type--active': isActive},
         )}
         tabIndex={0}
         onClick={handleTogglerClick}
@@ -52,7 +41,7 @@ function Sorter(props: PropsFromRedux): JSX.Element {
       <ul className={getClassNames(
         'places__options',
         'places__options--custom',
-        {'places__options--opened': active},
+        {'places__options--opened': isActive},
       )}
       >
         {Object.entries(SortType).map(([key, sortType]) => (
@@ -62,8 +51,8 @@ function Sorter(props: PropsFromRedux): JSX.Element {
               {'places__option--active': currentSortType === sortType},
             )}
             tabIndex={0}
-            onClick={() => changeSortType(sortType)}
             key={key}
+            onClick={handleSortTypeChange(sortType)}
           >
             {sortTypeToLabel[sortType]}
           </li>
@@ -73,5 +62,4 @@ function Sorter(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {Sorter};
-export default connector(Sorter);
+export default memo(Sorter);

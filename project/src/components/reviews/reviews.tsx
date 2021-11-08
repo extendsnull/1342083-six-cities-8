@@ -1,6 +1,6 @@
-import ReviewsList from '../reviews-list/reviews-list';
-import ReviewForm from '../review-form/review-form';
 import type {Comment, Offer} from '../../types';
+import ReviewForm from '../review-form/review-form';
+import ReviewsList from '../reviews-list/reviews-list';
 
 type ReviewsProps = {
   comments: Comment[];

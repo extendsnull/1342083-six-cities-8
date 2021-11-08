@@ -1,10 +1,10 @@
 import type {
-  AuthInfo,
+  AuthorizationInfo,
   City,
   Comment,
   MapLocation,
   Offer,
-  RawAuthInfo,
+  RawAuthorizationInfo,
   RawCity,
   RawComment,
   RawMapLocation,
@@ -13,22 +13,18 @@ import type {
   User
 } from './types';
 
-const adaptLocationToClient = (rawLocation: RawMapLocation): MapLocation => ({
-  lat: rawLocation.latitude,
-  lng: rawLocation.longitude,
-  zoom: rawLocation.zoom,
+const adaptAuthToClient = (rawAuthorizationInfo: RawAuthorizationInfo): AuthorizationInfo => ({
+  avatarUrl: rawAuthorizationInfo.avatar_url,
+  email: rawAuthorizationInfo.email,
+  id: rawAuthorizationInfo.id,
+  isPro: rawAuthorizationInfo.is_pro,
+  name: rawAuthorizationInfo.name,
+  token: rawAuthorizationInfo.token,
 });
 
 const adaptCityToClient = (rawCity: RawCity): City => ({
   location: adaptLocationToClient(rawCity.location),
   name: rawCity.name,
-});
-
-const adaptUserToClient = (rawUser: RawUser): User => ({
-  avatarUrl: rawUser.avatar_url,
-  id: rawUser.id,
-  isPro: rawUser.is_pro,
-  name: rawUser.name,
 });
 
 const adaptCommentToClient = (rawComment: RawComment): Comment => ({
@@ -37,6 +33,12 @@ const adaptCommentToClient = (rawComment: RawComment): Comment => ({
   id: rawComment.id,
   rating: rawComment.rating,
   user: adaptUserToClient(rawComment.user),
+});
+
+const adaptLocationToClient = (rawLocation: RawMapLocation): MapLocation => ({
+  lat: rawLocation.latitude,
+  lng: rawLocation.longitude,
+  zoom: rawLocation.zoom,
 });
 
 const adaptOfferToClient = (rawOffer: RawOffer): Offer => ({
@@ -57,17 +59,15 @@ const adaptOfferToClient = (rawOffer: RawOffer): Offer => ({
   type: rawOffer.type,
 });
 
-const adaptAuthToClient = (rawAuthInfo: RawAuthInfo): AuthInfo => ({
-  avatarUrl: rawAuthInfo.avatar_url,
-  email: rawAuthInfo.email,
-  id: rawAuthInfo.id,
-  isPro: rawAuthInfo.is_pro,
-  name: rawAuthInfo.name,
-  token: rawAuthInfo.token,
+const adaptUserToClient = (rawUser: RawUser): User => ({
+  avatarUrl: rawUser.avatar_url,
+  id: rawUser.id,
+  isPro: rawUser.is_pro,
+  name: rawUser.name,
 });
 
 export {
+  adaptAuthToClient,
   adaptCommentToClient,
-  adaptOfferToClient,
-  adaptAuthToClient
+  adaptOfferToClient
 };

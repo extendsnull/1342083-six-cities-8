@@ -1,48 +1,39 @@
-import {useEffect, useState} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import Header from '../header/header';
-import Tabs from '../tabs/tabs';
-import Spinner from '../spinner/spinner';
-import Sorter from '../sorter/sorter';
-import OfferCard from '../offer-card/offer-card';
-import Map from '../map/map';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {OfferCardType} from '../../const';
-import {getOffersByCity, sortOffersByType} from '../../utils';
-import type {Offer, State} from '../../types';
+import {getActiveCity, getOffersByCity, getSortType} from '../../store/selectors';
+import type {Offer} from '../../types';
+import {sortOffersByType} from '../../utils';
+import Header from '../header/header';
+import Map from '../map/map';
+import OfferCard from '../offer-card/offer-card';
+import Sorter from '../sorter/sorter';
+import Spinner from '../spinner/spinner';
+import Tabs from '../tabs/tabs';
 
-const mapStateToProps = ({activeCity, offers, sortType}: State) => ({
-  offers,
-  activeCity,
-  sortType,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function MainScreen(props: PropsFromRedux): JSX.Element {
-  const {offers, activeCity, sortType} = props;
-  const offersByCity = getOffersByCity(offers, activeCity);
-  const sortedOffers = sortOffersByType(offersByCity, sortType);
-  const hasOffers = Boolean(sortedOffers.length);
-
+function MainScreen(): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
   const [isLoaded, setLoading] = useState(true);
+  const offers = useSelector(getOffersByCity);
+  const sortType = useSelector(getSortType);
+  const activeCity = useSelector(getActiveCity);
+  const offersBySortType = useMemo(() => sortOffersByType(offers, sortType), [offers, sortType]);
+  const hasOffers = Boolean(offers.length);
 
   useEffect(() => {
-    if (offers.length) {
+    if (hasOffers) {
       setLoading(false);
     }
-  }, [offers]);
+  }, [hasOffers]);
 
-  const handleMouseOver = (offer: Offer): void => {
+  const onMouseOver = useCallback((offer: Offer): void => {
     setActiveOffer(offer);
-  };
+  }, []);
 
   if (isLoaded) {
     return (
       <div className="page page--gray page--main">
-        <Header hasNav />
+        <Header />
         <Tabs />
         <main className="page__main page__main--spinner">
           <Spinner />
@@ -54,7 +45,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
   if (hasOffers) {
     return (
       <div className="page page--gray page--main">
-        <Header hasNav />
+        <Header />
         <Tabs />
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
@@ -62,25 +53,22 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{sortedOffers.length} places to stay in {activeCity}</b>
+                <b className="places__found">{offers.length} places to stay in {activeCity}</b>
                 <Sorter />
                 <div className="cities__places-list places__list tabs__content">
-                  {sortedOffers.map((offer: Offer) => (
+                  {offersBySortType.map((offer: Offer) => (
                     <OfferCard
-                      key={offer.id}
                       type={OfferCardType.Cities}
                       offer={offer}
-                      onMouseOver={handleMouseOver}
+                      key={offer.id}
+                      onMouseOver={onMouseOver}
                     />
                   ))}
                 </div>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map
-                    offers={sortedOffers}
-                    activeOffer={activeOffer}
-                  />
+                  <Map offers={offers} activeOffer={activeOffer}/>
                 </section>
               </div>
             </div>
@@ -92,7 +80,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
-      <Header hasNav />
+      <Header />
       <Tabs />
       <main className="page__main page__main--index page__main--index-empty">
         <h1 className="visually-hidden">Cities</h1>
@@ -101,7 +89,9 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
             <section className="cities__no-places">
               <div className="cities__status-wrapper tabs__content">
                 <b className="cities__status">No places to stay available</b>
-                <p className="cities__status-description">We could not find any property available at the moment in {activeCity}</p>
+                <p className="cities__status-description">
+                  We could not find any property available at the moment in {activeCity}
+                </p>
               </div>
             </section>
             <div className="cities__right-section"></div>
@@ -112,5 +102,4 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {MainScreen};
-export default connector(MainScreen);
+export default MainScreen;
