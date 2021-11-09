@@ -84,13 +84,17 @@ const reviewFormSubmitAction = (
 
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get<RawAuthorizationInfo>(ApiRoute.Login).then(({data}) => {
-      const adaptedData = adaptAuthToClient(data);
+    await api.get<RawAuthorizationInfo>(ApiRoute.Login)
+      .then(({data}) => {
+        const adaptedData = adaptAuthToClient(data);
 
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      dispatch(setIsAuthorized(true));
-      dispatch(setAuthorizationInfo(adaptedData));
-    });
+        dispatch(requireAuthorization(AuthorizationStatus.Auth));
+        dispatch(setIsAuthorized(true));
+        dispatch(setAuthorizationInfo(adaptedData));
+      })
+      .catch((error) => {
+        toast.info('Please sign in');
+      });
   };
 
 const loginAction = (authData: AuthorizationData): ThunkActionResult =>
@@ -119,7 +123,6 @@ const logoutAction = (): ThunkActionResult =>
     removeToken();
     dispatch(requireLogout());
   };
-
 
 export {
   fetchOfferAction,
