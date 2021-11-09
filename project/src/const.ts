@@ -7,6 +7,7 @@ enum ApiRoute {
   Hotels$Id = '/hotels/:id',
   Hotels$IdNearby = '/hotels/:id/nearby',
   Favorite = '/favorite',
+  Favorite$Id$Status = '/favorite/:id/:status',
   Comments = '/comments',
   Comments$Id = '/comments/:id',
   Login = '/login',

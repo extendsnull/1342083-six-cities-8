@@ -1,7 +1,9 @@
 enum ActionType {
   SetOffer = 'data/setOffer',
   SetNearbyOffers = 'data/setNearbyOffers',
+  UpdateOffer = 'data/updateOffer',
   SetComments = 'data/setComments',
+  SetIsFavorite = 'data/setIsFavorite',
   SetOffers = 'data/setOffers',
   SetCities = 'data/setCities',
   SetActiveCity = 'data/setActiveCity',

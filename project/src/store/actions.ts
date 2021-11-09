@@ -7,6 +7,8 @@ const setOffer = createAction<Offer | null>(ActionType.SetOffer);
 
 const setOffers = createAction<Offer[]>(ActionType.SetOffers);
 
+const updateOffer = createAction<Offer>(ActionType.UpdateOffer);
+
 const setCities = createAction<Cities>(ActionType.SetCities);
 
 const setNearbyOffers = createAction<Offer[]>(ActionType.SetNearbyOffers);
@@ -29,6 +31,7 @@ const redirectToRoute = createAction<AppRoute>(ActionType.RedirectToRoute);
 
 export {
   setOffer,
+  updateOffer,
   setOffers,
   setCities,
   setNearbyOffers,

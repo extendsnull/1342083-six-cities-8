@@ -9,7 +9,8 @@ import {
   setIsAuthorized,
   setNearbyOffers,
   setOffer,
-  setOffers
+  setOffers,
+  updateOffer
 } from './actions';
 import {adaptAuthToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
 import {ApiRoute, AppRoute, AuthorizationStatus} from '../const';
@@ -43,6 +44,17 @@ const fetchOfferAction = (id: number): ThunkActionResult =>
       .catch((error) => {
         toast.error(error.data.error);
       });
+  };
+
+const fetchOfferIsFavorite = (
+  id: number,
+  status: number,
+): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const url = replaceRouteParams(ApiRoute.Favorite$Id$Status, {id, status});
+    const {data: offer} = await api.post<RawOffer>(url);
+
+    dispatch(updateOffer(adaptOfferToClient(offer)));
   };
 
 const fetchOffersAction = (): ThunkActionResult =>
@@ -111,6 +123,7 @@ const logoutAction = (): ThunkActionResult =>
 
 export {
   fetchOfferAction,
+  fetchOfferIsFavorite,
   fetchOffersAction,
   reviewFormSubmitAction,
   checkAuthAction,
