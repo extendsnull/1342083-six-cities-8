@@ -32,7 +32,15 @@ const humanizeDate = (iso: string): string =>
     year: 'numeric',
   });
 
-const replaceRouteIdParam = (url: string, id: number): string => url.replace(':id', String(id));
+const replaceRouteParams = (template: string, params: {[key: string]: string | number;} = {}): string => {
+  let url = template;
+
+  Object.entries(params).forEach(([key, value]) => {
+    url = url.replace(`:${key}`, String(value));
+  });
+
+  return url;
+};
 
 const sortOffersByType = (offers: Offer[], sortType: SortType): Offer[] => {
   switch (sortType) {
@@ -65,7 +73,7 @@ export {
   getOfferUrl,
   getRatingValue,
   humanizeDate,
-  replaceRouteIdParam,
+  replaceRouteParams,
   sortOffersByType,
   scrollToTop
 };
