@@ -9,18 +9,19 @@ import {
   setIsAuthorized,
   setNearbyOffers,
   setOffer,
-  setOffers
+  setOffers,
+  updateOffer
 } from './actions';
 import {adaptAuthToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
 import {ApiRoute, AppRoute, AuthorizationStatus} from '../const';
 import {removeToken, setToken} from '../services/token';
 import type {ThunkActionResult} from '../store/types';
 import type {AuthorizationData, CommentPost, RawAuthorizationInfo, RawComment, RawOffer} from '../types';
-import {getCities, replaceRouteIdParam} from '../utils';
+import {getCities, replaceRouteParams} from '../utils';
 
 const fetchOfferAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const url = replaceRouteIdParam(ApiRoute.Hotels$Id, id);
+    const url = replaceRouteParams(ApiRoute.Hotels$Id, {id});
     await await api.get<RawOffer>(url)
       .then(({data: offerData}) => {
         dispatch(setOffer(adaptOfferToClient(offerData)));
@@ -29,8 +30,8 @@ const fetchOfferAction = (id: number): ThunkActionResult =>
         dispatch(redirectToRoute(AppRoute.NotFound));
       });
 
-    const nearbyUrl = replaceRouteIdParam(ApiRoute.Hotels$IdNearby, id);
-    const commentsUrl = replaceRouteIdParam(ApiRoute.Comments$Id, id);
+    const nearbyUrl = replaceRouteParams(ApiRoute.Hotels$IdNearby, {id});
+    const commentsUrl = replaceRouteParams(ApiRoute.Comments$Id, {id});
     await Promise.all([
       api.get<RawOffer[]>(nearbyUrl),
       api.get<RawComment[]>(commentsUrl),
@@ -43,6 +44,17 @@ const fetchOfferAction = (id: number): ThunkActionResult =>
       .catch((error) => {
         toast.error(error.data.error);
       });
+  };
+
+const fetchOfferIsFavorite = (
+  id: number,
+  status: number,
+): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const url = replaceRouteParams(ApiRoute.Favorite$Id$Status, {id, status});
+    const {data: offer} = await api.post<RawOffer>(url);
+
+    dispatch(updateOffer(adaptOfferToClient(offer)));
   };
 
 const fetchOffersAction = (): ThunkActionResult =>
@@ -60,7 +72,7 @@ const reviewFormSubmitAction = (
   comment: CommentPost,
 ): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const url = replaceRouteIdParam(ApiRoute.Comments$Id, id);
+    const url = replaceRouteParams(ApiRoute.Comments$Id, {id});
     await api.post<RawComment[]>(url, comment)
       .then(({data: comments}) => {
         dispatch(setComments(comments.map(adaptCommentToClient)));
@@ -72,13 +84,17 @@ const reviewFormSubmitAction = (
 
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get<RawAuthorizationInfo>(ApiRoute.Login).then(({data}) => {
-      const adaptedData = adaptAuthToClient(data);
+    await api.get<RawAuthorizationInfo>(ApiRoute.Login)
+      .then(({data}) => {
+        const adaptedData = adaptAuthToClient(data);
 
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      dispatch(setIsAuthorized(true));
-      dispatch(setAuthorizationInfo(adaptedData));
-    });
+        dispatch(requireAuthorization(AuthorizationStatus.Auth));
+        dispatch(setIsAuthorized(true));
+        dispatch(setAuthorizationInfo(adaptedData));
+      })
+      .catch((error) => {
+        toast.info('Please sign in');
+      });
   };
 
 const loginAction = (authData: AuthorizationData): ThunkActionResult =>
@@ -108,9 +124,9 @@ const logoutAction = (): ThunkActionResult =>
     dispatch(requireLogout());
   };
 
-
 export {
   fetchOfferAction,
+  fetchOfferIsFavorite,
   fetchOffersAction,
   reviewFormSubmitAction,
   checkAuthAction,

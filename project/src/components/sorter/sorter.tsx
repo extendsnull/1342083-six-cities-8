@@ -1,9 +1,10 @@
-import {memo, useState} from 'react';
+import {memo, useCallback, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {SortType, sortTypeToLabel} from '../../const';
 import {setSortType} from '../../store/actions';
 import {getSortType} from '../../store/selectors';
 import {getClassNames} from '../../utils';
+import SorterOption from '../sorter-option/sorter-option';
 
 function Sorter(): JSX.Element {
   const currentSortType = useSelector(getSortType);
@@ -14,13 +15,13 @@ function Sorter(): JSX.Element {
     setIsActive((prevActive) => !prevActive);
   };
 
-  const handleSortTypeChange = (sortType: SortType) => () => {
+  const handleSortTypeChange = useCallback((sortType: SortType) => {
     if (sortType !== currentSortType) {
       dispatch(setSortType(sortType));
     }
 
     setIsActive(false);
-  };
+  }, [dispatch, currentSortType]);
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -44,18 +45,13 @@ function Sorter(): JSX.Element {
         {'places__options--opened': isActive},
       )}
       >
-        {Object.entries(SortType).map(([key, sortType]) => (
-          <li
-            className={getClassNames(
-              'places__option',
-              {'places__option--active': currentSortType === sortType},
-            )}
-            tabIndex={0}
-            key={key}
-            onClick={handleSortTypeChange(sortType)}
-          >
-            {sortTypeToLabel[sortType]}
-          </li>
+        {Object.values(SortType).map((sortType) => (
+          <SorterOption
+            sortType={sortType}
+            activeSortType={currentSortType}
+            key={sortType}
+            handleSortTypeChange={handleSortTypeChange}
+          />
         ))}
       </ul>
     </form>

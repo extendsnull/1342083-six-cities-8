@@ -26,7 +26,7 @@ function MainScreen(): JSX.Element {
     }
   }, [hasOffers]);
 
-  const onMouseOver = useCallback((offer: Offer): void => {
+  const handleMouseOver = useCallback((offer: Offer): void => {
     setActiveOffer(offer);
   }, []);
 
@@ -61,7 +61,7 @@ function MainScreen(): JSX.Element {
                       type={OfferCardType.Cities}
                       offer={offer}
                       key={offer.id}
-                      onMouseOver={onMouseOver}
+                      onMouseOver={handleMouseOver}
                     />
                   ))}
                 </div>

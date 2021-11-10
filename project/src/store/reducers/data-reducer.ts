@@ -7,7 +7,8 @@ import {
   setNearbyOffers,
   setOffer,
   setOffers,
-  setSortType
+  setSortType,
+  updateOffer
 } from '../actions';
 import type {AppData} from '../types';
 
@@ -28,6 +29,9 @@ const dataReducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(updateOffer, (state, action) => {
+      state.offers = state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer);
     })
     .addCase(setCities, (state, action) => {
       state.cities = action.payload;

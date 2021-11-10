@@ -19,14 +19,9 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
   const isDisabled = !rating || review.length < REVIEW_MIN_LENGTH;
   const dispatch = useDispatch();
 
-  const resetForm = (): void => {
-    setRating(0);
-    setReview('');
-  };
-
   const handleCommentChange = (evt: ChangeEvent<HTMLTextAreaElement>): void => setReview(evt.target.value);
 
-  const onRatingChange = useCallback((value: number): void => setRating(value), []);
+  const handleRatingChange = useCallback((value: number): void => setRating(value), []);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
@@ -37,7 +32,8 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
     };
 
     dispatch(reviewFormSubmitAction(offer.id, comment));
-    resetForm();
+    setRating(0);
+    setReview('');
   };
 
   return (
@@ -51,7 +47,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <Rating
         currentRating={rating}
-        onRatingChange={onRatingChange}
+        onRatingChange={handleRatingChange}
       />
       <textarea
         className="reviews__textarea form__textarea"

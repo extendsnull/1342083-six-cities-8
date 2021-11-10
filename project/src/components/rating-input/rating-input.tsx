@@ -20,7 +20,7 @@ function RatingInput(props: RatingInputProps): JSX.Element {
         required
         id={id}
         value={value}
-        checked={isChecked}
+        defaultChecked={isChecked}
       />
       <label
         className="reviews__rating-label form__rating-label"

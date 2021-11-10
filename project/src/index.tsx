@@ -30,7 +30,7 @@ ReactDOM.render(
   (
     <React.StrictMode>
       <Provider store={store}>
-        <ToastContainer />
+        <ToastContainer position="bottom-right" />
         <App />
       </Provider>
     </React.StrictMode>

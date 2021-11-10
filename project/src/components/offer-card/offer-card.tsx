@@ -1,7 +1,11 @@
 import {memo} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import type {LocationDescriptor} from 'history';
-import {offerTypeToReadable, OfferCardType} from '../../const';
+import {offerTypeToReadable, OfferCardType, AppRoute} from '../../const';
+import {redirectToRoute} from '../../store/actions';
+import {fetchOfferIsFavorite} from '../../store/api-action';
+import {getIsAuthorized} from '../../store/selectors';
 import type {Offer} from '../../types';
 import {getClassNames, getOfferUrl, getRatingValue} from '../../utils';
 
@@ -23,16 +27,27 @@ type PlaceCardProps = {
 
 function OfferCard(props: PlaceCardProps): JSX.Element {
   const {type, offer, onMouseOver} = props;
+  const isAuthorized = useSelector(getIsAuthorized);
   const ratingValue: string = getRatingValue(offer.rating);
   const offerUrl: LocationDescriptor<Offer> = {
     pathname: getOfferUrl(offer.id),
     state: offer,
   };
+  const dispatch = useDispatch();
 
   const handleMouseOver = (): void => {
     if (onMouseOver) {
       onMouseOver(offer);
     }
+  };
+
+  const handleFavoriteClick = () => {
+    if (!isAuthorized) {
+      dispatch(redirectToRoute(AppRoute.Login));
+      return;
+    }
+
+    dispatch(fetchOfferIsFavorite(offer.id, Number(!offer.isFavorite)));
   };
 
   return (
@@ -82,6 +97,7 @@ function OfferCard(props: PlaceCardProps): JSX.Element {
               'button',
             )}
             type="button"
+            onClick={handleFavoriteClick}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
