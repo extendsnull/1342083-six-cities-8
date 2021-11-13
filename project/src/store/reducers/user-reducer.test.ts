@@ -24,7 +24,7 @@ describe('Reducer: userReducer', () => {
     });
   });
 
-  it('should set authorization status to unauthorized if user is logout', () => {
+  it('should set authorization status to unauthorized when user is logout', () => {
     const state = {...initialState};
 
     expect(userReducer(state, requireLogout())).toEqual<UserProcess>({
@@ -33,7 +33,7 @@ describe('Reducer: userReducer', () => {
     });
   });
 
-  it('should set authorized status to truthy if user is authorized', () => {
+  it('should set authorized status to truthy when user is authorized', () => {
     const state = {...initialState};
     const isAuthorized = true;
 
