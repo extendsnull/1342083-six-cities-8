@@ -9,3 +9,10 @@ export {
   sortOffersByType,
   scrollToTop
 } from './common';
+
+export {
+  mockAuthorizationInfo,
+  makeMockCities,
+  makeMockComment,
+  makeMockOffer
+} from './mocks';
