@@ -27,10 +27,9 @@ const createApi = (onUnauthorized: UnauthorizedCallback): AxiosInstance => {
 
       if (response?.status === HttpCode.Unauthorized) {
         onUnauthorized();
-        return Promise.reject(error);
       }
 
-      return Promise.reject(response);
+      return Promise.reject(error);
     },
   );
 
