@@ -66,6 +66,18 @@ const makeMockCity = (): City => ({
   name: CityName.Paris,
 });
 
+const makeMockImages = () => [
+  image.city(),
+  image.fashion(),
+  image.food(),
+  image.nature(),
+  image.nightlife(),
+  image.people(),
+  image.sports(),
+  image.technics(),
+  image.transport(),
+];
+
 const makeMockRawMapLocation = (): RawMapLocation => ({
   latitude: parseFloat(address.latitude()),
   longitude: parseFloat(address.longitude()),
@@ -98,7 +110,7 @@ const makeMockRawOffer = (): RawOffer => ({
   goods: random.arrayElements(),
   host: makeMockRawUser(),
   id: datatype.number(),
-  images: Array.from(new Array(6), () => image.city()),
+  images: makeMockImages(),
   'is_favorite': datatype.boolean(),
   'is_premium': datatype.boolean(),
   location: makeMockRawMapLocation(),
@@ -116,7 +128,7 @@ const makeMockOffer = (): Offer => ({
   goods: random.arrayElements(),
   host: makeMockUser(),
   id: datatype.number(),
-  images: Array.from(new Array(6), () => image.city()),
+  images: makeMockImages(),
   isFavorite: datatype.boolean(),
   isPremium: datatype.boolean(),
   location: makeMockMapLocation(),
