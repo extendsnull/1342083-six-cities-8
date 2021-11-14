@@ -36,6 +36,7 @@ function MainScreen(): JSX.Element {
         <Header />
         <Tabs />
         <main className="page__main page__main--spinner">
+          <h1 className="visually-hidden">Cities</h1>
           <Spinner />
         </main>
       </div>

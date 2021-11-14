@@ -43,8 +43,9 @@ function LoginScreen(): JSX.Element {
               onSubmit={handleSubmit}
             >
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">E-mail</label>
+                <label className="visually-hidden" htmlFor="email">E-mail</label>
                 <input
+                  id="email"
                   className="login__input form__input"
                   type="email"
                   name="email"
@@ -54,8 +55,9 @@ function LoginScreen(): JSX.Element {
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">Password</label>
+                <label className="visually-hidden" htmlFor="password">Password</label>
                 <input
+                  id="password"
                   className="login__input form__input"
                   type="password"
                   name="password"
