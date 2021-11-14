@@ -53,18 +53,17 @@ const makeMockComment = (): Comment => ({
 });
 
 const makeMockCities = (): Cities => ({
-  [CityName.Amsterdam]: makeMockMapLocation(),
-  [CityName.Brussels]: makeMockMapLocation(),
+  [CityName.Paris]: makeMockMapLocation(),
 });
 
 const makeMockRawCity = (): RawCity => ({
   location: makeMockRawMapLocation(),
-  name: CityName.Amsterdam,
+  name: CityName.Paris,
 });
 
 const makeMockCity = (): City => ({
   location: makeMockMapLocation(),
-  name: CityName.Amsterdam,
+  name: CityName.Paris,
 });
 
 const makeMockRawMapLocation = (): RawMapLocation => ({
@@ -99,7 +98,7 @@ const makeMockRawOffer = (): RawOffer => ({
   goods: random.arrayElements(),
   host: makeMockRawUser(),
   id: datatype.number(),
-  images: random.arrayElements(),
+  images: Array.from(new Array(6), () => image.city()),
   'is_favorite': datatype.boolean(),
   'is_premium': datatype.boolean(),
   location: makeMockRawMapLocation(),
@@ -117,7 +116,7 @@ const makeMockOffer = (): Offer => ({
   goods: random.arrayElements(),
   host: makeMockUser(),
   id: datatype.number(),
-  images: random.arrayElements(),
+  images: Array.from(new Array(6), () => image.city()),
   isFavorite: datatype.boolean(),
   isPremium: datatype.boolean(),
   location: makeMockMapLocation(),
@@ -129,25 +128,25 @@ const makeMockOffer = (): Offer => ({
   type: OfferType.Apartament,
 });
 
-const makeMockAppDataState = (): AppData => ({
-  offer: null,
-  offers: [],
-  cities: {},
-  nearbyOffers: [],
-  comments: [],
+const makeMockAppDataState = (fill = false): AppData => ({
+  offer: fill ? makeMockOffer() : null,
+  offers: fill ? [makeMockOffer(), makeMockOffer(), makeMockOffer()] : [],
+  cities: fill ? makeMockCities() : {},
+  nearbyOffers: fill ? [makeMockOffer(), makeMockOffer()] : [],
+  comments: fill ? [makeMockComment(), makeMockComment(), makeMockComment()] : [],
   activeCity: CityName.Paris,
   sortType: SortType.Popular,
 });
 
-const makeMockUserProcessState = (): UserProcess => ({
-  authorizationStatus: AuthorizationStatus.Unknown,
-  isAuthorized: false,
-  authorizationInfo: null,
+const makeMockUserProcessState = (isAuthorized = false): UserProcess => ({
+  authorizationStatus: isAuthorized ? AuthorizationStatus.Auth : AuthorizationStatus.Unknown,
+  isAuthorized,
+  authorizationInfo: isAuthorized ? makeMockAuthorizationInfo() : null,
 });
 
-const makeMockRootState = (): RootState => ({
-  DATA: makeMockAppDataState(),
-  USER: makeMockUserProcessState(),
+const makeMockRootState = (fill = false, isAuthorized = false): RootState => ({
+  DATA: makeMockAppDataState(fill),
+  USER: makeMockUserProcessState(isAuthorized),
 });
 
 export {
