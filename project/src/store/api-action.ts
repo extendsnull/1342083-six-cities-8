@@ -12,7 +12,7 @@ import {
   setOffers,
   updateOffer
 } from './actions';
-import {adaptAuthToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
+import {adaptAuthorizationInfoToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
 import {ApiRoute, AppRoute, AuthorizationStatus} from '../const';
 import {removeToken, setToken} from '../services/token';
 import type {ThunkActionResult} from '../store/types';
@@ -86,7 +86,7 @@ const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get<RawAuthorizationInfo>(ApiRoute.Login)
       .then(({data}) => {
-        const adaptedData = adaptAuthToClient(data);
+        const adaptedData = adaptAuthorizationInfoToClient(data);
 
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
         dispatch(setIsAuthorized(true));
@@ -104,7 +104,7 @@ const loginAction = (authData: AuthorizationData): ThunkActionResult =>
       password: authData.password,
     })
       .then(({data}) => {
-        const adaptedData = adaptAuthToClient(data);
+        const adaptedData = adaptAuthorizationInfoToClient(data);
 
         setToken(adaptedData.token);
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
