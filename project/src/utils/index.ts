@@ -11,7 +11,7 @@ export {
 } from './common';
 
 export {
-  mockAuthorizationInfo,
+  makeMockAuthorizationInfo,
   makeMockCities,
   makeMockComment,
   makeMockOffer

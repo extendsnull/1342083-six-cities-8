@@ -2,7 +2,7 @@ import {address, datatype, lorem, image, name, random, date, internet} from 'fak
 import {CityName, OfferType} from '../const';
 import type {AuthorizationInfo, Cities, City, Comment, MapLocation, Offer, User} from '../types';
 
-const mockAuthorizationInfo = (): AuthorizationInfo => ({
+const makeMockAuthorizationInfo = (): AuthorizationInfo => ({
   avatarUrl: image.avatar(),
   email: internet.email(),
   id: datatype.number(),
@@ -61,7 +61,7 @@ const makeMockOffer = (): Offer => ({
 });
 
 export {
-  mockAuthorizationInfo,
+  makeMockAuthorizationInfo,
   makeMockComment,
   makeMockCities,
   makeMockOffer

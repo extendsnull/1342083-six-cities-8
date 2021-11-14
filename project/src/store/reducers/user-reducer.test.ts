@@ -1,5 +1,5 @@
 import {AuthorizationStatus} from '../../const';
-import {mockAuthorizationInfo} from '../../utils';
+import {makeMockAuthorizationInfo} from '../../utils';
 import {requireAuthorization, requireLogout, setAuthorizationInfo, setIsAuthorized} from '../actions';
 import type {UserProcess} from '../types';
 import {userReducer} from './user-reducer';
@@ -45,7 +45,7 @@ describe('Reducer: userReducer', () => {
 
   it('should set authorization info', () => {
     const state = {...initialState};
-    const authorizationInfo = mockAuthorizationInfo();
+    const authorizationInfo = makeMockAuthorizationInfo();
 
     expect(userReducer(state, setAuthorizationInfo(authorizationInfo))).toEqual<UserProcess>({
       ...state,
