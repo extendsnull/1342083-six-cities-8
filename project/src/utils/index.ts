@@ -11,8 +11,11 @@ export {
 } from './common';
 
 export {
+  makeMockRawAuthorizationInfo,
   makeMockAuthorizationInfo,
   makeMockCities,
+  makeMockRawComment,
   makeMockComment,
+  makeMockRawOffer,
   makeMockOffer
 } from './mocks';
