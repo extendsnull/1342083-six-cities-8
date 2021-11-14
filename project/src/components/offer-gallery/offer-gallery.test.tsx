@@ -7,6 +7,6 @@ const offer = makeMockOffer();
 describe('Component: OfferGallery', () => {
   it('should render correctly', () => {
     render(<OfferGallery images={offer.images} />);
-    expect(screen.getAllByRole('img').length).toBe(offer.images.length);
+    expect(screen.getAllByRole('img').length).toBe(6);
   });
 });
