@@ -2,8 +2,9 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import MockAdapter from 'axios-mock-adapter';
 import {Action} from 'redux';
 import thunk, {ThunkDispatch} from 'redux-thunk';
-import {createApi} from '../services/api';
+import {adaptAuthorizationInfoToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
 import {ApiRoute, AppRoute, AuthorizationStatus} from '../const';
+import {createApi} from '../services/api';
 import {
   redirectToRoute,
   requireAuthorization,
@@ -16,10 +17,22 @@ import {
   setOffers,
   updateOffer
 } from './actions';
-import {checkAuthAction, fetchOfferAction, fetchOffersAction, fetchOfferIsFavorite, reviewFormSubmitAction} from './api-action';
+import {
+  checkAuthAction,
+  fetchOfferAction,
+  fetchOffersAction,
+  fetchOfferIsFavorite,
+  reviewFormSubmitAction
+} from './api-action';
 import type {State} from './types';
-import {getCities, makeMockComment, makeMockRawAuthorizationInfo, makeMockRawComment, makeMockRawOffer, replaceRouteParams} from '../utils';
-import {adaptAuthorizationInfoToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
+import {
+  getCities,
+  makeMockComment,
+  makeMockRawAuthorizationInfo,
+  makeMockRawComment,
+  makeMockRawOffer,
+  replaceRouteParams
+} from '../utils';
 
 enum HttpStatusCode {
   Ok = 200,
