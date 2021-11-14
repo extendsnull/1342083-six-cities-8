@@ -1,5 +1,5 @@
 import {CityName, SortType} from '../../const';
-import {makeMockCities, makeMockComment, makeMockOffer} from '../../utils';
+import {makeMockAppDataState, makeMockCities, makeMockComment, makeMockOffer} from '../../utils';
 import {
   setActiveCity,
   setCities,
@@ -13,15 +13,7 @@ import {
 import type {AppData} from '../types';
 import {dataReducer} from './data-reducer';
 
-const initialState: AppData = {
-  offer: null,
-  offers: [],
-  cities: {},
-  nearbyOffers: [],
-  comments: [],
-  activeCity: CityName.Paris,
-  sortType: SortType.Popular,
-};
+const initialState: AppData = makeMockAppDataState();
 
 describe('Reducer: dataReducer', () => {
   it('without additional parameters should return initial state', () => {

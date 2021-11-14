@@ -17,5 +17,8 @@ export {
   makeMockRawComment,
   makeMockComment,
   makeMockRawOffer,
-  makeMockOffer
+  makeMockOffer,
+  makeMockAppDataState,
+  makeMockUserProcessState,
+  makeMockRootState
 } from './mocks';

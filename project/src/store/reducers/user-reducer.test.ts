@@ -1,14 +1,10 @@
 import {AuthorizationStatus} from '../../const';
-import {makeMockAuthorizationInfo} from '../../utils';
+import {makeMockAuthorizationInfo, makeMockUserProcessState} from '../../utils';
 import {requireAuthorization, requireLogout, setAuthorizationInfo, setIsAuthorized} from '../actions';
 import type {UserProcess} from '../types';
 import {userReducer} from './user-reducer';
 
-const initialState: UserProcess = {
-  authorizationStatus: AuthorizationStatus.Unknown,
-  isAuthorized: false,
-  authorizationInfo: null,
-};
+const initialState: UserProcess = makeMockUserProcessState();
 
 describe('Reducer: userReducer', () => {
   it('without additional parameters should return initial state', () => {

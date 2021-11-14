@@ -1,5 +1,7 @@
 import {address, datatype, lorem, image, name, random, date, internet} from 'faker';
-import {CityName, OfferType} from '../const';
+import {AuthorizationStatus, CityName, OfferType, SortType} from '../const';
+import type {RootState} from '../store/root-reducer';
+import type {AppData, UserProcess} from '../store/types';
 import type {
   AuthorizationInfo,
   Cities,
@@ -127,6 +129,27 @@ const makeMockOffer = (): Offer => ({
   type: OfferType.Apartament,
 });
 
+const makeMockAppDataState = (): AppData => ({
+  offer: null,
+  offers: [],
+  cities: {},
+  nearbyOffers: [],
+  comments: [],
+  activeCity: CityName.Paris,
+  sortType: SortType.Popular,
+});
+
+const makeMockUserProcessState = (): UserProcess => ({
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isAuthorized: false,
+  authorizationInfo: null,
+});
+
+const makeMockRootState = (): RootState => ({
+  DATA: makeMockAppDataState(),
+  USER: makeMockUserProcessState(),
+});
+
 export {
   makeMockRawAuthorizationInfo,
   makeMockAuthorizationInfo,
@@ -134,5 +157,8 @@ export {
   makeMockComment,
   makeMockCities,
   makeMockRawOffer,
-  makeMockOffer
+  makeMockOffer,
+  makeMockAppDataState,
+  makeMockUserProcessState,
+  makeMockRootState
 };
