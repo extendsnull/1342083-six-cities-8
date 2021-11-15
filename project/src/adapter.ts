@@ -13,7 +13,7 @@ import type {
   User
 } from './types';
 
-const adaptAuthToClient = (rawAuthorizationInfo: RawAuthorizationInfo): AuthorizationInfo => ({
+const adaptAuthorizationInfoToClient = (rawAuthorizationInfo: RawAuthorizationInfo): AuthorizationInfo => ({
   avatarUrl: rawAuthorizationInfo.avatar_url,
   email: rawAuthorizationInfo.email,
   id: rawAuthorizationInfo.id,
@@ -67,7 +67,7 @@ const adaptUserToClient = (rawUser: RawUser): User => ({
 });
 
 export {
-  adaptAuthToClient,
+  adaptAuthorizationInfoToClient,
   adaptCommentToClient,
   adaptOfferToClient
 };

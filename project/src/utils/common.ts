@@ -1,7 +1,7 @@
 import classNames, {Argument} from 'classnames';
 import {generatePath} from 'react-router';
-import {RATING_MAX_VALUE, AppRoute, CityName, SortType} from './const';
-import type {Cities, Offer} from './types';
+import {RATING_MAX_VALUE, AppRoute, CityName, SortType} from '../const';
+import type {Cities, Offer} from '../types';
 
 const filterOffersByCity = (offers: Offer[], activeCity: CityName): Offer[] =>
   offers.filter((offer) => offer.city.name === activeCity);

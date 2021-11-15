@@ -179,6 +179,14 @@ enum SortType {
   RatingDescent = 'rating-descent',
 }
 
+enum ToastMessage {
+  DefaultError = 'Something wrong, please try again later',
+  NearbyOffersError = 'Failed to load nearby offers, please try again later',
+  CommentsError = 'Failed to load comments, please try again later',
+  LoginError = 'The email address or password is incorrect',
+  SignIn = 'Please sign in',
+}
+
 enum UserKey {
   AvatarUrl = 'avatarUrl',
   Id = 'id',
@@ -234,6 +242,7 @@ export {
   RawOfferKey,
   RawUserKey,
   SortType,
+  ToastMessage,
   UserKey,
   offerTypeToReadable,
   ratingTitleToValue,

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {toast} from 'react-toastify';
 import {
   redirectToRoute,
@@ -12,8 +13,8 @@ import {
   setOffers,
   updateOffer
 } from './actions';
-import {adaptAuthToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
-import {ApiRoute, AppRoute, AuthorizationStatus} from '../const';
+import {adaptAuthorizationInfoToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
+import {ApiRoute, AppRoute, AuthorizationStatus, ToastMessage} from '../const';
 import {removeToken, setToken} from '../services/token';
 import type {ThunkActionResult} from '../store/types';
 import type {AuthorizationData, CommentPost, RawAuthorizationInfo, RawComment, RawOffer} from '../types';
@@ -21,107 +22,139 @@ import {getCities, replaceRouteParams} from '../utils';
 
 const fetchOfferAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const url = replaceRouteParams(ApiRoute.Hotels$Id, {id});
-    await await api.get<RawOffer>(url)
-      .then(({data: offerData}) => {
-        dispatch(setOffer(adaptOfferToClient(offerData)));
-      })
-      .catch((error) => {
-        dispatch(redirectToRoute(AppRoute.NotFound));
-      });
+    try {
+      const offerUrl = replaceRouteParams(ApiRoute.Hotels$Id, {id});
+      const {data: rawOffer} = await api.get<RawOffer>(offerUrl);
 
-    const nearbyUrl = replaceRouteParams(ApiRoute.Hotels$IdNearby, {id});
-    const commentsUrl = replaceRouteParams(ApiRoute.Comments$Id, {id});
-    await Promise.all([
-      api.get<RawOffer[]>(nearbyUrl),
-      api.get<RawComment[]>(commentsUrl),
-    ])
-      .then((response) => {
-        const [{data: nearbyOffersData}, {data: commentsData}] = response;
-        dispatch(setNearbyOffers(nearbyOffersData.map(adaptOfferToClient)));
-        dispatch(setComments(commentsData.map(adaptCommentToClient)));
-      })
-      .catch((error) => {
-        toast.error(error.data.error);
-      });
+      dispatch(setOffer(adaptOfferToClient(rawOffer)));
+    } catch (error) {
+      dispatch(redirectToRoute(AppRoute.NotFound));
+
+      if (axios.isAxiosError(error)) {
+        toast.error(ToastMessage.DefaultError);
+      }
+
+      return;
+    }
+
+    try {
+      const nearbyUrl = replaceRouteParams(ApiRoute.Hotels$IdNearby, {id});
+      const {data: rawNearbyOffers} = await api.get<RawOffer[]>(nearbyUrl);
+
+      dispatch(setNearbyOffers(rawNearbyOffers.map(adaptOfferToClient)));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(ToastMessage.NearbyOffersError);
+      }
+    }
+
+    try {
+      const commentsUrl = replaceRouteParams(ApiRoute.Comments$Id, {id});
+      const {data: rawComments} = await api.get<RawComment[]>(commentsUrl);
+
+      dispatch(setComments(rawComments.map(adaptCommentToClient)));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(ToastMessage.CommentsError);
+      }
+    }
   };
 
-const fetchOfferIsFavorite = (
-  id: number,
-  status: number,
-): ThunkActionResult =>
+const fetchOfferIsFavorite = (id: number, status: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const url = replaceRouteParams(ApiRoute.Favorite$Id$Status, {id, status});
-    const {data: offer} = await api.post<RawOffer>(url);
+    try {
+      const url = replaceRouteParams(ApiRoute.Favorite$Id$Status, {id, status});
+      const {data: offer} = await api.post<RawOffer>(url);
 
-    dispatch(updateOffer(adaptOfferToClient(offer)));
+      dispatch(updateOffer(adaptOfferToClient(offer)));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(ToastMessage.DefaultError);
+      }
+    }
   };
 
 const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data} = await api.get<RawOffer[]>(ApiRoute.Hotels);
-    const offers = data.map(adaptOfferToClient);
-    const cities = getCities(offers);
+    try {
+      const {data} = await api.get<RawOffer[]>(ApiRoute.Hotels);
+      const offers = data.map(adaptOfferToClient);
+      const cities = getCities(offers);
 
-    dispatch(setOffers(offers));
-    dispatch(setCities(cities));
+      dispatch(setOffers(offers));
+      dispatch(setCities(cities));
+    } catch (error) {
+      dispatch(redirectToRoute(AppRoute.NotFound));
+
+      if (axios.isAxiosError(error)) {
+        toast.error(ToastMessage.DefaultError);
+      }
+    }
   };
 
-const reviewFormSubmitAction = (
-  id: number,
-  comment: CommentPost,
-): ThunkActionResult =>
+const reviewFormSubmitAction = (id: number, comment: CommentPost): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const url = replaceRouteParams(ApiRoute.Comments$Id, {id});
-    await api.post<RawComment[]>(url, comment)
-      .then(({data: comments}) => {
-        dispatch(setComments(comments.map(adaptCommentToClient)));
-      })
-      .catch((error) => {
-        toast.error(error.data.error);
-      });
+    try {
+      const url = replaceRouteParams(ApiRoute.Comments$Id, {id});
+      const {data: comments} = await api.post<RawComment[]>(url, comment);
+
+      dispatch(setComments(comments.map(adaptCommentToClient)));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(ToastMessage.DefaultError);
+      }
+    }
   };
 
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get<RawAuthorizationInfo>(ApiRoute.Login)
-      .then(({data}) => {
-        const adaptedData = adaptAuthToClient(data);
+    try {
+      const {data: rawAuthorizationInfo} = await api.get<RawAuthorizationInfo>(ApiRoute.Login);
+      const authorizationInfo = adaptAuthorizationInfoToClient(rawAuthorizationInfo);
 
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
-        dispatch(setIsAuthorized(true));
-        dispatch(setAuthorizationInfo(adaptedData));
-      })
-      .catch((error) => {
-        toast.info('Please sign in');
-      });
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(setIsAuthorized(true));
+      dispatch(setAuthorizationInfo(authorizationInfo));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.info(ToastMessage.SignIn);
+      }
+    }
   };
 
 const loginAction = (authData: AuthorizationData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.post<RawAuthorizationInfo>(ApiRoute.Login, {
-      email: authData.login,
-      password: authData.password,
-    })
-      .then(({data}) => {
-        const adaptedData = adaptAuthToClient(data);
-
-        setToken(adaptedData.token);
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
-        dispatch(setIsAuthorized(true));
-        dispatch(setAuthorizationInfo(adaptedData));
-        dispatch(redirectToRoute(AppRoute.Main));
-      })
-      .catch((error) => {
-        toast.error(error.data.error);
+    try {
+      const {data: rawAthorizationInfo} = await api.post<RawAuthorizationInfo>(ApiRoute.Login, {
+        email: authData.login,
+        password: authData.password,
       });
+      const athorizationInfo = adaptAuthorizationInfoToClient(rawAthorizationInfo);
+
+      setToken(athorizationInfo.token);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(setIsAuthorized(true));
+      dispatch(setAuthorizationInfo(athorizationInfo));
+      dispatch(redirectToRoute(AppRoute.Main));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(ToastMessage.LoginError);
+      }
+    }
   };
 
 const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.delete(ApiRoute.Logout);
-    removeToken();
-    dispatch(requireLogout());
+    try {
+      await api.delete(ApiRoute.Logout);
+
+      removeToken();
+      dispatch(requireLogout());
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(ToastMessage.DefaultError);
+      }
+    }
   };
 
 export {
