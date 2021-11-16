@@ -3,8 +3,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Redirect} from 'react-router';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {setActiveCity} from '../../store/actions';
 import {loginAction} from '../../store/api-action';
 import {getIsAuthorized} from '../../store/selectors';
+import {getRandomCity} from '../../utils/common';
 import Header from '../header/header';
 
 function LoginScreen(): JSX.Element {
@@ -29,6 +31,12 @@ function LoginScreen(): JSX.Element {
     return <Redirect to={AppRoute.Main} />;
   }
 
+  const randomCity = getRandomCity();
+
+  const handleCityClick = () => {
+    dispatch(setActiveCity(randomCity));
+  };
+
   return (
     <div className="page page--gray page--login">
       <Header hasNav={false} />
@@ -47,6 +55,7 @@ function LoginScreen(): JSX.Element {
                 <input
                   id="email"
                   className="login__input form__input"
+                  data-testid="email"
                   type="email"
                   name="email"
                   placeholder="Email"
@@ -59,6 +68,7 @@ function LoginScreen(): JSX.Element {
                 <input
                   id="password"
                   className="login__input form__input"
+                  data-testid="password"
                   type="password"
                   name="password"
                   placeholder="Password"
@@ -71,8 +81,12 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main}>
-                <span>Amsterdam</span>
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Main}
+                onClick={handleCityClick}
+              >
+                <span>{randomCity}</span>
               </Link>
             </div>
           </section>
