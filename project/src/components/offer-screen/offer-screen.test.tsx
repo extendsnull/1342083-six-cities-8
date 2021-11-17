@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import {Router as BrowserRouter} from 'react-router-dom';
-import {Offer} from '../../types';
+import type {Offer} from '../../types';
 import {makeMockRootState} from '../../utils';
 import OfferScreen from './offer-screen';
 

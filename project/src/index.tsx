@@ -14,7 +14,6 @@ import redirect from './store/middlewares/redirect';
 import {rootReducer as reducer} from './store/root-reducer';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const api = createApi(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
 );

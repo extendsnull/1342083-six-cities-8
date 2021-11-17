@@ -36,7 +36,7 @@ import {
   makeMockRawOffer,
   replaceRouteParams
 } from '../utils';
-import {AuthorizationData} from '../types';
+import type {AuthorizationData} from '../types';
 
 enum HttpStatusCode {
   Ok = 200,
