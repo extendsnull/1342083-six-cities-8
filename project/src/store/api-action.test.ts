@@ -3,11 +3,12 @@ import MockAdapter from 'axios-mock-adapter';
 import {Action} from 'redux';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import {adaptAuthorizationInfoToClient, adaptCommentToClient, adaptOfferToClient} from '../adapter';
-import {ApiRoute, AppRoute, AuthorizationStatus} from '../const';
+import {ApiRoute, AppRoute, AuthorizationStatus, AUTH_TOKEN_KEY_NAME} from '../const';
 import {createApi} from '../services/api';
 import {
   redirectToRoute,
   requireAuthorization,
+  requireLogout,
   setAuthorizationInfo,
   setCities,
   setComments,
@@ -22,7 +23,9 @@ import {
   fetchOfferAction,
   fetchOffersAction,
   fetchOfferIsFavorite,
-  reviewFormSubmitAction
+  reviewFormSubmitAction,
+  loginAction,
+  logoutAction
 } from './api-action';
 import type {State} from './types';
 import {
@@ -33,9 +36,11 @@ import {
   makeMockRawOffer,
   replaceRouteParams
 } from '../utils';
+import {AuthorizationData} from '../types';
 
 enum HttpStatusCode {
   Ok = 200,
+  NoContent = 204,
   NotFound = 404,
 }
 
@@ -222,5 +227,51 @@ describe('Async actions', () => {
       setIsAuthorized(true),
       setAuthorizationInfo(adaptedAuthorizationInfo),
     ]);
+  });
+
+  it('should login and set token when user sign in', async () => {
+    const user: AuthorizationData = {
+      login: 'keks@htmlacademy.ru',
+      password: '123456',
+    };
+
+    const store = mockStore();
+    const rawAuthorizationInfo = makeMockRawAuthorizationInfo();
+    const adaptedAuthorizationInfo = adaptAuthorizationInfoToClient(rawAuthorizationInfo);
+
+    Storage.prototype.setItem = jest.fn();
+
+    mockApi.onPost(ApiRoute.Login).reply(HttpStatusCode.Ok, rawAuthorizationInfo);
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(loginAction(user));
+
+    expect(store.getActions()).toEqual([
+      requireAuthorization(AuthorizationStatus.Auth),
+      setIsAuthorized(true),
+      setAuthorizationInfo(adaptedAuthorizationInfo),
+      redirectToRoute(AppRoute.Main),
+    ]);
+
+    expect(Storage.prototype.setItem).toBeCalledTimes(1);
+    expect(Storage.prototype.setItem).toBeCalledWith(AUTH_TOKEN_KEY_NAME, adaptedAuthorizationInfo.token);
+  });
+
+  it('should logout and remove token when user sign out', async () => {
+    const store = mockStore();
+
+    Storage.prototype.removeItem = jest.fn();
+
+    mockApi.onDelete(ApiRoute.Logout).reply(HttpStatusCode.NoContent);
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(logoutAction());
+
+    expect(store.getActions()).toEqual([
+      requireLogout(),
+    ]);
+
+    expect(Storage.prototype.removeItem).toBeCalledTimes(1);
+    expect(Storage.prototype.removeItem).toBeCalledWith(AUTH_TOKEN_KEY_NAME);
   });
 });

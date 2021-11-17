@@ -66,11 +66,23 @@ const scrollToTop = (): void => {
   }
 };
 
+const getRandomInt = (min: number, max: number) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+const getRandomCity = (): CityName => {
+  const cities = Object.values(CityName);
+  return cities[getRandomInt(0, cities.length - 1)];
+};
+
 export {
   filterOffersByCity,
   getCities,
   getClassNames,
   getOfferUrl,
+  getRandomCity,
   getRatingValue,
   humanizeDate,
   replaceRouteParams,

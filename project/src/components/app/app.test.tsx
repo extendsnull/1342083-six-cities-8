@@ -63,7 +63,7 @@ describe('App routing', () => {
     history.push(AppRoute.Favorites);
     render(fakeAppWithAuthorization);
 
-    expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
+    expect(screen.getByText(/Nothing yet saved./i)).toBeInTheDocument();
   });
 
   it('should render "NotFoundScreen" when user navigate to "/404"', () => {

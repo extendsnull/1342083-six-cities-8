@@ -6,10 +6,11 @@ import {Router as BrowserRouter} from 'react-router-dom';
 import {makeMockRootState} from '../../utils';
 import Header from './header';
 
-const mockState = makeMockRootState(true);
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
-const store = mockStore(mockState);
+
+const store = mockStore(makeMockRootState(true));
+const storeWithAuthorization =  mockStore(makeMockRootState(true, true));
 
 describe('Component: Header', () => {
   it('should render correctly', () => {
@@ -36,8 +37,6 @@ describe('Component: Header', () => {
   });
 
   it('should render correctly when user is authorized', () => {
-    const storeWithAuthorization =  mockStore(makeMockRootState(true, true));
-
     render(
       <Provider store={storeWithAuthorization}>
         <BrowserRouter history={history}>
