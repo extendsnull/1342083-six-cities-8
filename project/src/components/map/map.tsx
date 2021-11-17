@@ -55,7 +55,7 @@ function Map(props: MapProps): JSX.Element {
 
   }, [map, offers, activeOffer]);
 
-  return <div ref={mapRef}></div>;
+  return <div ref={mapRef} data-testid="map"></div>;
 }
 
 export default memo(Map);

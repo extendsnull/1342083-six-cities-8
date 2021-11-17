@@ -170,6 +170,7 @@ export {
   makeMockRawOffer,
   makeMockOffer,
   makeMockAppDataState,
+  makeMockMapLocation,
   makeMockUserProcessState,
   makeMockRootState
 };
